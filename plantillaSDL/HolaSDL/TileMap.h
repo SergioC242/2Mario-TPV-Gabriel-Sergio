@@ -1,5 +1,6 @@
 #include "checkML.h"
 #include "Texture.h"
+#include "Game.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include <string>
@@ -9,8 +10,6 @@ using namespace std;
 
 #pragma once
 
-class Game;
-
 class TileMap {
 
 private:
@@ -19,18 +18,14 @@ private:
 	vector<vector<int>> tiledata;
 	int nCols;
 	int nRows;
-	int tileS;
 	const int OBSTACLE_THRESHOLD = 4; // Número de columnas de la textura donde se contienen los obstáculos
 
 public:
 	// Constructora
-	TileMap(Texture* tex, Game* g, string worldname, string tilesetname, int tilesize);
+	TileMap(Texture* tex, Game* g, string worldname);
 
 	// Dibujar el mapa
 	void Render();
-
-	// Actualizar el mapa
-	void Update() { };
 
 	// Detectar colisiones
 	bool Hit(const SDL_Rect& rect, bool fromPlayer);

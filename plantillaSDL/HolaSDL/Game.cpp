@@ -124,3 +124,20 @@ Game::handleEvents()
 		}
 	}
 }
+
+int 
+Game::offset_Return() {
+	return mapOffset;
+}
+void 
+Game::offset_Add(int n) {
+	mapOffset += n;
+}
+void 
+Game::offset_Lock() {
+	lockOffset = true;
+}
+bool 
+Game::offset_isLocked() {
+	return lockOffset;
+}
