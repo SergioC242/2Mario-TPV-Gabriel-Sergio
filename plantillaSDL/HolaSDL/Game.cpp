@@ -1,25 +1,34 @@
-#include <string>
+ï»¿#include <string>
 
 #include "Game.h"
 
 using namespace std;
 
-// Formato de la especificación de una textura
+// Formato de la especificaciÃ³n de una textura
 struct TextureSpec
 {
 	const char* name;	// Ruta del archivo
-	uint numColumns;	// Número de frames por fila
-	uint numRows;		// Número de frames por columna
+	uint numColumns;	// NÃºmero de frames por fila
+	uint numRows;		// NÃºmero de frames por columna
 };
 
-// Directorio raíz de los archivos de textura
-const string textureRoot = "../images/";
+// Directorio raÃ­z de los archivos de textura
+const string textureRoot = "../assets/imgs/";
 
-// Especificación de las texturas del juego
+// EspecificaciÃ³n de las texturas del juego
 const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
-	TextureSpec{"background1.png", 1, 1},
-	{"dog.png", 6, 1},
-	{"helicopter.png", 5, 1},
+	TextureSpec{"background.png", 7, 9},
+	{"blocks.png", 1, 6},
+	{"mario.png", 1, 12},
+	{"supermario.png", 1, 22},
+	{"firemario.png", 1, 21},
+	{"goomba.png", 1, 3},
+	{"koopa.png", 1, 4},
+	{"piranha.png", 1, 2},
+	{"shell.png", 1, 2},
+	{"mushroom.png", 1, 1},
+	{"plant.png", 1, 4},
+	{"star.png", 1, 4},
 };
 
 Game::Game()
@@ -69,7 +78,7 @@ Game::run()
 {
 	// Bucle principal del juego
 	while (seguir) {
-		// Marca de tiempo del inicio de la iteración
+		// Marca de tiempo del inicio de la iteraciÃ³n
 		uint32_t inicio = SDL_GetTicks();
 
 		update();       // Actualiza el estado de los objetos del juego
@@ -79,7 +88,7 @@ Game::run()
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;
 
-		// Duerme el resto de la duraci??el frame
+		// Duerme el resto de la duració® ¤el frame
 		if (elapsed < FRAME_RATE)
 			SDL_Delay(FRAME_RATE - elapsed);
 	}
@@ -91,7 +100,6 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
-	textures[BACKGROUND]->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -100,7 +108,6 @@ void
 Game::update()
 {
 	// Actualiza los objetos del juego
-	perro->update();
 }
 
 void
@@ -113,7 +120,7 @@ Game::handleEvents()
 		if (evento.type == SDL_QUIT)
 			seguir = false;
 		else if (evento.type == SDL_KEYDOWN) {
-			perro->handleEvent(evento);
+			//->handleEvent(evento);
 		}
 	}
 }

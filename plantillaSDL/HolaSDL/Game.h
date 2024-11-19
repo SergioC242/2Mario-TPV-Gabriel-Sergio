@@ -1,10 +1,12 @@
 #pragma once
 
 #include <array>
+#include <vector>
 #include <SDL.h>
 
 #include "Texture.h"
 #include "GameItem.h"
+#include "TileMap.h"
 
 using uint = unsigned int;
 
@@ -16,8 +18,15 @@ public:
 		Tilemap,
 		Blocks,
 		Mario,
+		SuperMario,
+		FireMario,
 		Goomba,
 		Koopa,
+		Piranha,
+		Shell,
+		Mushroom,
+		Plant,
+		Star,
 		NUM_TEXTURES
 	};
 
@@ -44,9 +53,9 @@ public:
 	Texture* getTexture(TextureName name) const;
 
 	// Constante globales
-	static constexpr uint WIN_WIDTH = 800;
-	static constexpr uint WIN_HEIGHT = 600;
-	static constexpr uint FRAME_RATE = 50;
+	static constexpr uint WIN_WIDTH = 544;
+	static constexpr uint WIN_HEIGHT = 480;
+	static constexpr uint FRAME_RATE = 60;
 
 	Game();
 	~Game();
