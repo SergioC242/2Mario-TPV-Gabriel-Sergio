@@ -1,3 +1,6 @@
+#ifndef VECTOR2D_H
+#define VECTOR2D_H
+
 #pragma once
 template <class T>
 
@@ -55,3 +58,4 @@ public:
 
 using Point2D = Vector2D<int>;
 
+#endif

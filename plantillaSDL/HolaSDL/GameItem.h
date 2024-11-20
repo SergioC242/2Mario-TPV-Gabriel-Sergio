@@ -1,5 +1,9 @@
-#pragma once
+#ifndef GAMEITEM_H
+#define GAMEITEM_H
+
 #include <iostream>
+
+#pragma once
 using namespace std;
 
 class GameItem
@@ -28,3 +32,5 @@ public:
 		cout << "Fallo de polimorfismo en Hit para GameItem";
 	}
 };
+
+#endif

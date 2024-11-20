@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
 #include <array>
 #include <vector>
@@ -8,14 +9,18 @@
 #include "GameItem.h"
 #include "TileMap.h"
 
+#pragma once
+
 using uint = unsigned int;
+
+class TileMap;
 
 class Game
 {
 public:
 	// Identificadores de las texturas
 	enum TextureName {
-		Tilemap,
+		Background,
 		Blocks,
 		Mario,
 		SuperMario,
@@ -38,11 +43,14 @@ private:
 	// Array con todas las texturas del juego
 	std::array<Texture*, NUM_TEXTURES> textures;
 	// Interruptor para terminar el juego
-	bool seguir;
+	bool exit;
 
 	// Datos del juego
 	int mapOffset;
 	bool lockOffset;
+
+	// Elementos del juego
+	TileMap* tilemap;
 
 	// Objetos del juego
 	vector<GameItem*> gameItems;
@@ -66,8 +74,9 @@ public:
 	static constexpr uint WIN_HEIGHT = 480;
 	static constexpr uint FRAME_RATE = 60;
 	static constexpr uint TILE_SIZE = 16;
+	static constexpr uint RENDER_SCALE_MULT = 2;
 
-	Game();
+	Game(int world);
 	~Game();
 };
 
@@ -76,3 +85,5 @@ Game::getTexture(TextureName name) const
 {
 	return textures[name];
 }
+
+#endif

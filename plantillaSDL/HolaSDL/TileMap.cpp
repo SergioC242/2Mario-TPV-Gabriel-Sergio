@@ -1,5 +1,7 @@
 #include "TileMap.h"
 #include "Texture.h"
+#include "Game.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -9,14 +11,14 @@
 
 using namespace std;
 
-TileMap::TileMap(Texture* tex, Game* g, string worldname) {
+TileMap::TileMap(Texture* tex, Game* g, int worldN) {
 
 	tiletexture = tex;
 	game = g;
 
 	// game->ReturnTexture(Textures::Tilemap)
 
-	string filename = "../assets/maps/" + worldname + ".csv";
+	string filename = "../assets/maps/world" + to_string(worldN) + ".csv";
 	ifstream csvWorld(filename);
 
 	string line;
@@ -60,40 +62,42 @@ TileMap::TileMap(Texture* tex, Game* g, string worldname) {
 }
 
 void TileMap::Render() {
-	int tileSide = Game::TILE_SIZE;
-	int wWidth = Game::WIN_WIDTH;
-	int wHeight = Game::WIN_HEIGHT;
-	int offset = game->returnMapOffset();
+	int offset = game->offset_Return();
 
 	// Primera columna y fila del mapa visible
-	int x0 = offset / tileSide;
-	// Anchura de esa primera columna;
-	int d0 = offset % tileSide;
+	int x0 = offset / (game->TILE_SIZE * game->RENDER_SCALE_MULT);
+	// Anchura de ese espacio detrás de la primera columna;
+	int d0 = offset % (game->TILE_SIZE * game->RENDER_SCALE_MULT);
 
+	int nColsOnScreen = game->WIN_WIDTH / (game->TILE_SIZE * game->RENDER_SCALE_MULT);
 
 	int targetCol = x0;
-	for (int i = 0; i < wWidth + 1; i++) {
-		for (int j = 0; j < wHeight - 1; j++) {
-			if (i + x0 >= nCols) {
-				x0 = nCols - wWidth - 1;
-				game->lockOffset();
+	for (int i = 0; i < nColsOnScreen + 1; i++) {
+		for (int j = 0; j < nRows; j++) {
+			if (x0 + nColsOnScreen >= nCols) {
+				x0 = nCols - (nColsOnScreen) - 1;
+				game->offset_Lock();
 			}
 			int index = tiledata[j][i + x0];
 
 			if (index != -1) {
 				int frameX = index % 9;
 				int frameY = index / 9;
-				int posX = -d0 + i * tileSide;
-				int posY = j * tileSide;
+				SDL_Rect rect;
+				//rect.x = -d0 + i * game->TILE_SIZE;
+				rect.x = -d0 + i * game->TILE_SIZE * game->RENDER_SCALE_MULT;
+				rect.y = j * game->TILE_SIZE * game->RENDER_SCALE_MULT;
+				rect.w = rect.h = game->TILE_SIZE * game->RENDER_SCALE_MULT;
 
-				//cout << i << " " << j << " | " << x0 << " " << targetCol << " " << i + x0 << endl;
-
-				tiletexture->RenderFrame(posX, posY, 2, SDL_FLIP_NONE, frameX, frameY);
+				//cout << index << " " << frameX << "|" << frameY << " " << rect.x << "|" << rect.y << endl;
+				tiletexture->renderFrame(rect, frameY, frameX, SDL_FLIP_NONE);
 			}
 		}
 	}
+	cout << nCols << " " << nColsOnScreen << " " << x0 + nColsOnScreen + 1 << " " << x0 << " " << game->offset_Return() << endl;
 }
 
+/*
 bool TileMap::Hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
@@ -115,6 +119,7 @@ bool TileMap::Hit(const SDL_Rect& rect, bool fromPlayer)
 		}
 	return false;
 }
+*/
 
 int TileMap::ReturnNCols() {
 	return nCols;

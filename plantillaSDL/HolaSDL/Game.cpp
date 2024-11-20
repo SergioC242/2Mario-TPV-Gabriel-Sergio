@@ -17,22 +17,22 @@ const string textureRoot = "../assets/imgs/";
 
 // Especificación de las texturas del juego
 const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
-	TextureSpec{"background.png", 7, 9},
-	{"blocks.png", 1, 6},
-	{"mario.png", 1, 12},
-	{"supermario.png", 1, 22},
-	{"firemario.png", 1, 21},
-	{"goomba.png", 1, 3},
-	{"koopa.png", 1, 4},
-	{"piranha.png", 1, 2},
-	{"shell.png", 1, 2},
+	TextureSpec{"background.png", 9, 7},
+	{"blocks.png", 6, 1},
+	{"mario.png", 12, 1},
+	{"supermario.png", 22, 1},
+	{"firemario.png", 21, 1},
+	{"goomba.png", 3, 1},
+	{"koopa.png", 4, 1},
+	{"piranha.png", 2, 1},
+	{"shell.png", 2, 1},
 	{"mushroom.png", 1, 1},
-	{"plant.png", 1, 4},
-	{"star.png", 1, 4},
+	{"plant.png", 4, 1},
+	{"star.png", 4, 1},
 };
 
-Game::Game()
-	: seguir(true)
+Game::Game(int worldN)
+	: exit(false)
 {
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -48,12 +48,18 @@ Game::Game()
 	if (window == nullptr || renderer == nullptr)
 		throw "Error cargando SDL"s;
 
+	// Color de fondo
+	SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
+
 	// Carga las texturas
 	for (int i = 0; i < NUM_TEXTURES; ++i)
 		textures[i] = new Texture(renderer,
 			(textureRoot + textureSpec[i].name).c_str(),
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
+
+	// Crea el tilemap
+	tilemap = new TileMap(textures[Background], this, worldN);
 
 	// Crea los objetos del juego
 	
@@ -77,7 +83,7 @@ void
 Game::run()
 {
 	// Bucle principal del juego
-	while (seguir) {
+	while (!exit) {
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
@@ -87,6 +93,10 @@ Game::run()
 
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;
+
+		if (!lockOffset) { // AVANCE POR FUERZA BRUTA
+			offset_Add(8);
+		}
 
 		// Duerme el resto de la duraci󮠤el frame
 		if (elapsed < FRAME_RATE)
@@ -100,6 +110,17 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
+	
+	/*
+	bloque de prueba
+	SDL_Rect rect;
+	rect.x = rect.y = 0;
+	rect.h = rect.w = 32;
+	textures[Background]->renderFrame(rect, 0, 1, SDL_FLIP_NONE);
+	*/
+
+	// Renderiza tilemap
+	tilemap->Render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -118,7 +139,7 @@ Game::handleEvents()
 
 	while (SDL_PollEvent(&evento)) {
 		if (evento.type == SDL_QUIT)
-			seguir = false;
+			exit = true;
 		else if (evento.type == SDL_KEYDOWN) {
 			//->handleEvent(evento);
 		}

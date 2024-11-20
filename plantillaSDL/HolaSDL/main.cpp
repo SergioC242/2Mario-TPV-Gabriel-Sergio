@@ -9,7 +9,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	try {
-		Game game;
+		Game game = Game(1);
 		game.run();
 	}
 	catch (const std::string& msg) {
