@@ -3,6 +3,7 @@
 
 #include "checkML.h"
 #include "Texture.h"
+#include "Collision.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include <string>
@@ -29,13 +30,13 @@ public:
 	TileMap(Texture* tex, Game* g, int worldN);
 
 	// Dibujar el mapa
-	void Render();
+	void render();
 
 	// Detectar colisiones
-	//bool Hit(const SDL_Rect& rect, bool fromPlayer);
+	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
-	int ReturnNCols();
-	int ReturnNRows();
+	int returnNCols() { return nCols; }
+	int returnNRows() { return nRows; }
 
 	/*
 	// Destructora

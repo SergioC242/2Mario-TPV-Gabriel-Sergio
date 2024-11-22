@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "GameItem.h"
 #include "TileMap.h"
+#include "Player.h"
 
 #pragma once
 
@@ -22,7 +23,7 @@ public:
 	enum TextureName {
 		Background,
 		Blocks,
-		Mario,
+		SmallMario,
 		SuperMario,
 		FireMario,
 		Goomba,
@@ -51,6 +52,7 @@ private:
 
 	// Elementos del juego
 	TileMap* tilemap;
+	Player* player;
 
 	// Objetos del juego
 	vector<GameItem*> gameItems;
@@ -67,7 +69,8 @@ public:
 	void offset_Lock();
 	bool offset_isLocked();
 
-	Texture* getTexture(TextureName name) const;
+	Texture* getTexture(TextureName name) const { return textures[name]; }
+	TileMap* getTileMap() { return tilemap; }
 
 	// Constante globales
 	static constexpr uint WIN_WIDTH = 544;
@@ -79,11 +82,5 @@ public:
 	Game(int world);
 	~Game();
 };
-
-inline Texture*
-Game::getTexture(TextureName name) const
-{
-	return textures[name];
-}
 
 #endif

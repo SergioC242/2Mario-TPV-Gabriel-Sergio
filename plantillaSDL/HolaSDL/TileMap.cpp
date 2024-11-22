@@ -61,7 +61,7 @@ TileMap::TileMap(Texture* tex, Game* g, int worldN) {
 	//cout << nCols << " " << nRows << endl;
 }
 
-void TileMap::Render() {
+void TileMap::render() {
 	int offset = game->offset_Return();
 
 	// Primera columna y fila del mapa visible
@@ -94,11 +94,10 @@ void TileMap::Render() {
 			}
 		}
 	}
-	cout << nCols << " " << nColsOnScreen << " " << x0 + nColsOnScreen + 1 << " " << x0 << " " << game->offset_Return() << endl;
+	//cout << nCols << " " << nColsOnScreen << " " << x0 + nColsOnScreen + 1 << " " << x0 << " " << game->offset_Return() << endl;
 }
 
-/*
-bool TileMap::Hit(const SDL_Rect& rect, bool fromPlayer)
+Collision TileMap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
 	int row0 = rect.y / 32;
@@ -112,18 +111,10 @@ bool TileMap::Hit(const SDL_Rect& rect, bool fromPlayer)
 		for (int j = col0; j <= col1; j++) {
 			int index = tiledata[i][j];
 			//cout << i << "|" << j << " " << row0 << "|" << col0 << " " << row1 << "|" << col1 << " " << index << " " << tiletexture->ReturnNCols() << " " << index % nCols << endl;
-			if ((index != -1) && ((index % tiletexture->ReturnNCols()) < OBSTACLE_THRESHOLD)) { // Está en las 4 primeras columnas, es obstáculo
+			if ((index != -1) && ((index % tiletexture->getNumColumns()) < OBSTACLE_THRESHOLD)) { // Está en las 4 primeras columnas, es obstáculo
 				//cout << "COLISSION \n";
-				return true;
+				return Collision(true, 0); // direction is irrelevant
 			}
 		}
-	return false;
-}
-*/
-
-int TileMap::ReturnNCols() {
-	return nCols;
-}
-int TileMap::ReturnNRows() {
-	return nRows;
+	return Collision(false, 0); // direction is irrelevant
 }

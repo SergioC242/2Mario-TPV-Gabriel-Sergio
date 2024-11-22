@@ -58,8 +58,9 @@ Game::Game(int worldN)
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
 
-	// Crea el tilemap
+	// Crea los elementos del juego
 	tilemap = new TileMap(textures[Background], this, worldN);
+	player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, 1 * TILE_SIZE, 14 * TILE_SIZE, 3);
 
 	// Crea los objetos del juego
 	
@@ -87,16 +88,19 @@ Game::run()
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
+		
 		update();       // Actualiza el estado de los objetos del juego
 		render();       // Dibuja los objetos en la venta
-		handleEvents(); // Maneja los eventos de la SDL
+		handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)
 
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;
 
+		/*
 		if (!lockOffset) { // AVANCE POR FUERZA BRUTA
 			offset_Add(8);
 		}
+		*/
 
 		// Duerme el resto de la duraci󮠤el frame
 		if (elapsed < FRAME_RATE)
@@ -112,15 +116,18 @@ Game::render() const
 	// Pinta los objetos del juego
 	
 	/*
-	bloque de prueba
+	test
 	SDL_Rect rect;
 	rect.x = rect.y = 0;
 	rect.h = rect.w = 32;
-	textures[Background]->renderFrame(rect, 0, 1, SDL_FLIP_NONE);
+	textures[SmallMario]->renderFrame(rect, 0, 1, SDL_FLIP_NONE);
 	*/
+	
 
 	// Renderiza tilemap
-	tilemap->Render();
+	tilemap->render();
+	// Renderiza player
+	player->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -129,6 +136,7 @@ void
 Game::update()
 {
 	// Actualiza los objetos del juego
+	player->update();
 }
 
 void
@@ -140,8 +148,8 @@ Game::handleEvents()
 	while (SDL_PollEvent(&evento)) {
 		if (evento.type == SDL_QUIT)
 			exit = true;
-		else if (evento.type == SDL_KEYDOWN) {
-			//->handleEvent(evento);
+		else if (evento.type == SDL_KEYDOWN || evento.type == SDL_KEYUP) {
+			player->handleEvent(evento.key);
 		}
 	}
 }
