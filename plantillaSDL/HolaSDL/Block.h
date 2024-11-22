@@ -41,6 +41,7 @@ public:
     void render();
     void update();
     Collision hit(SDL_Rect rect, bool fromPlayer);
+    Point2D returnPos();
 };
 
 #endif

@@ -38,6 +38,10 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
     game = g;
 }
 
+Point2D Block::returnPos() {
+    return position;
+}
+
 void Block::render() {
 
     SDL_Rect rect;
@@ -73,17 +77,19 @@ Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
     blockRect.y = position.Y();
     blockRect.w = blockRect.h = game->TILE_SIZE * 2;
 
-    int direction = 0;
-    if (rect.y + game->TILE_SIZE > blockRect.y) {
-        direction = 1;
+    Collision::CollisionDir dir = Collision::CollisionDir::Middle;
+    
+    if (rect.y < blockRect.y) {
+        dir = Collision::CollisionDir::Above;
     }
-    else if (rect.y < blockRect.y + game->TILE_SIZE) {
-        direction = -1;
+    else if (rect.y > blockRect.y - game->TILE_SIZE * 2) {
+        dir = Collision::CollisionDir::Below;
     }
 
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
-        return Collision(true, direction, Collision::Block);
+        //cout << rect.y << " " << blockRect.y << " " << direction << endl;
+        return Collision(true, dir, Collision::Block);
     }
-    return Collision(false, direction, Collision::Block);
+    return Collision(false, dir, Collision::Block);
 }

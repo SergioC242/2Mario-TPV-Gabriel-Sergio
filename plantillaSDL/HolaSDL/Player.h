@@ -40,6 +40,7 @@ private:
 	SDL_RendererFlip flipH;
 
 	bool onGround;
+	bool jumping;
 
 public:
 	static constexpr uint WALK_POWER = 8;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Collision.h"
+#include "Vector2D.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -34,7 +35,12 @@ public:
 
 	virtual Collision hit(SDL_Rect rect, bool fromPlayer) {
 		cout << "Fallo de polimorfismo en Hit para GameItem" << endl;
-		return Collision(false, 0, Collision::None);
+		return Collision(false, Collision::CollisionDir::Middle, Collision::None);
+	}
+
+	virtual Point2D returnPos() {
+		cout << "Fallo de polimorfismo en returnPos para GameItem" << endl;
+		return Point2D(0, 0);
 	}
 };
 

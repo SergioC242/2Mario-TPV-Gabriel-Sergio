@@ -16,6 +16,7 @@ Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, i
 	currentWalkingFrame = 0;
 	flipH = SDL_FLIP_NONE;
 	onGround = false;
+	jumping = false;
 }
 
 void Player::handleEvent(SDL_KeyboardEvent& E) {
@@ -25,6 +26,7 @@ void Player::handleEvent(SDL_KeyboardEvent& E) {
 		if (onGround) {
 			moveY = JUMP_POWER;
 			onGround = false;
+			jumping = true;
 		}
 	}
 
@@ -102,16 +104,32 @@ void Player::update() {
 		}
 	}
 
-	// cálculo de onGround, decide movimiento vertical
-	if ((!collisionGravity && !collisionVertical) || moveY > 0) {
+	// cálculo de onGround (en el suelo) y jumping (ascendiendo después de un salto)
+
+	if (!collisionGravity && !collisionVertical) {
 		onGround = false;
 	}
 	else {
 		onGround = true;
 	}
 
+	if (moveY <= 0) {
+		jumping = false;
+	}
+	else {
+		onGround = false;
+	}
+
+	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
+	if (objectCollisionVertical.hasCollided()) {
+		cout << objectCollisionVertical.directionV() << endl;
+	}
+ 	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {
+		moveY = 0;
+	}
+
 	// aplicar movimiento VERTICAL
-	if (!onGround) {
+	if (!collisionVertical) {
 		position += Point2D(0, -moveY);
 	}
 	// aplicar movimiento HORIZONTAL
@@ -137,7 +155,7 @@ void Player::update() {
 		game->offset_Add(WALK_POWER);
 	}
 
-	//cout << position.X() << "|" << position.Y() << " " << tileColissionGravity << tileColissionVertical << " " << onGround << " " << moveX << " " << moveY << endl;
+	//cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY << endl;
 }
 
 void Player::render() {

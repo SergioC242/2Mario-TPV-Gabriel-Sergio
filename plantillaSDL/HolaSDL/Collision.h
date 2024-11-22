@@ -12,26 +12,31 @@ enum ObjetoTipo {
 	Goomba,
 	Koopa
 };
+enum CollisionDir {
+	Above,
+	Middle,
+	Below
+};
 
 private:
 	bool collision;
-	int dirV; // -1 = below, 0 = middle, 1 = above
+	CollisionDir dirV;
 	ObjetoTipo tipo;
 
 public:
 	Collision() {
 		collision = false;
-		dirV = 0;
+		dirV = Middle;
 		tipo = None;
 	}
-	Collision(bool c, int d, ObjetoTipo t) {
+	Collision(bool c, CollisionDir d, ObjetoTipo t) {
 		collision = c;
 		dirV = d;
 		tipo = t;
 	}
 
 	bool hasCollided() { return collision; }
-	bool directionV() { return dirV; }
+	CollisionDir directionV() { return dirV; }
 	ObjetoTipo object() { return tipo; }
 };
 

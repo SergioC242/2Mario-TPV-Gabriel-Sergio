@@ -125,12 +125,17 @@ void Game::loadMap(int worldN) {
 
 Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
 	for (int i = 0; i < gameItems.size(); i++) {
-		Collision collision = gameItems[i]->hit(rect, fromPlayer);
-		if (collision.hasCollided()) {
-			return collision;
+		int distX = abs(gameItems[i]->returnPos().Y() - rect.y);
+		int distY = abs(gameItems[i]->returnPos().Y() - rect.y);
+		if (distX < TILE_SIZE * 2 && distY < TILE_SIZE * 2) { // Solo comprueba objetos cerca
+			Collision collision = gameItems[i]->hit(rect, fromPlayer);
+			cout << collision.directionV() << endl;
+			if (collision.hasCollided()) {
+				return collision;
+			}
 		}
 	}
-	return Collision(false, 0, Collision::None);
+	return Collision(false, Collision::CollisionDir::Middle, Collision::None);
 }
 
 Game::~Game()
