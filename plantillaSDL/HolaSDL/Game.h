@@ -64,6 +64,8 @@ public:
 	void render() const;
 	void handleEvents();
 
+	void loadMap(int worldN);
+
 	int offset_Return();
 	void offset_Add(int n);
 	void offset_Lock();
@@ -79,7 +81,7 @@ public:
 	static constexpr uint TILE_SIZE = 16;
 	static constexpr uint RENDER_SCALE_MULT = 2;
 
-	Game(int world);
+	Game(int worldN);
 	~Game();
 };
 

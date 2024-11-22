@@ -73,44 +73,16 @@ void Player::update() {
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool tileColissionGravity = game->getTileMap()->hit(predictedRect, true).HasCollided();
-	//Collision blockColissionGravity = game->checkCollision(predictedRect, true);
-	//Collision enemyColissionGravity = game->CheckEnemyCollision(predictedRect, true);
-	//cout << enemyColissionGravity.DirectionV() << " ";
+	bool tileColissionGravity = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool tileColissionVertical = game->getTileMap()->hit(predictedRect, true).HasCollided();
-	//Collision blockColissionVertical = game->checkCollision(predictedRect, true);
-	//Collision enemyColissionVertical = game->CheckEnemyCollision(predictedRect, true);
-	//cout << enemyColissionVertical.DirectionV() << " ";
+	bool tileColissionVertical = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool tileColissionHorizontal = game->getTileMap()->hit(predictedRect, true).HasCollided();
-	//Collision blockColissionHorizontal = game->checkCollision(predictedRect, true);
-	//Collision enemyColissionHorizontal = game->CheckEnemyCollision(predictedRect, true);
-	//cout << enemyColissionHorizontal.DirectionV() << endl;
+	bool tileColissionHorizontal = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
 
-
-	/*
-	* if (tileColissionGravity) cout << "grav colission T" << endl;
-	if (tileColissionVertical) cout << "vert colission T" << endl;
-	if (tileColissionHorizontal) cout << "hori colission T" << endl;
-	if (blockColissionGravity.HasCollided()) cout << "grav colission B" << endl;
-	if (blockColissionVertical.HasCollided()) cout << "vert colission B" << endl;
-	if (blockColissionHorizontal.HasCollided()) cout << "hori colission B" << endl;
-	*/
-
-	// movimiento VERTICAL
-	/*
-	if (enemyColissionGravity.DirectionV() || enemyColissionVertical.DirectionV() || enemyColissionHorizontal.DirectionV()) {
-		moveY = jumpPower;
-		onGround = false;
-	}
-	else if (enemyColissionGravity.HasCollided() || enemyColissionVertical.HasCollided() || enemyColissionHorizontal.HasCollided()) {
-		vidas--;
-	}*/
-
+	// cálculo de onGround, decide movimiento vertical
 	if ((!tileColissionGravity && !tileColissionVertical) || moveY > 0) {
 		onGround = false;
 	}
@@ -118,11 +90,12 @@ void Player::update() {
 		onGround = true;
 	}
 
+	// aplicar movimiento VERTICAL
 	if (!onGround) {
 		position += Point2D(0, -moveY);
 	}
-	// movimiento HORIZONTAL
-	if (!tileColissionHorizontal) { //(!tileColissionHorizontal && !blockColissionHorizontal.HasCollided()) {
+	// aplicar movimiento HORIZONTAL
+	if (!tileColissionHorizontal) {
 		if (!(position.X() - game->offset_Return() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde de la pantalla
 			position += Point2D(moveX, 0);
 		}
@@ -144,7 +117,7 @@ void Player::update() {
 		game->offset_Add(WALK_POWER);
 	}
 
-	cout << position.X() << "|" << position.Y() << " " << tileColissionGravity << tileColissionVertical << " " << onGround << " " << moveX << " " << moveY << endl;
+	//cout << position.X() << "|" << position.Y() << " " << tileColissionGravity << tileColissionVertical << " " << onGround << " " << moveX << " " << moveY << endl;
 }
 
 void Player::render() {

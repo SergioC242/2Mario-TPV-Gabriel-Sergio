@@ -1,4 +1,7 @@
 ﻿#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
 #include "Game.h"
 
@@ -59,11 +62,68 @@ Game::Game(int worldN)
 			textureSpec[i].numColumns);
 
 	// Crea los elementos del juego
-	tilemap = new TileMap(textures[Background], this, worldN);
-	player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, 1 * TILE_SIZE, 14 * TILE_SIZE, 3);
-
+	//tilemap = new TileMap(textures[Background], this, worldN);
+	//player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, 1 * TILE_SIZE, 14 * TILE_SIZE, 3);
+	loadMap(worldN);
 	// Crea los objetos del juego
 	
+}
+
+void Game::loadMap(int worldN) {
+
+	tilemap = new TileMap(textures[Background], this, worldN);
+
+	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
+	ifstream txtWorld(filename);
+
+	char tipo;
+	float posX;
+	float posY;
+	float spawnPosX;
+	float spawnPosY;
+	char atrib1;
+	char atrib2;
+	string line;
+	while (getline(txtWorld, line)) {
+		//cout << line << endl;
+		istringstream l(line);
+		l >> tipo;
+		l >> posX;
+		l >> posY;
+		spawnPosX = (posX - 1) * TILE_SIZE;
+		spawnPosY = (posY - 2) * TILE_SIZE;
+		if (tipo == 'M') { // mario: 3 atributos
+			l >> atrib1;
+			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, spawnPosX, spawnPosY, atrib1);
+		}
+		else if (tipo == 'B') { // bloque: 4 atributos
+			l >> atrib1;
+			l >> atrib2;
+			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//Block* block = new Block(ReturnTexture(Textures::Blocks), this, atrib1, atrib2, spawnPosX, spawnPosY);
+			//blocks.push_back(block);
+		}
+		else if (tipo == 'G') { // goomba: 2 atributos
+			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
+			cout << "GOOMBA - " << posX << "|" << posY << "\n";
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//Goomba* goomba = new Goomba(ReturnTexture(Textures::Goomba), this, windowW, windowH, spawnPosX, spawnPosY);
+			//goombas.push_back(goomba);
+		}
+		else if (tipo == 'K') { // koopa: 2 atributos
+			spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
+			cout << "KOOPA - " << posX << "|" << posY << "\n";
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//Koopa* koopa = new Koopa(ReturnTexture(Textures::Koopa), this, windowW, windowH, spawnPosX, spawnPosY);
+			//koopas.push_back(koopa);
+		}
+
+		cout << "------------------\n";
+	}
+	cout << "|                |\n" << "------------------\n";
 }
 
 Game::~Game()
