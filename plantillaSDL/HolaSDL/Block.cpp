@@ -71,15 +71,19 @@ Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
     SDL_Rect blockRect;
     blockRect.x = position.X();
     blockRect.y = position.Y();
-    blockRect.w = blockRect.h = game->TILE_SIZE;
+    blockRect.w = blockRect.h = game->TILE_SIZE * 2;
 
-    bool above = false;
-    if (rect.x < blockRect.x) {
-        above = true;
+    int direction = 0;
+    if (rect.y + game->TILE_SIZE > blockRect.y) {
+        direction = 1;
     }
+    else if (rect.y < blockRect.y + game->TILE_SIZE) {
+        direction = -1;
+    }
+
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
-        return Collision(true, above, Collision::Block);
+        return Collision(true, direction, Collision::Block);
     }
-    return Collision(false, above, Collision::Block);
+    return Collision(false, direction, Collision::Block);
 }

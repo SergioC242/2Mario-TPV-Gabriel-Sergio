@@ -109,11 +109,14 @@ Collision TileMap::hit(const SDL_Rect& rect, bool fromPlayer)
 
 	for (int i = row0; i <= row1; i++)
 		for (int j = col0; j <= col1; j++) {
-			int index = tiledata[i][j];
-			//cout << i << "|" << j << " " << row0 << "|" << col0 << " " << row1 << "|" << col1 << " " << index << " " << tiletexture->ReturnNCols() << " " << index % nCols << endl;
-			if ((index != -1) && ((index % tiletexture->getNumColumns()) < OBSTACLE_THRESHOLD)) { // Está en las 4 primeras columnas, es obstáculo
-				//cout << "COLISSION \n";
-				return Collision(true, 0, Collision::Tilemap); // direction is irrelevant
+			if (!(row0 < 0 || row0 > nRows - 1 || col0 < 0 || col0 > nCols - 1 ||
+				row1 < 0 || row1 > nRows - 1 || col1 < 0 || col1 > nCols - 1)) { // No comprueba si se saldría del tilemap
+				int index = tiledata[i][j];
+				//cout << i << "|" << j << " " << row0 << "|" << col0 << " " << row1 << "|" << col1 << " " << index << " " << tiletexture->ReturnNCols() << " " << index % nCols << endl;
+				if ((index != -1) && ((index % tiletexture->getNumColumns()) < OBSTACLE_THRESHOLD)) { // Está en las 4 primeras columnas, es obstáculo
+					//cout << "COLISSION \n";
+					return Collision(true, 0, Collision::Tilemap); // direction is irrelevant
+				}
 			}
 		}
 	return Collision(false, 0, Collision::Tilemap); // direction is irrelevant

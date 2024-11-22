@@ -73,17 +73,37 @@ void Player::update() {
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool tileCollisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	bool collisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->checkCollisions(predictedRect, true);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool tileCollisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	bool collisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->checkCollisions(predictedRect, true);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool tileCollisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, true);
+
+	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical
+	if (objectCollisionGravity.hasCollided()) {
+		if (objectCollisionGravity.object() == Collision::Block) {
+			collisionGravity = true;
+		}
+	}
+	else if (objectCollisionVertical.hasCollided()) {
+		if (objectCollisionVertical.object() == Collision::Block) {
+			collisionHorizontal = true;
+		}
+	}
+	else if (objectCollisionHorizontal.hasCollided()) {
+		if (objectCollisionHorizontal.object() == Collision::Block) {
+			collisionHorizontal = true;
+		}
+	}
 
 	// cálculo de onGround, decide movimiento vertical
-	if ((!tileCollisionGravity && !tileCollisionVertical) || moveY > 0) {
+	if ((!collisionGravity && !collisionVertical) || moveY > 0) {
 		onGround = false;
 	}
 	else {
@@ -95,7 +115,7 @@ void Player::update() {
 		position += Point2D(0, -moveY);
 	}
 	// aplicar movimiento HORIZONTAL
-	if (!tileCollisionHorizontal) {
+	if (!collisionHorizontal) {
 		if (!(position.X() - game->offset_Return() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde de la pantalla
 			position += Point2D(moveX, 0);
 		}

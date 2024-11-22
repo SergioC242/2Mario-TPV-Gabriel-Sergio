@@ -65,6 +65,7 @@ public:
 	void handleEvents();
 
 	void loadMap(int worldN);
+	Collision checkCollisions(SDL_Rect rect, bool fromPlayer);
 
 	int offset_Return();
 	void offset_Add(int n);

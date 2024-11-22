@@ -6,6 +6,7 @@ class Collision
 {
 public: 
 enum ObjetoTipo {
+	None,
 	Tilemap,
 	Block,
 	Goomba,
@@ -18,6 +19,11 @@ private:
 	ObjetoTipo tipo;
 
 public:
+	Collision() {
+		collision = false;
+		dirV = 0;
+		tipo = None;
+	}
 	Collision(bool c, int d, ObjetoTipo t) {
 		collision = c;
 		dirV = d;

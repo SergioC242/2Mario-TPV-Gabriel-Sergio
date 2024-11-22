@@ -123,6 +123,16 @@ void Game::loadMap(int worldN) {
 	cout << "|                |\n" << "------------------\n";
 }
 
+Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
+	for (int i = 0; i < gameItems.size(); i++) {
+		Collision collision = gameItems[i]->hit(rect, fromPlayer);
+		if (collision.hasCollided()) {
+			return collision;
+		}
+	}
+	return Collision(false, 0, Collision::None);
+}
+
 Game::~Game()
 {
 	// Elimina los objetos del juego
