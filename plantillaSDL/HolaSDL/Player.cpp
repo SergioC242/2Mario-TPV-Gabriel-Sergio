@@ -73,17 +73,17 @@ void Player::update() {
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool tileColissionGravity = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
+	bool tileCollisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool tileColissionVertical = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
+	bool tileCollisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool tileColissionHorizontal = game->getTileMap()->hit(predictedRect, true).HasCollided(); // Dirección es irrelevante para tilemap
+	bool tileCollisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
 
 	// cálculo de onGround, decide movimiento vertical
-	if ((!tileColissionGravity && !tileColissionVertical) || moveY > 0) {
+	if ((!tileCollisionGravity && !tileCollisionVertical) || moveY > 0) {
 		onGround = false;
 	}
 	else {
@@ -95,7 +95,7 @@ void Player::update() {
 		position += Point2D(0, -moveY);
 	}
 	// aplicar movimiento HORIZONTAL
-	if (!tileColissionHorizontal) {
+	if (!tileCollisionHorizontal) {
 		if (!(position.X() - game->offset_Return() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde de la pantalla
 			position += Point2D(moveX, 0);
 		}

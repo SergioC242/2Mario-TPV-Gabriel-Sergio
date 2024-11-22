@@ -16,20 +16,20 @@ private:
 	};
 
 public:
-	virtual void Update() {
-		cout << "Fallo de polimorfismo en Update para GameItem";
+	virtual void update() {
+		cout << "Fallo de polimorfismo en Update para GameItem" << endl;
 	}
 
-	virtual void Render() {
-		cout << "Fallo de polimorfismo en Render para GameItem";
+	virtual void render() {
+		cout << "Fallo de polimorfismo en Render para GameItem" << endl;
 	}
 
-	virtual void HandleEvents() {
-		cout << "Fallo de polimorfismo en HandleEvents para GameItem";
+	virtual void handleEvents() {
+		cout << "Fallo de polimorfismo en HandleEvents para GameItem" << endl;
 	}
 
-	virtual void Hit() {
-		cout << "Fallo de polimorfismo en Hit para GameItem";
+	virtual void hit() {
+		cout << "Fallo de polimorfismo en Hit para GameItem" << endl;
 	}
 };
 

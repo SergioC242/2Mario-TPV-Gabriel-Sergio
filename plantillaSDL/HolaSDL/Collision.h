@@ -4,19 +4,29 @@
 #pragma once
 class Collision
 {
+public: 
+enum ObjetoTipo {
+	Tilemap,
+	Block,
+	Goomba,
+	Koopa
+};
+
 private:
 	bool collision;
-	int directionV; // -1 = below, 0 = middle, 1 = above
+	int dirV; // -1 = below, 0 = middle, 1 = above
+	ObjetoTipo tipo;
 
 public:
-	Collision(bool c, int dir) {
+	Collision(bool c, int d, ObjetoTipo t) {
 		collision = c;
-		directionV = dir;
+		dirV = d;
+		tipo = t;
 	}
 
-	bool HasCollided() { return collision; }
-	bool DirectionV() { return directionV; }
-	//bool Object() { return /*object*/; }
+	bool hasCollided() { return collision; }
+	bool directionV() { return dirV; }
+	ObjetoTipo object() { return tipo; }
 };
 
 #endif

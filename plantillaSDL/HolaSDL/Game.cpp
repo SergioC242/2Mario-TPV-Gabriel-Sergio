@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "Game.h"
+#include "Block.h"
 
 using namespace std;
 
@@ -62,11 +63,7 @@ Game::Game(int worldN)
 			textureSpec[i].numColumns);
 
 	// Crea los elementos del juego
-	//tilemap = new TileMap(textures[Background], this, worldN);
-	//player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, 1 * TILE_SIZE, 14 * TILE_SIZE, 3);
 	loadMap(worldN);
-	// Crea los objetos del juego
-	
 }
 
 void Game::loadMap(int worldN) {
@@ -90,8 +87,8 @@ void Game::loadMap(int worldN) {
 		l >> tipo;
 		l >> posX;
 		l >> posY;
-		spawnPosX = (posX - 1) * TILE_SIZE;
-		spawnPosY = (posY - 2) * TILE_SIZE;
+		spawnPosX = (posX - 1) * TILE_SIZE * 2;
+		spawnPosY = (posY - 2) * TILE_SIZE * 2;
 		if (tipo == 'M') { // mario: 3 atributos
 			l >> atrib1;
 			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
@@ -103,8 +100,8 @@ void Game::loadMap(int worldN) {
 			l >> atrib2;
 			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			//Block* block = new Block(ReturnTexture(Textures::Blocks), this, atrib1, atrib2, spawnPosX, spawnPosY);
-			//blocks.push_back(block);
+			Block* block = new Block(textures[Blocks], this, atrib1, atrib2, spawnPosX, spawnPosY);
+			gameItems.push_back(block);
 		}
 		else if (tipo == 'G') { // goomba: 2 atributos
 			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
@@ -183,11 +180,14 @@ Game::render() const
 	textures[SmallMario]->renderFrame(rect, 0, 1, SDL_FLIP_NONE);
 	*/
 	
-
 	// Renderiza tilemap
 	tilemap->render();
 	// Renderiza player
 	player->render();
+	// Renderiza objetos del mapa
+	for (int i = 0; i < gameItems.size(); i++) {
+		gameItems[i]->render();
+	}
 
 	SDL_RenderPresent(renderer);
 }
@@ -195,8 +195,12 @@ Game::render() const
 void
 Game::update()
 {
-	// Actualiza los objetos del juego
+	// Actualiza player
 	player->update();
+	// Actualiza los objetos del juego
+	for (int i = 0; i < gameItems.size(); i++) {
+		gameItems[i]->update();
+	}
 }
 
 void

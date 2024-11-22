@@ -113,8 +113,8 @@ Collision TileMap::hit(const SDL_Rect& rect, bool fromPlayer)
 			//cout << i << "|" << j << " " << row0 << "|" << col0 << " " << row1 << "|" << col1 << " " << index << " " << tiletexture->ReturnNCols() << " " << index % nCols << endl;
 			if ((index != -1) && ((index % tiletexture->getNumColumns()) < OBSTACLE_THRESHOLD)) { // Está en las 4 primeras columnas, es obstáculo
 				//cout << "COLISSION \n";
-				return Collision(true, 0); // direction is irrelevant
+				return Collision(true, 0, Collision::Tilemap); // direction is irrelevant
 			}
 		}
-	return Collision(false, 0); // direction is irrelevant
+	return Collision(false, 0, Collision::Tilemap); // direction is irrelevant
 }
