@@ -129,8 +129,11 @@ void Player::update() {
 	}
 
 	// aplicar movimiento VERTICAL
-	if (!collisionVertical) {
+	if (!collisionVertical && !objectCollisionVertical.hasCollided()) {
 		position += Point2D(0, -moveY);
+	}
+	else {
+		moveY = 0;
 	}
 	// aplicar movimiento HORIZONTAL
 	if (!collisionHorizontal) {
