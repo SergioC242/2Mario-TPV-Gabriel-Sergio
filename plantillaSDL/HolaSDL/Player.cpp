@@ -97,9 +97,9 @@ void Player::update() {
 		if (objectCollisionGravity.object() == Collision::Block) {
 			collisionGravity = true;
 		}
-		else if (objectCollisionGravity.object() == Collision::Goomba) {
+		else if (objectCollisionGravity.object() == Collision::Goomba || objectCollisionGravity.object() == Collision::Koopa) {
 			if (objectCollisionGravity.directionV() == Collision::Above) {
-				// bounce, enemy kills itself
+				// bounce, enemy handles the rest
 				bounce();
 				collisionVertical = false;
 			}
@@ -112,9 +112,9 @@ void Player::update() {
 		if (objectCollisionVertical.object() == Collision::Block) {
 			collisionVertical = true;
 		}
-		else if (objectCollisionVertical.object() == Collision::Goomba) {
+		else if (objectCollisionVertical.object() == Collision::Goomba || objectCollisionVertical.object() == Collision::Koopa) {
 			if (objectCollisionVertical.directionV() == Collision::Above) {
-				// bounce, enemy kills itself
+				// bounce, enemy handles the rest
 				bounce();
 				collisionVertical = false;
 			}
