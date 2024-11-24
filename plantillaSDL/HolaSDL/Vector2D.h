@@ -56,6 +56,6 @@ public:
 	}
 };
 
-using Point2D = Vector2D<int>;
+using Point2D = Vector2D<float>;
 
 #endif

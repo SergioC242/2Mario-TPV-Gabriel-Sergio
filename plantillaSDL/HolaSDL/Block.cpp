@@ -38,10 +38,6 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
     game = g;
 }
 
-Point2D Block::returnPos() {
-    return position;
-}
-
 void Block::render() {
 
     SDL_Rect rect;

@@ -87,20 +87,48 @@ void Player::update() {
 	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
 	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, true);
 
+	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
+	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {
+		moveY = 0;
+	}
+
 	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical
 	if (objectCollisionGravity.hasCollided()) {
 		if (objectCollisionGravity.object() == Collision::Block) {
 			collisionGravity = true;
 		}
+		else if (objectCollisionGravity.object() == Collision::Goomba) {
+			if (objectCollisionGravity.directionV() == Collision::Above) {
+				// bounce, enemy kills itself
+				bounce();
+				collisionVertical = false;
+			}
+			else {
+				// take damage
+			}
+		}
 	}
 	else if (objectCollisionVertical.hasCollided()) {
 		if (objectCollisionVertical.object() == Collision::Block) {
-			collisionHorizontal = true;
+			collisionVertical = true;
+		}
+		else if (objectCollisionVertical.object() == Collision::Goomba) {
+			if (objectCollisionVertical.directionV() == Collision::Above) {
+				// bounce, enemy kills itself
+				bounce();
+				collisionVertical = false;
+			}
+			else {
+				// take damage
+			}
 		}
 	}
 	else if (objectCollisionHorizontal.hasCollided()) {
 		if (objectCollisionHorizontal.object() == Collision::Block) {
 			collisionHorizontal = true;
+		}
+		else if (objectCollisionHorizontal.object() == Collision::Goomba) {
+			// take damage
 		}
 	}
 
@@ -120,13 +148,8 @@ void Player::update() {
 		onGround = false;
 	}
 
-	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
- 	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {
-		moveY = 0;
-	}
-
 	// aplicar movimiento VERTICAL
-	if (!collisionVertical && !objectCollisionVertical.hasCollided()) {
+	if (!collisionVertical) {
 		position += Point2D(0, -moveY);
 	}
 	else {
@@ -189,4 +212,10 @@ void Player::render() {
 			currentTexture->renderFrame(rect, 0, 0, flipH);
 		}
 	}
+}
+
+void Player::bounce() {
+	moveY = JUMP_POWER / 2;
+	onGround = false;
+	jumping = true;
 }

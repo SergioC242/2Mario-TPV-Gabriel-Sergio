@@ -5,6 +5,7 @@
 
 #include "Game.h"
 #include "Block.h"
+#include "Goomba.h"
 
 using namespace std;
 
@@ -110,14 +111,14 @@ void Game::loadMap(int worldN) {
 			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
 			cout << "GOOMBA - " << posX << "|" << posY << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			//Goomba* goomba = new Goomba(ReturnTexture(Textures::Goomba), this, windowW, windowH, spawnPosX, spawnPosY);
-			//goombas.push_back(goomba);
+			Goomba* goomba = new Goomba(textures[GoombaTex], this, spawnPosX, spawnPosY);
+			gameItems.push_back(goomba);
 		}
 		else if (tipo == 'K') { // koopa: 2 atributos
 			spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
 			cout << "KOOPA - " << posX << "|" << posY << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			//Koopa* koopa = new Koopa(ReturnTexture(Textures::Koopa), this, windowW, windowH, spawnPosX, spawnPosY);
+			//Koopa* koopa = new Koopa(ReturnTexture(Textures::KoopaTex), this, windowW, windowH, spawnPosX, spawnPosY);
 			//koopas.push_back(koopa);
 		}
 

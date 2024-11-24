@@ -43,7 +43,7 @@ public:
     void update();
     void act();
     Collision hit(SDL_Rect rect, bool fromPlayer);
-    Point2D returnPos();
+    Point2D returnPos() { return position; }
 };
 
 #endif

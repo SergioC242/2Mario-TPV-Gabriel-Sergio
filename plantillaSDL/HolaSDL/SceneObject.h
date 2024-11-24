@@ -10,7 +10,6 @@
 
 #pragma once
 using namespace std;
-
 class Game;
 
 class SceneObject : public GameObject

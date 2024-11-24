@@ -1,11 +1,11 @@
 #include "Vector2D.h"
 #include "Texture.h"
+#include "Enemy.h"
 #include "Game.h"
-
 
 #pragma once
 class TileMap;
-class Goomba : public GameItem
+class Goomba : public Enemy
 {
 private:
 	Vector2D<float> position;
@@ -13,20 +13,22 @@ private:
 	Texture* texture;
 	Game* game;
 	int frame;
+	int moveX;
+	int moveY;
 	bool alive;
 	bool onGround;
 	bool active;
 
 public: 
-	static constexpr uint gravity = 8;
-	static constexpr uint moveX = 8;
+	static constexpr uint WALK_POWER = 4;
+	static constexpr uint GRAVITY = 2;
+	static constexpr uint MAX_FALL_SPEED = 8;
 
-
-	Goomba(Texture* tex, Game* g /*, int wWidth, int wHeight*/, int posX, int posY);
-	void Update();
-	void Render();
-	Collision Hit(SDL_Rect rect, bool fromPlayer);
-	void Die();
-
+	Goomba(Texture* tex, Game* g, int posX, int posY);
+	void update();
+	void render();
+	Collision hit(SDL_Rect rect, bool fromPlayer);
+	void die();
+	Vector2D<float> returnPos() { return position; }
 };
 
