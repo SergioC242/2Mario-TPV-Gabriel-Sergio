@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "Texture.h"
 #include "Collision.h"
+#include "Mushroom.h"
 using namespace std;
 
 //constructor
@@ -30,6 +31,7 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
     }
 
     if (a == 'P') {
+        
         action = Action::Potenciador;
     }
     else if (a == 'C') {
@@ -85,9 +87,12 @@ void Block::update() {
 void Block::act() {
     string ac;
     if (action == Action::Moneda) {
+        cout << "no mush2" << endl;
         game->addScore(200);
     }
     else if (action == Action::Potenciador) {
+        cout << "mush2" << endl;
+        game->createMushrooms(position.X(), position.Y());
     }
 }
 

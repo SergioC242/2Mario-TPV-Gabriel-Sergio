@@ -7,6 +7,7 @@
 #include "Block.h"
 #include "Goomba.h"
 #include "Koopa.h"
+#include "Mushroom.h"
 
 using namespace std;
 
@@ -104,9 +105,11 @@ void Game::loadMap(int worldN) {
 			l >> atrib1;
 			l >> atrib2;
 			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl; 
 			Block* block = new Block(textures[Blocks], this, atrib1, atrib2, spawnPosX, spawnPosY);
 			gameItems.push_back(block);
+			// if atrb 2 = p { mushroom(puntero al bloque) pushback
+			
 		}
 		else if (tipo == 'G') { // goomba: 2 atributos
 			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
@@ -208,6 +211,9 @@ Game::render() const
 	for (int i = 0; i < gameItems.size(); i++) {
 		gameItems[i]->render();
 	}
+	for (int i = 0; i < activeItems.size(); i++) {
+		activeItems[i]->render();
+	}
 
 	SDL_RenderPresent(renderer);
 }
@@ -220,6 +226,9 @@ Game::update()
 	// Actualiza los objetos del juego
 	for (int i = 0; i < gameItems.size(); i++) {
 		gameItems[i]->update();
+	}
+	for (int i = 0; i < activeItems.size(); i++) {
+		activeItems[i]->update();
 	}
 }
 
@@ -238,6 +247,12 @@ Game::handleEvents()
 	}
 }
 
+void Game::createMushrooms(int x,  int y) {
+	cout << "mush" << endl;
+		Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - 32);
+		activeItems.push_back(mushroom);
+	
+}
 int 
 Game::offset_Return() {
 	return mapOffset;
