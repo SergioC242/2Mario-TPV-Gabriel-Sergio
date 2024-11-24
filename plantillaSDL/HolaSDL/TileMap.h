@@ -4,6 +4,7 @@
 #include "checkML.h"
 #include "Texture.h"
 #include "Collision.h"
+#include "SceneObject.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include <string>
@@ -15,7 +16,8 @@ using namespace std;
 
 class Game;
 
-class TileMap {
+class TileMap : public SceneObject
+{
 
 private:
 	Game* game;

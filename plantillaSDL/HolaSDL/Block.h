@@ -4,7 +4,7 @@
 #include "Vector2D.h"
 #include "Texture.h"
 #include "Game.h"
-#include "GameItem.h"
+#include "SceneObject.h"
 #include <iostream>
 
 #include "SDL.h"
@@ -12,7 +12,7 @@
 
 #pragma once
 
-class Block : public GameItem {
+class Block : public SceneObject {
 private:
     enum class Tipo {
         Ladrillo,

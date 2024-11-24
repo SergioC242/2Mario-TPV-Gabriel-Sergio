@@ -1,5 +1,6 @@
 #include "Vector2D.h"
 #include "Texture.h"
+#include "GameObject.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include <array>
@@ -13,7 +14,7 @@ class Game;
 
 using uint = unsigned int;
 
-class Player
+class Player : public GameObject
 {
 private:
 

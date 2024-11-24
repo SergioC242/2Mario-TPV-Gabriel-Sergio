@@ -6,7 +6,8 @@
 #include <SDL.h>
 
 #include "Texture.h"
-#include "GameItem.h"
+#include "GameObject.h"
+#include "SceneObject.h"
 #include "TileMap.h"
 #include "Player.h"
 
@@ -55,7 +56,7 @@ private:
 	Player* player;
 
 	// Objetos del juego
-	vector<GameItem*> gameItems;
+	vector<SceneObject*> gameItems;
 
 public:
 	void run();

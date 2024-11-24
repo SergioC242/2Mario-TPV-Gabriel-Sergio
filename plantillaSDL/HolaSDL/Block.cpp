@@ -120,7 +120,7 @@ Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
 
-        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below && fromPlayer && ) {
+        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below && fromPlayer) {
             tipo = Tipo::Vacio;
             hitAnimFrame = true;
             act();
