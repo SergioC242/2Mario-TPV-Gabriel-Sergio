@@ -53,6 +53,7 @@ private:
 	// Datos del juego
 	int mapOffset;
 	bool lockOffset;
+	int score;
 
 	// Elementos del juego
 	TileMap* tilemap;
@@ -75,6 +76,8 @@ public:
 	void offset_Add(int n);
 	void offset_Lock();
 	bool offset_isLocked();
+
+	void addScore(int n);
 
 	Texture* getTexture(TextureName name) const { return textures[name]; }
 	TileMap* getTileMap() { return tilemap; }

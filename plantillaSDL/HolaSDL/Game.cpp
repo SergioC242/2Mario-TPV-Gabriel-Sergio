@@ -252,3 +252,9 @@ bool
 Game::offset_isLocked() {
 	return lockOffset;
 }
+
+void
+Game::addScore(int n) {
+	score += n;
+	cout << "SCORE: " << to_string(score) << endl;
+}

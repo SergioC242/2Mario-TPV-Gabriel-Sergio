@@ -89,12 +89,10 @@ void Block::update() {
 void Block::act() {
     string ac;
     if (action == Action::Moneda) {
-        ac = "moneda";
+        game->addScore(200);
     }
     else if (action == Action::Potenciador) {
-        ac = "potenciador";
     }
-    cout << "bloque golpeado con accion " << ac << endl;
 }
 
 Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
