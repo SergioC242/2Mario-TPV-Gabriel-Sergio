@@ -4,7 +4,8 @@
 
 
 #pragma once
-class Goomba
+class TileMap;
+class Goomba : public GameItem
 {
 private:
 	Vector2D<float> position;
@@ -19,5 +20,13 @@ private:
 public: 
 	static constexpr uint gravity = 8;
 	static constexpr uint moveX = 8;
+
+
+	Goomba(Texture* tex, Game* g /*, int wWidth, int wHeight*/, int posX, int posY);
+	void Update();
+	void Render();
+	Collision Hit(SDL_Rect rect, bool fromPlayer);
+	void Die();
+
 };
 
