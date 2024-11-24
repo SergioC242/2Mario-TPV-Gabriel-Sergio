@@ -30,9 +30,12 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"koopa.png", 4, 1},
 	{"piranha.png", 2, 1},
 	{"shell.png", 2, 1},
+	{"coin.png", 4, 1},
 	{"mushroom.png", 1, 1},
 	{"plant.png", 4, 1},
 	{"star.png", 4, 1},
+	{"lift.png", 1, 1},
+	{"numbers.png", 10, 1}
 };
 
 Game::Game(int worldN)

@@ -31,9 +31,12 @@ public:
 		Koopa,
 		Piranha,
 		Shell,
+		Coin,
 		Mushroom,
 		Plant,
 		Star,
+		Lift,
+		Numbers,
 		NUM_TEXTURES
 	};
 
