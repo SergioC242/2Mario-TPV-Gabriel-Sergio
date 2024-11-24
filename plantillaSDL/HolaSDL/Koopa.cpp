@@ -166,4 +166,5 @@ Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
 
 void Koopa::die() {
 	cout << "Koopa was killed" << endl;
+	cout << "Debe llamar a un método 'spawnshell' en Game y luego destruirse" << endl;
 }
