@@ -70,7 +70,7 @@ void Player::update() {
 	int frameHeight = currentTexture->getFrameHeight();
 	SDL_Rect predictedRect;
 	predictedRect.w = frameWidth;
-	predictedRect.h = frameHeight;
+	predictedRect.h = game->TILE_SIZE; // El sprite de mario es 36px pero un bloque es 32px
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
