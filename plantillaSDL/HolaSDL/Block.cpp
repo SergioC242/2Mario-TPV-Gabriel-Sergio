@@ -32,7 +32,7 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
     if (a == 'P') {
         action = Action::Potenciador;
     }
-    else if (a == 'M') {
+    else if (a == 'C') {
         action = Action::Moneda;
     }
     game = g;
@@ -47,8 +47,8 @@ void Block::render() {
     SDL_Rect rect;
     rect.x = position.X() - game->offset_Return();
     rect.y = position.Y();
-    rect.h = game->TILE_SIZE*2;
-    rect.w = game->TILE_SIZE*2;
+    rect.h = game->TILE_SIZE;
+    rect.w = game->TILE_SIZE;
 
     if (hitAnimFrame) {
         rect.y = position.Y() - (game->TILE_SIZE / 2);
@@ -86,28 +86,44 @@ void Block::update() {
     }
 }
 
+void Block::act() {
+    string ac;
+    if (action == Action::Moneda) {
+        ac = "moneda";
+    }
+    else if (action == Action::Potenciador) {
+        ac = "potenciador";
+    }
+    cout << "bloque golpeado con accion " << ac << endl;
+}
+
 Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
 
     SDL_Rect blockRect;
     blockRect.x = position.X();
     blockRect.y = position.Y();
-    blockRect.w = blockRect.h = game->TILE_SIZE * 2;
+    blockRect.w = blockRect.h = game->TILE_SIZE;
+    if (tipo == Tipo::Pregunta) {
+        // Los bloques pregunta colisionan un poco más abajo, dando prioridad sobre otros bloques a la misma altura
+        blockRect.h += 8; 
+    }
 
     Collision::CollisionDir dir = Collision::CollisionDir::Middle;
     
     if (rect.y < blockRect.y) {
         dir = Collision::CollisionDir::Above;
     }
-    else if (rect.y > blockRect.y - game->TILE_SIZE * 2) {
+    else if (rect.y > blockRect.y - game->TILE_SIZE) {
         dir = Collision::CollisionDir::Below;
     }
 
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
 
-        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below) {
+        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below && fromPlayer && ) {
             tipo = Tipo::Vacio;
             hitAnimFrame = true;
+            act();
         }
 
         return Collision(true, dir, Collision::Block);

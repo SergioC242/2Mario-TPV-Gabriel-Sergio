@@ -87,8 +87,8 @@ void Game::loadMap(int worldN) {
 		l >> tipo;
 		l >> posX;
 		l >> posY;
-		spawnPosX = (posX - 1) * TILE_SIZE * 2;
-		spawnPosY = (posY - 2) * TILE_SIZE * 2;
+		spawnPosX = (posX - 1) * TILE_SIZE;
+		spawnPosY = (posY - 2) * TILE_SIZE;
 		if (tipo == 'M') { // mario: 3 atributos
 			l >> atrib1;
 			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
@@ -127,9 +127,9 @@ Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
 	for (int i = 0; i < gameItems.size(); i++) {
 		int distX = abs(gameItems[i]->returnPos().Y() - rect.y);
 		int distY = abs(gameItems[i]->returnPos().Y() - rect.y);
-		if (distX < TILE_SIZE * 2 && distY < TILE_SIZE * 2) { // Solo comprueba objetos cerca
+		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
 			Collision collision = gameItems[i]->hit(rect, fromPlayer);
-			cout << collision.directionV() << endl;
+			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
 			}

@@ -121,9 +121,6 @@ void Player::update() {
 	}
 
 	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
-	if (objectCollisionVertical.hasCollided()) {
-		cout << objectCollisionVertical.directionV() << endl;
-	}
  	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {
 		moveY = 0;
 	}

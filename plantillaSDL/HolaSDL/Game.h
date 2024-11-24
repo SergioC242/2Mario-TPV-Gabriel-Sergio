@@ -79,8 +79,7 @@ public:
 	static constexpr uint WIN_WIDTH = 544;
 	static constexpr uint WIN_HEIGHT = 480;
 	static constexpr uint FRAME_RATE = 60;
-	static constexpr uint TILE_SIZE = 16;
-	static constexpr uint RENDER_SCALE_MULT = 2;
+	static constexpr uint TILE_SIZE = 32;
 
 	Game(int worldN);
 	~Game();

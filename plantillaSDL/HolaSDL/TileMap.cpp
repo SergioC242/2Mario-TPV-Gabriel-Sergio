@@ -65,11 +65,11 @@ void TileMap::render() {
 	int offset = game->offset_Return();
 
 	// Primera columna y fila del mapa visible
-	int x0 = offset / (game->TILE_SIZE * game->RENDER_SCALE_MULT);
+	int x0 = offset / (game->TILE_SIZE);
 	// Anchura de ese espacio detrás de la primera columna;
-	int d0 = offset % (game->TILE_SIZE * game->RENDER_SCALE_MULT);
+	int d0 = offset % (game->TILE_SIZE);
 
-	int nColsOnScreen = game->WIN_WIDTH / (game->TILE_SIZE * game->RENDER_SCALE_MULT);
+	int nColsOnScreen = game->WIN_WIDTH / (game->TILE_SIZE);
 
 	int targetCol = x0;
 	for (int i = 0; i < nColsOnScreen + 1; i++) {
@@ -85,9 +85,9 @@ void TileMap::render() {
 				int frameY = index / 9;
 				SDL_Rect rect;
 				//rect.x = -d0 + i * game->TILE_SIZE;
-				rect.x = -d0 + i * game->TILE_SIZE * game->RENDER_SCALE_MULT;
-				rect.y = j * game->TILE_SIZE * game->RENDER_SCALE_MULT;
-				rect.w = rect.h = game->TILE_SIZE * game->RENDER_SCALE_MULT;
+				rect.x = -d0 + i * game->TILE_SIZE;
+				rect.y = j * game->TILE_SIZE;
+				rect.w = rect.h = game->TILE_SIZE;
 
 				//cout << index << " " << frameX << "|" << frameY << " " << rect.x << "|" << rect.y << endl;
 				tiletexture->renderFrame(rect, frameY, frameX, SDL_FLIP_NONE);
@@ -100,12 +100,12 @@ void TileMap::render() {
 Collision TileMap::hit(const SDL_Rect& rect, bool fromPlayer)
 {
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
-	int row0 = rect.y / 32;
-	int col0 = rect.x / 32;
+	int row0 = rect.y / game->TILE_SIZE;
+	int col0 = rect.x / game->TILE_SIZE;
 
 	// Celda del nivel que contiene la esquina inferior derecha del rectángulo
-	int row1 = (rect.y + rect.h) / 32;
-	int col1 = (rect.x + rect.w) / 32;
+	int row1 = (rect.y + rect.h) / game->TILE_SIZE;
+	int col1 = (rect.x + rect.w) / game->TILE_SIZE;
 
 	for (int i = row0; i <= row1; i++)
 		for (int j = col0; j <= col1; j++) {

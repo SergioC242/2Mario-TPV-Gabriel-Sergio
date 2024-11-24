@@ -54,6 +54,8 @@ public:
 	void update();
 	void render();
 
+	bool isMovingUp() { return moveY > 0; }
+
 	~Player();
 };
 
