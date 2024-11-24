@@ -50,6 +50,11 @@ void Block::render() {
     rect.h = game->TILE_SIZE*2;
     rect.w = game->TILE_SIZE*2;
 
+    if (hitAnimFrame) {
+        rect.y = position.Y() - (game->TILE_SIZE / 2);
+        hitAnimFrame = false;
+    }
+
     // const SDL_Rect& target, int row, int col, SDL_RendererFlip flip
     if (tipo == Tipo::Pregunta) {
         texture->renderFrame(rect, 0, startFrame + currentFrame, SDL_FLIP_NONE);
@@ -67,7 +72,18 @@ void Block::render() {
 }
 
 void Block::update() {
-
+    if (tipo == Tipo::Ladrillo) {
+        startFrame = 5;
+    }
+    else if (tipo == Tipo::Vacio) {
+        startFrame = 4;
+    }
+    else if (tipo == Tipo::Pregunta) {
+        startFrame = 0;
+    }
+    else if (tipo == Tipo::Oculto) {
+        startFrame = -1;
+    }
 }
 
 Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
@@ -88,7 +104,12 @@ Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
 
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
-        //cout << rect.y << " " << blockRect.y << " " << direction << endl;
+
+        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below) {
+            tipo = Tipo::Vacio;
+            hitAnimFrame = true;
+        }
+
         return Collision(true, dir, Collision::Block);
     }
     return Collision(false, dir, Collision::Block);

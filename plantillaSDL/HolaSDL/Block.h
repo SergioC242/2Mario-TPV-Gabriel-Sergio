@@ -32,6 +32,7 @@ private:
     int startFrame;
     int currentFrame;
     Game* game;
+    bool hitAnimFrame;
 
 public:
 
