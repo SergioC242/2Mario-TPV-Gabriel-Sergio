@@ -168,11 +168,15 @@ Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
 
 Game::~Game()
 {
+
 	// Elimina los objetos del juego
-	
+	for (GameObject* obj : gameItems) delete obj;
+	for (GameObject* obj : activeItems) delete obj;
+	delete tilemap;
+	delete player;
+
 	// Elimina las texturas
-	for (Texture* texture : textures)
-		delete texture;
+	for (Texture* texture : textures) delete texture;
 
 	// Desactiva la SDL
 	SDL_DestroyRenderer(renderer);

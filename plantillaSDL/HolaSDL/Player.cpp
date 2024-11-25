@@ -264,3 +264,7 @@ void Player::makeSuper() {
 	position += Point2D(0, -tilesize);
 	forma = Forma::Super;
 }
+
+Player::~Player() {
+	for (Texture* tex : textures) delete tex;
+}
