@@ -42,9 +42,12 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"numbers.png", 10, 1}
 };
 
-Game::Game(int worldN)
-	: exit(false)
-{
+Game::Game(int worldN, Game* pGame)	: exit(false) {
+	if (pGame != nullptr) {
+		prevWorld = pGame;
+	}
+	world = worldN;
+
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
 	window = SDL_CreateWindow("First test with SDL",
@@ -60,7 +63,12 @@ Game::Game(int worldN)
 		throw "Error cargando SDL"s;
 
 	// Color de fondo
-	SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
+	if (world == 1) {
+		SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
+	}
+	if (world == 2) {
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	}
 
 	// Carga las texturas
 	for (int i = 0; i < NUM_TEXTURES; ++i)
@@ -70,14 +78,14 @@ Game::Game(int worldN)
 			textureSpec[i].numColumns);
 
 	// Crea los elementos del juego
-	loadMap(worldN);
+	loadMap();
 }
 
-void Game::loadMap(int worldN) {
+void Game::loadMap() {
 
-	tilemap = new TileMap(textures[Background], this, worldN);
+	tilemap = new TileMap(textures[Background], this, world);
 
-	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
+	string filename = "../assets/maps/world" + to_string(world) + ".txt";
 	ifstream txtWorld(filename);
 
 	char tipo;
@@ -175,7 +183,10 @@ Game::~Game()
 void
 Game::run()
 {
+	//delete prevWorld;
+
 	// Bucle principal del juego
+
 	while (!exit) {
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
@@ -289,4 +300,10 @@ void
 Game::addScore(int n) {
 	score += n;
 	cout << "SCORE: " << to_string(score) << endl;
+}
+
+void
+Game::nextWorld() {
+	Game* game2 = new Game(world + 1, this);
+	game2->run();
 }

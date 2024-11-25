@@ -132,6 +132,7 @@ Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_bool intersection = SDL_HasIntersection(&rect, &mushroomRect);
 	if (intersection == SDL_TRUE) {
 		//disapear mushroom
+		game->addScore(1000);
 		return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom
 	}
 	return Collision(false, dir, Collision::Mushroom);

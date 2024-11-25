@@ -167,5 +167,5 @@ Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
 }
 
 void Goomba::die() {
-	cout << "Goomba was killed" << endl;
+	game->addScore(100);
 }

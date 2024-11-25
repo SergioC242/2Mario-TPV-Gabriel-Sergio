@@ -165,6 +165,6 @@ Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
 }
 
 void Koopa::die() {
-	cout << "Koopa was killed" << endl;
+	game->addScore(100);
 	game->createShell(position.X(), position.Y());
 }

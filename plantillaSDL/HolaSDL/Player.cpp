@@ -50,6 +50,11 @@ void Player::handleEvent(SDL_KeyboardEvent& E) {
 }
 
 void Player::update() {
+
+	if (position.X() > 6296) {
+		game->nextWorld();
+	}
+
 	int maxfallspeed = MAX_FALL_SPEED;
 
 	if (onGround) {
@@ -77,7 +82,7 @@ void Player::update() {
 		predictedRect.h = predictedRect.h * 2;
 	}
 
-	//cout << predictedRect.x << "|" << predictedRect.y << " " << predictedRect.w << "|" << predictedRect.h << endl;
+	cout << predictedRect.x << "|" << predictedRect.y << " " << predictedRect.w << "|" << predictedRect.h << endl;
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.y = position.Y() + GRAVITY;
@@ -116,11 +121,6 @@ void Player::update() {
 		else if (objectCollisionGravity.object() == Collision::Mushroom) {
 			if (forma == Forma::Small) {
 				makeSuper();
-				cout << "Mario Grande" << endl;
-			}
-			else {
-				vidas++;
-				cout << "vidas: " << vidas << endl;
 			}
 		}
 	}

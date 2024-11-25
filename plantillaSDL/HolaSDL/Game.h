@@ -53,9 +53,11 @@ private:
 	bool exit;
 
 	// Datos del juego
+	int world;
 	int mapOffset;
 	bool lockOffset;
 	int score;
+	Game* prevWorld;
 
 	// Elementos del juego
 	TileMap* tilemap;
@@ -72,7 +74,7 @@ public:
 	void render() const;
 	void handleEvents();
 
-	void loadMap(int worldN);
+	void loadMap();
 	Collision checkCollisions(SDL_Rect rect, bool fromPlayer);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);
@@ -83,6 +85,7 @@ public:
 	bool offset_isLocked();
 
 	void addScore(int n);
+	void nextWorld();
 
 	Texture* getTexture(TextureName name) const { return textures[name]; }
 	TileMap* getTileMap() { return tilemap; }
@@ -93,7 +96,7 @@ public:
 	static constexpr uint FRAME_RATE = 60;
 	static constexpr uint TILE_SIZE = 32;
 
-	Game(int worldN);
+	Game(int worldN, Game* prevGame);
 	~Game();
 };
 
