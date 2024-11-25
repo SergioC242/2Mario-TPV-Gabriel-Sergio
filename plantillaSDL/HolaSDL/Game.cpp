@@ -260,14 +260,13 @@ Game::handleEvents()
 }
 
 void Game::createMushrooms(int x,  int y) {
-		Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - 16);
-		activeItems.push_back(mushroom);
-	
+	Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - TILE_SIZE);
+	activeItems.push_back(mushroom);
 }
 void Game::createShell(int x, int y) {
-	Shell* shell = new Shell(textures[ShellTex], this, x, y + 32 + 16);
+	Shell* shell = new Shell(textures[ShellTex], this, x, y - TILE_SIZE * 2);
+	cout << x << "|" << y << endl;
 	activeItems.push_back(shell);
-
 }
 int 
 Game::offset_Return() {

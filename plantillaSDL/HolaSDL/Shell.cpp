@@ -1,6 +1,6 @@
 #include "Shell.h"
 
-Shell::Shell(Texture* tex, Game* g, int posX, int posY) : position(posX /* + game->TILE_SIZE*/, posY) {
+Shell::Shell(Texture* tex, Game* g, int posX, int posY) : position(posX, posY + g->TILE_SIZE) {
 
 	texture = tex;
 	game = g;
@@ -9,18 +9,16 @@ Shell::Shell(Texture* tex, Game* g, int posX, int posY) : position(posX /* + gam
 	onGround = true;
 	active = false;
 	hitCD = 20;
+	moveX = 0;
+	moveY = 0;
 }
 
 
 
 void Shell::update(){ 
-	hitCD--;
-	int walkp = WALK_POWER;
-	if (dirIzq) {
-		moveX = -walkp;
-	}
-	else {
-		moveX = walkp;
+	
+	if (hitCD > 0) {
+		hitCD--;
 	}
 
 	int maxfallspeed = MAX_FALL_SPEED;
@@ -37,8 +35,8 @@ void Shell::update(){
 		}
 	}
 
-	int frameWidth = texture->getFrameWidth();
-	int frameHeight = texture->getFrameHeight();
+	int frameWidth = texture->getFrameWidth() * 2;
+	int frameHeight = texture->getFrameHeight() * 2;
 	SDL_Rect predictedRect;
 	predictedRect.w = frameWidth;
 	predictedRect.h = frameHeight;
@@ -91,7 +89,8 @@ void Shell::update(){
 		moveY = 0;
 	}
 	// aplicar movimiento HORIZONTAL
-	if (!collisionHorizontal && moving) {
+	if ((objectCollisionGravity.object() == Collision::Goomba || objectCollisionGravity.object() == Collision::Koopa) ||
+		!collisionHorizontal) {
 		if (!(position.X() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde del mapa
 			position += Vector2D<float>(moveX, 0);
 		}
@@ -100,7 +99,7 @@ void Shell::update(){
 		}
 	}
 	else {
-		dirIzq = !dirIzq;
+		moveX = -moveX;
 	}
 }
 
@@ -109,8 +108,8 @@ void Shell::render() {
 	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
-	rect.h = texture->getFrameHeight();
-	rect.w = texture->getFrameWidth();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
 
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
@@ -118,8 +117,8 @@ Collision Shell::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_Rect shellRect;
 	shellRect.x = position.X();
 	shellRect.y = position.Y();
-	shellRect.h = texture->getFrameHeight();
-	shellRect.w = texture->getFrameWidth();
+	shellRect.h = texture->getFrameHeight() * 2;
+	shellRect.w = texture->getFrameWidth() * 2;
 
 	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
@@ -130,20 +129,37 @@ Collision Shell::hit(SDL_Rect rect, bool fromPlayer) {
 		dir = Collision::CollisionDir::Below;
 	}
 
-	SDL_bool intersection = SDL_HasIntersection(&rect, &shellRect);
-	if (intersection == SDL_TRUE && hitCD <= 0) {
-		if (fromPlayer && !moving) {
-			//move shell
-			cout << "move" << endl;
-			moving = true;
+	bool moveDir;
+	if (rect.x < shellRect.x) {
+		moveDir = true; // left
+	}
+	else {
+		moveDir = false; // right
+	}
+
+	if (hitCD <= 0) {
+		SDL_bool intersection = SDL_HasIntersection(&rect, &shellRect);
+		if (intersection == SDL_TRUE) {
+			if (fromPlayer && moveX == 0) {
+				startMove(moveDir);
+				hitCD = 20;
+			}
+			else if (dir == Collision::CollisionDir::Above && fromPlayer && moveX != 0) {
+				stopMove();
+				hitCD = 20;
+			}
+			return Collision(true, dir, Collision::Shell);
 		}
-		else if (dir == Collision::CollisionDir::Above && fromPlayer && moving) {
-			//stop shell
-			cout << "stop" << endl;
-			moving = false;
-		}
-		hitCD = 20;
-		return Collision(true, dir, Collision::Shell);
 	}
 	return Collision(false, dir, Collision::Shell);
+}
+
+void Shell::startMove(bool moveDir) {
+	int walkp = WALK_POWER;
+	if (moveDir) { //left
+		moveX = -walkp;
+	}
+	else { // right
+		moveX = walkp;
+	}
 }

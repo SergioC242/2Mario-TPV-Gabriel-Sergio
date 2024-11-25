@@ -66,18 +66,20 @@ void Player::update() {
 
 	Texture* currentTexture = textures[forma];
 
-	int frameWidth = currentTexture->getFrameWidth();
-	int frameHeight = currentTexture->getFrameHeight();
+	int frameWidth = currentTexture->getFrameWidth() * 2;
+	int frameHeight = currentTexture->getFrameHeight() * 2;
 	SDL_Rect predictedRect;
+	predictedRect.x = position.X();
+	predictedRect.y = position.Y();
 	predictedRect.w = frameWidth;
 	predictedRect.h = game->TILE_SIZE; // El sprite de mario es 36px pero un bloque es 32px
 	if (forma == Super) {
 		predictedRect.h = predictedRect.h * 2;
-		predictedRect.w = predictedRect.w * 2;
 	}
 
+	//cout << predictedRect.x << "|" << predictedRect.y << " " << predictedRect.w << "|" << predictedRect.h << endl;
+
 	// colisiones VERTICAL en función de la gravedad
-	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
 	bool collisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
 	Collision objectCollisionGravity = game->checkCollisions(predictedRect, true);
@@ -152,7 +154,7 @@ void Player::update() {
 		if (objectCollisionHorizontal.object() == Collision::Block) {
 			collisionHorizontal = true;
 		}
-		else if (objectCollisionHorizontal.object() == Collision::Goomba) {
+		else if (objectCollisionHorizontal.object() == Collision::Goomba || objectCollisionVertical.object() == Collision::Koopa) {
 			// take damage
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
@@ -225,32 +227,30 @@ void Player::render() {
 	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
-	rect.h = currentTexture->getFrameHeight();
-	rect.w = currentTexture->getFrameWidth();
+	rect.h = currentTexture->getFrameHeight() * 2;
+	rect.w = currentTexture->getFrameWidth() * 2;
 	if (forma == Super) {
-		rect.h = rect.h * 2;
-		rect.w = rect.w * 2;
+		rect.h = rect.h;
+		rect.w = rect.w;
 	}
 
-	//if (forma == Small) {
-		if (estado == Estado::Caminando) {
-			currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
+	if (estado == Estado::Caminando) {
+		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
 
-			if (currentWalkingFrame >= 2) {
-				currentWalkingFrame = 0;
-			}
-			else {
-				currentWalkingFrame++;
-			}
-
-		}
-		else if (estado == Estado::Aire) {
-			currentTexture->renderFrame(rect, 0, 6, flipH);
+		if (currentWalkingFrame >= 2) {
+			currentWalkingFrame = 0;
 		}
 		else {
-			currentTexture->renderFrame(rect, 0, 0, flipH);
+			currentWalkingFrame++;
 		}
-	//}
+
+	}
+	else if (estado == Estado::Aire) {
+		currentTexture->renderFrame(rect, 0, 6, flipH);
+	}
+	else {
+		currentTexture->renderFrame(rect, 0, 0, flipH);
+	}
 }
 
 void Player::bounce() {

@@ -11,6 +11,8 @@ Goomba::Goomba(Texture* tex, Game* g, int posX, int posY) : position(posX + game
 	alive = true;
 	onGround = true;
 	active = false;
+	moveX = 0;
+	moveY = 0;
 }
 
 
@@ -32,8 +34,8 @@ void Goomba::render() {
 	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
-	rect.h = texture->getFrameHeight();
-	rect.w = texture->getFrameWidth();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
 
 	texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
 }
@@ -66,8 +68,8 @@ void Goomba::update() {
 			}
 		}
 
-		int frameWidth = texture->getFrameWidth();
-		int frameHeight = texture->getFrameHeight();
+		int frameWidth = texture->getFrameWidth() * 2;
+		int frameHeight = texture->getFrameHeight() * 2;
 		SDL_Rect predictedRect;
 		predictedRect.w = frameWidth;
 		predictedRect.h = frameHeight;
@@ -140,8 +142,8 @@ Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_Rect goombaRect;
 	goombaRect.x = position.X();
 	goombaRect.y = position.Y();
-	goombaRect.h = texture->getFrameHeight();
-	goombaRect.w = texture->getFrameWidth();
+	goombaRect.h = texture->getFrameHeight() * 2;
+	goombaRect.w = texture->getFrameWidth() * 2;
 
 	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 

@@ -32,8 +32,8 @@ void Koopa::render() {
 	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
-	rect.h = texture->getFrameHeight();
-	rect.w = texture->getFrameWidth();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
 
 	texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
 }
@@ -66,8 +66,8 @@ void Koopa::update() {
 			}
 		}
 
-		int frameWidth = texture->getFrameWidth();
-		int frameHeight = texture->getFrameHeight();
+		int frameWidth = texture->getFrameWidth() * 2;
+		int frameHeight = texture->getFrameHeight() * 2;
 		SDL_Rect predictedRect;
 		predictedRect.w = frameWidth;
 		predictedRect.h = frameHeight / 4 * 3;
@@ -139,9 +139,9 @@ void Koopa::update() {
 Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_Rect koopaRect;
 	koopaRect.x = position.X();
-	koopaRect.y = position.Y() + texture->getFrameHeight() / 4;
-	koopaRect.h = texture->getFrameHeight() / 4 * 3;
-	koopaRect.w = texture->getFrameWidth();
+	koopaRect.y = position.Y() + texture->getFrameHeight() * 2 / 4;
+	koopaRect.h = texture->getFrameHeight() * 2 / 4 * 3;
+	koopaRect.w = texture->getFrameWidth() * 2;
 
 	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
@@ -166,6 +166,5 @@ Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
 
 void Koopa::die() {
 	cout << "Koopa was killed" << endl;
-	cout << "Debe llamar a un método 'spawnshell' en Game y luego destruirse" << endl;
 	game->createShell(position.X(), position.Y());
 }

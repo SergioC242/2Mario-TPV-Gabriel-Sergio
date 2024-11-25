@@ -40,8 +40,8 @@ void Mushroom::update() {
 			}
 		}
 
-		int frameWidth = texture->getFrameWidth();
-		int frameHeight = texture->getFrameHeight();
+		int frameWidth = texture->getFrameWidth() * 2;
+		int frameHeight = texture->getFrameHeight() * 2;
 		SDL_Rect predictedRect;
 		predictedRect.w = frameWidth;
 		predictedRect.h = frameHeight;
@@ -115,8 +115,8 @@ void Mushroom::render() {
 	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
-	rect.h = texture->getFrameHeight();
-	rect.w = texture->getFrameWidth();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
 
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
@@ -124,8 +124,8 @@ Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_Rect mushroomRect;
 	mushroomRect.x = position.X();
 	mushroomRect.y = position.Y();
-	mushroomRect.h = texture->getFrameHeight();
-	mushroomRect.w = texture->getFrameWidth();
+	mushroomRect.h = texture->getFrameHeight() * 2;
+	mushroomRect.w = texture->getFrameWidth() * 2;
 
 	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
