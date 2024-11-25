@@ -27,6 +27,7 @@ public:
 	void update();
 	void render();
 	Collision hit(SDL_Rect rect, bool fromPlayer);
+	Vector2D<float> returnPos() { return position; }
 
 };
 
