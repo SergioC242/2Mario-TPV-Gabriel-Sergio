@@ -143,6 +143,17 @@ Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
 			}
 		}
 	}
+	for (int i = 0; i < activeItems.size(); i++) {
+		int distX = abs(activeItems[i]->returnPos().Y() - rect.y);
+		int distY = abs(activeItems[i]->returnPos().Y() - rect.y);
+		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
+			Collision collision = activeItems[i]->hit(rect, fromPlayer);
+			//cout << collision.directionV() << endl;
+			if (collision.hasCollided()) {
+				return collision;
+			}
+		}
+	}
 	return Collision(false, Collision::CollisionDir::Middle, Collision::None);
 }
 
