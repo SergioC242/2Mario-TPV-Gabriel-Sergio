@@ -1,7 +1,7 @@
 #include "Mushroom.h"
 
 
-Mushroom::Mushroom(Texture* tex, Game* g, int posX, int posY) : position(posX /* + game->TILE_SIZE*/, posY - 8) {
+Mushroom::Mushroom(Texture* tex, Game* g, int posX, int posY) : position(posX /* + game->TILE_SIZE*/, posY) {
 
 	texture = tex;
 	game = g;

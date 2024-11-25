@@ -249,7 +249,7 @@ Game::handleEvents()
 
 void Game::createMushrooms(int x,  int y) {
 	cout << "mush" << endl;
-		Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - 32);
+		Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - 16);
 		activeItems.push_back(mushroom);
 	
 }

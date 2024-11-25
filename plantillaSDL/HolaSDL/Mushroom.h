@@ -21,7 +21,7 @@ private:
 public:
 	static constexpr uint WALK_POWER = 4;
 	static constexpr uint GRAVITY = 2;
-	static constexpr uint MAX_FALL_SPEED = 2;// 8;
+	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Mushroom(Texture* tex, Game* g, int posX, int posY);
 	void update();
