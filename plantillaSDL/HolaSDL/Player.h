@@ -56,6 +56,7 @@ public:
 	void render();
 
 	void bounce();
+	void makeSuper();
 
 	bool isMovingUp() { return moveY > 0; }
 

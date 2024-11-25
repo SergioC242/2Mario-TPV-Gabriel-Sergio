@@ -71,6 +71,10 @@ void Player::update() {
 	SDL_Rect predictedRect;
 	predictedRect.w = frameWidth;
 	predictedRect.h = game->TILE_SIZE; // El sprite de mario es 36px pero un bloque es 32px
+	if (forma == Super) {
+		predictedRect.h = predictedRect.h * 2;
+		predictedRect.w = predictedRect.w * 2;
+	}
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
@@ -109,7 +113,7 @@ void Player::update() {
 		}
 		else if (objectCollisionGravity.object() == Collision::Mushroom) {
 			if (forma == Forma::Small) {
-				forma = Forma::Super;
+				makeSuper();
 				cout << "Mario Grande" << endl;
 			}
 			else {
@@ -135,7 +139,7 @@ void Player::update() {
 		else if (objectCollisionVertical.object() == Collision::Mushroom) {
 			//mario grande
 			if (forma == Forma::Small) {
-				forma = Forma::Super;
+				makeSuper();
 				cout << "Mario Grande" << endl;
 			}
 			else {
@@ -153,7 +157,7 @@ void Player::update() {
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
 			if (forma == Forma::Small) {
-				forma = Forma::Super;
+				makeSuper();
 				cout << "Mario Grande" << endl;
 			}
 			else {
@@ -223,6 +227,10 @@ void Player::render() {
 	rect.y = position.Y();
 	rect.h = currentTexture->getFrameHeight();
 	rect.w = currentTexture->getFrameWidth();
+	if (forma == Super) {
+		rect.h = rect.h * 2;
+		rect.w = rect.w * 2;
+	}
 
 	//if (forma == Small) {
 		if (estado == Estado::Caminando) {
@@ -249,4 +257,10 @@ void Player::bounce() {
 	moveY = JUMP_POWER / 2;
 	onGround = false;
 	jumping = true;
+}
+
+void Player::makeSuper() {
+	int tilesize = game->TILE_SIZE;
+	position += Point2D(0, -tilesize);
+	forma = Forma::Super;
 }
