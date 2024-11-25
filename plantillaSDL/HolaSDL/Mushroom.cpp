@@ -120,3 +120,20 @@ void Mushroom::render() {
 
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
+Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
+	SDL_Rect goombaRect;
+	goombaRect.x = position.X();
+	goombaRect.y = position.Y();
+	goombaRect.h = texture->getFrameHeight();
+	goombaRect.w = texture->getFrameWidth();
+
+	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
+
+	SDL_bool intersection = SDL_HasIntersection(&rect, &goombaRect);
+	if (intersection == SDL_TRUE) {
+		//disapear mushroom
+		cout << "seta tocada" << endl;
+		return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom
+	}
+	return Collision(false, dir, Collision::Mushroom);
+}

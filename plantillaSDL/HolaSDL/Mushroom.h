@@ -26,6 +26,7 @@ public:
 	Mushroom(Texture* tex, Game* g, int posX, int posY);
 	void update();
 	void render();
+	Collision hit(SDL_Rect rect, bool fromPlayer);
 
 };
 

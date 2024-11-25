@@ -107,6 +107,10 @@ void Player::update() {
 				// take damage
 			}
 		}
+		else if (objectCollisionGravity.object() == Collision::Mushroom) {
+			cout << "Mario Grande" << endl;
+			//mario grande
+		}
 	}
 	else if (objectCollisionVertical.hasCollided()) {
 		if (objectCollisionVertical.object() == Collision::Block) {
@@ -122,6 +126,10 @@ void Player::update() {
 				// take damage
 			}
 		}
+		else if (objectCollisionVertical.object() == Collision::Mushroom) {
+			cout << "Mario Grande" << endl;
+			//mario grande
+		}
 	}
 	else if (objectCollisionHorizontal.hasCollided()) {
 		if (objectCollisionHorizontal.object() == Collision::Block) {
@@ -129,6 +137,10 @@ void Player::update() {
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Goomba) {
 			// take damage
+		}
+		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
+			cout << "Mario Grande" << endl;
+			//mario grande
 		}
 	}
 

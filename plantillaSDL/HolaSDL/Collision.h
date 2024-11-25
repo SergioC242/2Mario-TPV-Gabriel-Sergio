@@ -10,7 +10,8 @@ enum ObjetoTipo {
 	Tilemap,
 	Block,
 	Goomba,
-	Koopa
+	Koopa,
+	Mushroom
 };
 enum CollisionDir {
 	Above,

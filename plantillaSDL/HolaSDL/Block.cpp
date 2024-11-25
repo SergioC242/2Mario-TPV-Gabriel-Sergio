@@ -87,11 +87,9 @@ void Block::update() {
 void Block::act() {
     string ac;
     if (action == Action::Moneda) {
-        cout << "no mush2" << endl;
         game->addScore(200);
     }
     else if (action == Action::Potenciador) {
-        cout << "mush2" << endl;
         game->createMushrooms(position.X(), position.Y());
     }
 }
