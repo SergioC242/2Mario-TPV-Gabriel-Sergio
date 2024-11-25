@@ -18,6 +18,7 @@ using uint = unsigned int;
 class TileMap;
 class Mushroom;
 class Shell;
+class Coin;
 
 class Game
 {
@@ -33,7 +34,7 @@ public:
 		KoopaTex,
 		PiranhaTex,
 		ShellTex,
-		Coin,
+		CoinTex,
 		MushroomTex,
 		Plant,
 		Star,

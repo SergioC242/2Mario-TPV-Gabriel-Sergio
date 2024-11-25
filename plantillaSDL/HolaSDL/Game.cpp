@@ -9,6 +9,7 @@
 #include "Koopa.h"
 #include "Mushroom.h"
 #include "Shell.h"
+#include "Coin.h"
 
 using namespace std;
 
@@ -133,6 +134,13 @@ void Game::loadMap() {
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Koopa* koopa = new Koopa(textures[KoopaTex], this, spawnPosX, spawnPosY);
 			gameItems.push_back(koopa);
+		}
+		else if (tipo == 'C') { // koopa: 2 atributos
+			//spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
+			cout << "COIN - " << posX << "|" << posY << "\n";
+			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			Coin* coin = new Coin(textures[CoinTex], this, spawnPosX, spawnPosY);
+			gameItems.push_back(coin);
 		}
 
 		cout << "------------------\n";

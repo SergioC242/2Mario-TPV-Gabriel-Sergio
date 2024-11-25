@@ -21,6 +21,7 @@ private:
 	bool alive;
 	bool onGround;
 	bool active;
+	bool dead;
 
 public: 
 	static constexpr uint WALK_POWER = 4;

@@ -12,7 +12,8 @@ enum ObjetoTipo {
 	Goomba,
 	Koopa,
 	Mushroom,
-	Shell
+	Shell,
+	Coin
 };
 enum CollisionDir {
 	Above,

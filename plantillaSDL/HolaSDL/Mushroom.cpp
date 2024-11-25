@@ -7,17 +7,13 @@ Mushroom::Mushroom(Texture* tex, Game* g, int posX, int posY) : position(posX /*
 	game = g;
 	dirIzq = false;
 	onGround = true;
-	active = false;
+	active = true;
 }
 
 
 
 void Mushroom::update() {
-	if (!active) {
-		active = (game->offset_Return() + game->WIN_WIDTH + game->TILE_SIZE) > position.X();
-	}
-	else
-	{
+	//if (active) {
 		int walkp = WALK_POWER;
 		if (dirIzq) {
 			moveX = -walkp;
@@ -105,35 +101,38 @@ void Mushroom::update() {
 		else {
 			dirIzq = !dirIzq;
 		}
-
-	}
+	//}
 }
 
 
 void Mushroom::render() {
+	//if (active){
+		SDL_Rect rect;
+		rect.x = position.X() - game->offset_Return();
+		rect.y = position.Y();
+		rect.h = texture->getFrameHeight() * 2;
+		rect.w = texture->getFrameWidth() * 2;
 
-	SDL_Rect rect;
-	rect.x = position.X() - game->offset_Return();
-	rect.y = position.Y();
-	rect.h = texture->getFrameHeight() * 2;
-	rect.w = texture->getFrameWidth() * 2;
-
-	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
+		texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
+	//}
 }
 Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
-	SDL_Rect mushroomRect;
-	mushroomRect.x = position.X();
-	mushroomRect.y = position.Y();
-	mushroomRect.h = texture->getFrameHeight() * 2;
-	mushroomRect.w = texture->getFrameWidth() * 2;
+	//if (active){
+		SDL_Rect mushroomRect;
+		mushroomRect.x = position.X();
+		mushroomRect.y = position.Y();
+		mushroomRect.h = texture->getFrameHeight() * 2;
+		mushroomRect.w = texture->getFrameWidth() * 2;
 
-	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
+		Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
-	SDL_bool intersection = SDL_HasIntersection(&rect, &mushroomRect);
-	if (intersection == SDL_TRUE) {
-		//disapear mushroom
-		game->addScore(1000);
-		return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom
-	}
-	return Collision(false, dir, Collision::Mushroom);
+		SDL_bool intersection = SDL_HasIntersection(&rect, &mushroomRect);
+		if (intersection == SDL_TRUE && fromPlayer) {
+			//disapear mushroom
+			game->addScore(1000);
+			active = false;
+			return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom
+		}
+		return Collision(false, dir, Collision::Mushroom);
+	//}
 }
