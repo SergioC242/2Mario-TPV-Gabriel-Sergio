@@ -108,8 +108,14 @@ void Player::update() {
 			}
 		}
 		else if (objectCollisionGravity.object() == Collision::Mushroom) {
-			cout << "Mario Grande" << endl;
-			//mario grande
+			if (forma == Forma::Small) {
+				forma = Forma::Super;
+				cout << "Mario Grande" << endl;
+			}
+			else {
+				vidas++;
+				cout << "vidas: " << vidas << endl;
+			}
 		}
 	}
 	else if (objectCollisionVertical.hasCollided()) {
@@ -127,8 +133,15 @@ void Player::update() {
 			}
 		}
 		else if (objectCollisionVertical.object() == Collision::Mushroom) {
-			cout << "Mario Grande" << endl;
 			//mario grande
+			if (forma == Forma::Small) {
+				forma = Forma::Super;
+				cout << "Mario Grande" << endl;
+			}
+			else {
+				vidas++;
+				cout << "vidas: " << vidas << endl;
+			}
 		}
 	}
 	else if (objectCollisionHorizontal.hasCollided()) {
@@ -139,8 +152,14 @@ void Player::update() {
 			// take damage
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
-			cout << "Mario Grande" << endl;
-			//mario grande
+			if (forma == Forma::Small) {
+				forma = Forma::Super;
+				cout << "Mario Grande" << endl;
+			}
+			else {
+				vidas++;
+				cout << "vidas: " << vidas << endl;
+			}
 		}
 	}
 
@@ -205,7 +224,7 @@ void Player::render() {
 	rect.h = currentTexture->getFrameHeight();
 	rect.w = currentTexture->getFrameWidth();
 
-	if (forma == Small) {
+	//if (forma == Small) {
 		if (estado == Estado::Caminando) {
 			currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
 
@@ -223,7 +242,7 @@ void Player::render() {
 		else {
 			currentTexture->renderFrame(rect, 0, 0, flipH);
 		}
-	}
+	//}
 }
 
 void Player::bounce() {

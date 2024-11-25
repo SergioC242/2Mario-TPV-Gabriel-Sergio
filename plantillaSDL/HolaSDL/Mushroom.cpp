@@ -132,7 +132,6 @@ Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_bool intersection = SDL_HasIntersection(&rect, &goombaRect);
 	if (intersection == SDL_TRUE) {
 		//disapear mushroom
-		cout << "seta tocada" << endl;
 		return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom
 	}
 	return Collision(false, dir, Collision::Mushroom);
