@@ -17,6 +17,7 @@ using uint = unsigned int;
 
 class TileMap;
 class Mushroom;
+class Shell;
 
 class Game
 {
@@ -31,7 +32,7 @@ public:
 		GoombaTex,
 		KoopaTex,
 		PiranhaTex,
-		Shell,
+		ShellTex,
 		Coin,
 		MushroomTex,
 		Plant,
@@ -74,6 +75,7 @@ public:
 	void loadMap(int worldN);
 	Collision checkCollisions(SDL_Rect rect, bool fromPlayer);
 	void createMushrooms(int x, int y);
+	void createShell(int x, int y);
 
 	int offset_Return();
 	void offset_Add(int n);

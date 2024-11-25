@@ -17,5 +17,16 @@ private:
 	int moveY;
 	bool onGround;
 	bool active;
+
+public:
+	static constexpr uint WALK_POWER = 4;
+	static constexpr uint GRAVITY = 2;
+	static constexpr uint MAX_FALL_SPEED = 8;
+
+	Shell(Texture* tex, Game* g, int posX, int posY);
+	void update();
+	void render();
+	Collision hit(SDL_Rect rect, bool fromPlayer);
+	Vector2D<float> returnPos() { return position; }
 };
 

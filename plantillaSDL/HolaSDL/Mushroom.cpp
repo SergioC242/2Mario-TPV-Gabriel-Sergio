@@ -121,15 +121,15 @@ void Mushroom::render() {
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
 Collision Mushroom::hit(SDL_Rect rect, bool fromPlayer) {
-	SDL_Rect goombaRect;
-	goombaRect.x = position.X();
-	goombaRect.y = position.Y();
-	goombaRect.h = texture->getFrameHeight();
-	goombaRect.w = texture->getFrameWidth();
+	SDL_Rect mushroomRect;
+	mushroomRect.x = position.X();
+	mushroomRect.y = position.Y();
+	mushroomRect.h = texture->getFrameHeight();
+	mushroomRect.w = texture->getFrameWidth();
 
 	Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
-	SDL_bool intersection = SDL_HasIntersection(&rect, &goombaRect);
+	SDL_bool intersection = SDL_HasIntersection(&rect, &mushroomRect);
 	if (intersection == SDL_TRUE) {
 		//disapear mushroom
 		return Collision(true, dir, Collision::Mushroom); //esto tiene que ser mushroom

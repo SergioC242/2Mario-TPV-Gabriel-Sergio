@@ -11,7 +11,8 @@ enum ObjetoTipo {
 	Block,
 	Goomba,
 	Koopa,
-	Mushroom
+	Mushroom,
+	Shell
 };
 enum CollisionDir {
 	Above,

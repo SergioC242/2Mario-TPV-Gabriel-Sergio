@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "Enemy.h"
 #include "Game.h"
+#include "Shell.h"
 
 #pragma once
 class TileMap;
