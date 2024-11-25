@@ -17,9 +17,10 @@ private:
 	int moveY;
 	bool onGround;
 	bool active;
+	int hitCD;
 
 public:
-	static constexpr uint WALK_POWER = 4;
+	static constexpr uint WALK_POWER = 16;
 	static constexpr uint GRAVITY = 2;
 	static constexpr uint MAX_FALL_SPEED = 8;
 
