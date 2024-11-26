@@ -37,8 +37,8 @@ public:
 	// Detectar colisiones
 	Collision hit(const SDL_Rect& rect, bool fromPlayer);
 
-	int returnNCols() { return nCols; }
-	int returnNRows() { return nRows; }
+	int returnNCols() const { return nCols; }
+	int returnNRows() const { return nRows; }
 
 	/*
 	// Destructora

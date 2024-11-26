@@ -302,7 +302,7 @@ void Game::destroyDead() {
 }
 
 int 
-Game::offset_Return() {
+Game::offset_Return() const {
 	return mapOffset;
 }
 void 
@@ -314,7 +314,7 @@ Game::offset_Lock() {
 	lockOffset = true;
 }
 bool 
-Game::offset_isLocked() {
+Game::offset_isLocked() const {
 	return lockOffset;
 }
 

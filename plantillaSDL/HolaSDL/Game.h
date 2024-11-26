@@ -82,10 +82,10 @@ public:
 	void createShell(int x, int y);
 	void destroyDead();
 
-	int offset_Return();
+	int offset_Return() const;
 	void offset_Add(int n);
 	void offset_Lock();
-	bool offset_isLocked();
+	bool offset_isLocked() const;
 
 	void addScore(int n);
 	void nextWorld();
