@@ -148,12 +148,12 @@ void Game::loadMap() {
 	cout << "|                |\n" << "------------------\n";
 }
 
-Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
+Collision Game::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	for (int i = 0; i < gameItems.size(); i++) {
 		int distX = abs(gameItems[i]->returnPos().Y() - rect.y);
 		int distY = abs(gameItems[i]->returnPos().Y() - rect.y);
 		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = gameItems[i]->hit(rect, fromPlayer);
+			Collision collision = gameItems[i]->hit(rect, tipoObj);
 			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
@@ -164,7 +164,7 @@ Collision Game::checkCollisions(SDL_Rect rect, bool fromPlayer) {
 		int distX = abs(activeItems[i]->returnPos().Y() - rect.y);
 		int distY = abs(activeItems[i]->returnPos().Y() - rect.y);
 		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = activeItems[i]->hit(rect, fromPlayer);
+			Collision collision = activeItems[i]->hit(rect, tipoObj);
 			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;

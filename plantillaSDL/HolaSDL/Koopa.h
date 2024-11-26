@@ -33,7 +33,7 @@ public:
 	Koopa(Texture* tex, Game* g, int posX, int posY);
 	void update();
 	void render();
-	Collision hit(SDL_Rect rect, bool fromPlayer);
+	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void die();
 	Vector2D<float> returnPos() { return position; }
 };

@@ -41,20 +41,28 @@ void Shell::update(){
 	predictedRect.w = frameWidth;
 	predictedRect.h = frameHeight;
 
+	Collision::ObjetoTipo state;
+	if (moving) {
+		state = Collision::ObjetoTipo::moveShell;
+	}
+	else {
+		state = Collision::ObjetoTipo::Shell;
+	}
+
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, false);
+	bool collisionGravity = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->checkCollisions(predictedRect, state);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, false);
+	bool collisionVertical = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->checkCollisions(predictedRect, state);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, false);
+	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, state);
 
 	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 	if (objectCollisionGravity.hasCollided()) {
@@ -113,7 +121,7 @@ void Shell::render() {
 
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
-Collision Shell::hit(SDL_Rect rect, bool fromPlayer) {
+Collision Shell::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	SDL_Rect shellRect;
 	shellRect.x = position.X();
 	shellRect.y = position.Y();
@@ -140,11 +148,11 @@ Collision Shell::hit(SDL_Rect rect, bool fromPlayer) {
 	if (hitCD <= 0) {
 		SDL_bool intersection = SDL_HasIntersection(&rect, &shellRect);
 		if (intersection == SDL_TRUE) {
-			if (fromPlayer && moveX == 0) {
+			if (tipoObj == Collision::ObjetoTipo::Player && moveX == 0) {
 				startMove(moveDir);
 				hitCD = 20;
 			}
-			else if (dir == Collision::CollisionDir::Above && fromPlayer && moveX != 0) {
+			else if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Above && moveX != 0) {
 				stopMove();
 				hitCD = 20;
 			}
@@ -157,9 +165,9 @@ Collision Shell::hit(SDL_Rect rect, bool fromPlayer) {
 void Shell::startMove(bool moveDir) {
 	int walkp = WALK_POWER;
 	if (moveDir) { //left
-		moveX = -walkp;
+		moveX = walkp;
 	}
 	else { // right
-		moveX = walkp;
+		moveX = -walkp;
 	}
 }

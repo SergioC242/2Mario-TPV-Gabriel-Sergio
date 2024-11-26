@@ -7,16 +7,18 @@
 class Collision
 {
 public: 
-enum ObjetoTipo {
+	enum ObjetoTipo {
 	None,
+	Player,
 	Tilemap,
 	Block,
 	Goomba,
 	Koopa,
 	Mushroom,
 	Shell,
+	moveShell,
 	Coin
-};
+	};
 enum CollisionDir {
 	Above,
 	Middle,

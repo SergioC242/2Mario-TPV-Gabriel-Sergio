@@ -86,17 +86,17 @@ void Player::update() {
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, true);
+	bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, true);
+	bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, true);
+	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 
 	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
 	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {

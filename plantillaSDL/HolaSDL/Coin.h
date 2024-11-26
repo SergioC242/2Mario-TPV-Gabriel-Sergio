@@ -21,7 +21,7 @@ public:
 	//~Coin();
 	void update();
 	void render();
-	Collision hit(SDL_Rect rect, bool fromPlayer);
+	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	Vector2D<float> returnPos() { return position; }
 	bool isActive() { return active; }
 

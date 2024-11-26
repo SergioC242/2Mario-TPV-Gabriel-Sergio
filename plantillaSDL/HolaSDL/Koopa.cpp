@@ -34,8 +34,9 @@ void Koopa::render() {
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;
-
+	if(dirIzq)
 	texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
+	else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
 }
 
 void Koopa::update() {
@@ -75,17 +76,17 @@ void Koopa::update() {
 		// colisiones VERTICAL en función de la gravedad
 		predictedRect.x = position.X();
 		predictedRect.y = position.Y() + frameHeight/4 + GRAVITY;
-		bool collisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionGravity = game->checkCollisions(predictedRect, true);
+		bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+		Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
 		// colisiones VERTICAL en función del movimiento
 		predictedRect.y = position.Y() + frameHeight/4 - moveY;
-		bool collisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionVertical = game->checkCollisions(predictedRect, true);
+		bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+		Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
 		// colisiones HORIZONTAL en función del movimiento previsto
 		predictedRect.x = position.X() + moveX;
 		predictedRect.y = position.Y() + frameHeight/4;
-		bool collisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, true);
+		bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+		Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
 
 		// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 		if (objectCollisionGravity.hasCollided()) {
@@ -136,7 +137,7 @@ void Koopa::update() {
 }
 
 
-Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
+Collision Koopa::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	SDL_Rect koopaRect;
 	koopaRect.x = position.X();
 	koopaRect.y = position.Y() + texture->getFrameHeight() * 2 / 4;
@@ -155,7 +156,7 @@ Collision Koopa::hit(SDL_Rect rect, bool fromPlayer) {
 	SDL_bool intersection = SDL_HasIntersection(&rect, &koopaRect);
 	if (intersection == SDL_TRUE && alive) {
 
-		if (dir == Collision::CollisionDir::Above && fromPlayer && alive) {
+		if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Above && alive) {
 			alive = false;
 			die();
 		}

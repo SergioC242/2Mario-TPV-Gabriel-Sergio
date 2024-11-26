@@ -28,7 +28,7 @@ void Coin::render() {
 	}
 }
 
-Collision Coin::hit(SDL_Rect rect, bool fromPlayer) {
+Collision Coin::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	if (active)
 	{
 		SDL_Rect coinRect;
@@ -40,7 +40,7 @@ Collision Coin::hit(SDL_Rect rect, bool fromPlayer) {
 		Collision::CollisionDir dir = Collision::CollisionDir::Middle;
 
 		SDL_bool intersection = SDL_HasIntersection(&rect, &coinRect);
-		if (intersection == SDL_TRUE) {
+		if (intersection == SDL_TRUE && tipoObj == Collision::ObjetoTipo::Player) {
 			game->addScore(100);
 			active = false;
 			return Collision(true, dir, Collision::Coin);

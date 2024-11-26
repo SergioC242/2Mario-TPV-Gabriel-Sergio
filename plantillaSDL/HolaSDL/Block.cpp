@@ -94,7 +94,7 @@ void Block::act() {
     }
 }
 
-Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
+Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 
     SDL_Rect blockRect;
     blockRect.x = position.X();
@@ -117,7 +117,7 @@ Collision Block::hit(SDL_Rect rect, bool fromPlayer) {
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
 
-        if (tipo == Tipo::Pregunta && dir == Collision::CollisionDir::Below && fromPlayer) {
+        if (tipo == Tipo::Pregunta && tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Below) {
             tipo = Tipo::Vacio;
             hitAnimFrame = true;
             act();

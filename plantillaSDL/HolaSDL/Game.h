@@ -77,7 +77,7 @@ public:
 	void handleEvents();
 
 	void loadMap();
-	Collision checkCollisions(SDL_Rect rect, bool fromPlayer);
+	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);
 	void destroyDead();

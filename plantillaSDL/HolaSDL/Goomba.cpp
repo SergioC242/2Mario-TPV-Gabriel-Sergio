@@ -88,17 +88,17 @@ void Goomba::update() {
 			// colisiones VERTICAL en función de la gravedad
 			predictedRect.x = position.X();
 			predictedRect.y = position.Y() + GRAVITY;
-			bool collisionGravity = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionGravity = game->checkCollisions(predictedRect, false);
+			bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 			// colisiones VERTICAL en función del movimiento
 			predictedRect.y = position.Y() - moveY;
-			bool collisionVertical = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionVertical = game->checkCollisions(predictedRect, false);
+			bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 			// colisiones HORIZONTAL en función del movimiento previsto
 			predictedRect.x = position.X() + moveX;
 			predictedRect.y = position.Y();
-			bool collisionHorizontal = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, false);
+			bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 
 			// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 			if (objectCollisionGravity.hasCollided()) {
@@ -150,7 +150,7 @@ void Goomba::update() {
 }
 
 
-Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
+Collision Goomba::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	
 		SDL_Rect goombaRect;
 		goombaRect.x = position.X();
@@ -170,7 +170,11 @@ Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
 		SDL_bool intersection = SDL_HasIntersection(&rect, &goombaRect);
 		if (intersection == SDL_TRUE && alive) {
 
-			if (dir == Collision::CollisionDir::Above && fromPlayer && alive) {
+			if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Above &&  alive) {
+				alive = false;
+				die();
+			}
+			else if (tipoObj == Collision::ObjetoTipo::moveShell) {
 				alive = false;
 				die();
 			}

@@ -97,7 +97,7 @@ void TileMap::render() {
 	//cout << nCols << " " << nColsOnScreen << " " << x0 + nColsOnScreen + 1 << " " << x0 << " " << game->offset_Return() << endl;
 }
 
-Collision TileMap::hit(const SDL_Rect& rect, bool fromPlayer)
+Collision TileMap::hit(const SDL_Rect& rect, Collision::ObjetoTipo tipoObj)
 {
 	// Celda del nivel que contiene la esquina superior izquierda del rectángulo
 	int row0 = rect.y / game->TILE_SIZE;

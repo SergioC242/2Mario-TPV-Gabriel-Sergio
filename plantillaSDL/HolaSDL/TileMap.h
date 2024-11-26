@@ -35,7 +35,7 @@ public:
 	void render();
 
 	// Detectar colisiones
-	Collision hit(const SDL_Rect& rect, bool fromPlayer);
+	Collision hit(const SDL_Rect& rect, Collision::ObjetoTipo tipoObj);
 
 	int returnNCols() { return nCols; }
 	int returnNRows() { return nRows; }

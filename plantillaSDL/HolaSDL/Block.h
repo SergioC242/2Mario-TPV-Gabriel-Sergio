@@ -43,7 +43,7 @@ public:
     void render();
     void update();
     void act();
-    Collision hit(SDL_Rect rect, bool fromPlayer);
+    Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
     Point2D returnPos() { return position; }
 };
 

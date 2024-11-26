@@ -20,7 +20,7 @@ public:
 		cout << "Fallo de polimorfismo en HandleEvents para GameItem" << endl;
 	}
 
-	virtual Collision hit(SDL_Rect rect, bool fromPlayer) {
+	virtual Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 		cout << "Fallo de polimorfismo en Hit para GameItem" << endl;
 		return Collision(false, Collision::CollisionDir::Middle, Collision::None);
 	}
