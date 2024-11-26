@@ -10,8 +10,6 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 #pragma once
 
 class Game;
@@ -37,8 +35,8 @@ public:
 	// Detectar colisiones
 	Collision hit(const SDL_Rect& rect, Collision::ObjetoTipo tipoObj);
 
-	int returnNCols() { return nCols; }
-	int returnNRows() { return nRows; }
+	int returnNCols() const { return nCols; }
+	int returnNRows() const { return nRows; }
 
 	/*
 	// Destructora

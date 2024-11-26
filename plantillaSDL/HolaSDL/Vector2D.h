@@ -16,10 +16,10 @@ public:
 	Vector2D() { x = 0; y = 0; }
 	Vector2D(T x, T y) : x(x), y(y) {}
 
-	T X() {
+	T X() const {
 		return x;
 	}
-	T Y() {
+	T Y() const {
 		return y;
 	}
 

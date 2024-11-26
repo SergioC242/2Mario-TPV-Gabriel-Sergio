@@ -42,9 +42,9 @@ public:
 		tipo = t;
 	}
 
-	bool hasCollided() { return collision; }
-	CollisionDir directionV() { return dirV; }
-	ObjetoTipo object() { return tipo; }
+	bool hasCollided() const { return collision; }
+	CollisionDir directionV() const { return dirV; }
+	ObjetoTipo object() const { return tipo; }
 };
 
 #endif
