@@ -1,6 +1,8 @@
 #ifndef COLLISION_H
 #define COLLISION_H
 
+#include "checkML.h"
+
 #pragma once
 class Collision
 {
