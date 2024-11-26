@@ -136,6 +136,9 @@ void Player::update() {
 			}
 			else {
 				// take damage
+				if (forma == Forma::Super) {
+					forma = Forma::Small;
+				}
 			}
 		}
 		else if (objectCollisionVertical.object() == Collision::Mushroom) {

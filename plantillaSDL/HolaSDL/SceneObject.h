@@ -29,6 +29,10 @@ public:
 		cout << "Fallo de polimorfismo en returnPos para GameItem" << endl;
 		return Point2D(0, 0);
 	}
+	virtual bool isActive() {
+		cout << "Fallo de polimorfismo en isActive para GameItem" << endl;
+		return true;
+	}
 };
 
 #endif

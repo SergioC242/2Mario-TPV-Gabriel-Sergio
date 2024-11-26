@@ -8,6 +8,10 @@ Coin::Coin(Texture* tex, Game* g, int posX, int posY) : position(posX, posY) {
 	game = g;
 	active = true;
 }
+//Coin::~Coin() {
+//	texture = nullptr;
+//	game = nullptr;
+//}
 
 void Coin::update(){}
 

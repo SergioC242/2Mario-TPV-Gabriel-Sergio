@@ -22,7 +22,7 @@ struct TextureSpec
 };
 
 // Directorio raíz de los archivos de textura
-const string textureRoot = "../assets/imgs/";
+const string textureRoot = "../assets/images/";
 
 // Especificación de las texturas del juego
 const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
@@ -265,6 +265,7 @@ Game::update()
 	for (int i = 0; i < activeItems.size(); i++) {
 		activeItems[i]->update();
 	}
+	//destroyDead();
 }
 
 void
@@ -291,6 +292,15 @@ void Game::createShell(int x, int y) {
 	cout << x << "|" << y << endl;
 	activeItems.push_back(shell);
 }
+
+void Game::destroyDead() {
+	for (int i = 0; i < activeItems.size(); i++) {
+		if (!(activeItems[i]->isActive())) {
+			delete activeItems[i];
+		}
+	}
+}
+
 int 
 Game::offset_Return() {
 	return mapOffset;

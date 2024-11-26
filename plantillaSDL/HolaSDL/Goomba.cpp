@@ -16,6 +16,12 @@ Goomba::Goomba(Texture* tex, Game* g, int posX, int posY) : position(posX + game
 }
 
 
+//Goomba::~Goomba() {
+//	texture = nullptr;
+//	game = nullptr;
+//}
+
+
 void Goomba::render() {
 	if(alive)
 	{
@@ -82,17 +88,17 @@ void Goomba::update() {
 			// colisiones VERTICAL en función de la gravedad
 			predictedRect.x = position.X();
 			predictedRect.y = position.Y() + GRAVITY;
-			bool collisionGravity = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionGravity = game->checkCollisions(predictedRect, true);
+			bool collisionGravity = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionGravity = game->checkCollisions(predictedRect, false);
 			// colisiones VERTICAL en función del movimiento
 			predictedRect.y = position.Y() - moveY;
-			bool collisionVertical = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionVertical = game->checkCollisions(predictedRect, true);
+			bool collisionVertical = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionVertical = game->checkCollisions(predictedRect, false);
 			// colisiones HORIZONTAL en función del movimiento previsto
 			predictedRect.x = position.X() + moveX;
 			predictedRect.y = position.Y();
-			bool collisionHorizontal = game->getTileMap()->hit(predictedRect, true).hasCollided(); // Dirección es irrelevante para tilemap
-			Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, true);
+			bool collisionHorizontal = game->getTileMap()->hit(predictedRect, false).hasCollided(); // Dirección es irrelevante para tilemap
+			Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, false);
 
 			// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 			if (objectCollisionGravity.hasCollided()) {
@@ -145,7 +151,7 @@ void Goomba::update() {
 
 
 Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
-
+	
 		SDL_Rect goombaRect;
 		goombaRect.x = position.X();
 		goombaRect.y = position.Y();
@@ -171,6 +177,7 @@ Collision Goomba::hit(SDL_Rect rect, bool fromPlayer) {
 			return Collision(true, dir, Collision::Goomba);
 		}
 		return Collision(false, dir, Collision::Goomba);
+	
 
 }
 

@@ -18,10 +18,12 @@ private:
 public:
 
 	Coin(Texture* tex, Game* g, int posX, int posY);
+	//~Coin();
 	void update();
 	void render();
 	Collision hit(SDL_Rect rect, bool fromPlayer);
 	Vector2D<float> returnPos() { return position; }
+	bool isActive() { return active; }
 
 };
 

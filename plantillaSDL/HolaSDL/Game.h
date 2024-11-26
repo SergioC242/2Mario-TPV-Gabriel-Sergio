@@ -80,6 +80,7 @@ public:
 	Collision checkCollisions(SDL_Rect rect, bool fromPlayer);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);
+	void destroyDead();
 
 	int offset_Return();
 	void offset_Add(int n);

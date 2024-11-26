@@ -25,10 +25,12 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Mushroom(Texture* tex, Game* g, int posX, int posY);
+	//~Mushroom();
 	void update();
 	void render();
 	Collision hit(SDL_Rect rect, bool fromPlayer);
 	Vector2D<float> returnPos() { return position; }
+	bool isActive() { return active; }
 
 };
 
