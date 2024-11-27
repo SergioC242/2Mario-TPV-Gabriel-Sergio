@@ -17,11 +17,11 @@ private:
 	Game* game;
 public:
 	virtual void update() {
-		cout << "Fallo de polimorfismo en Update para GameItem" << endl;
+		//cout << "Fallo de polimorfismo en Update para GameItem" << endl;
 	}
 
 	virtual void render() {
-		cout << "Fallo de polimorfismo en Render para GameItem" << endl;
+		//cout << "Fallo de polimorfismo en Render para GameItem" << endl;
 	}
 };
 

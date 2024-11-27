@@ -11,6 +11,7 @@
 #include "SceneObject.h"
 #include "TileMap.h"
 #include "Player.h"
+#include "gameList.h"
 
 #pragma once
 
@@ -65,9 +66,13 @@ private:
 	TileMap* tilemap;
 	Player* player;
 
+	//lista de objetos (gamelist)
+	GameList<SceneObject> lista;
+	vector<SceneObject*> createdItems;
+
 	// Objetos del juego
 	vector<SceneObject*> gameItems;
-	vector<SceneObject*> activeItems;
+	vector<SceneObject*> activeItems; //objetos que se spawnean
 
 public:
 	void run();

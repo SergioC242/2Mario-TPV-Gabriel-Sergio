@@ -116,6 +116,12 @@ void Player::update() {
 			}
 			else {
 				// take damage
+				if (forma == Forma::Super) {
+					forma = Forma::Small;
+				}
+				else if (forma == Forma::Small) {
+					//die
+				}
 			}
 		}
 		else if (objectCollisionGravity.object() == Collision::Mushroom) {
@@ -139,6 +145,9 @@ void Player::update() {
 				if (forma == Forma::Super) {
 					forma = Forma::Small;
 				}
+				else if (forma == Forma::Small) {
+					//die
+				}
 			}
 		}
 		else if (objectCollisionVertical.object() == Collision::Mushroom) {
@@ -159,6 +168,12 @@ void Player::update() {
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Goomba || objectCollisionVertical.object() == Collision::Koopa) {
 			// take damage
+			if (forma == Forma::Super) {
+				forma = Forma::Small;
+			}
+			else if (forma == Forma::Small) {
+				//die
+			}
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
 			if (forma == Forma::Small) {
@@ -269,5 +284,5 @@ void Player::makeSuper() {
 }
 
 Player::~Player() {
-	for (Texture* tex : textures) delete tex;
+	//for (Texture* tex : textures) delete tex;
 }

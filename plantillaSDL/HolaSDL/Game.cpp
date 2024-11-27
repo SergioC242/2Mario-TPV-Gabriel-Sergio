@@ -110,6 +110,7 @@ void Game::loadMap() {
 			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, spawnPosX, spawnPosY, atrib1);
+			createdItems.push_back(player);
 		}
 		else if (tipo == 'B') { // bloque: 4 atributos
 			l >> atrib1;
@@ -117,7 +118,7 @@ void Game::loadMap() {
 			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl; 
 			Block* block = new Block(textures[Blocks], this, atrib1, atrib2, spawnPosX, spawnPosY);
-			gameItems.push_back(block);
+			createdItems.push_back(block);
 			// if atrb 2 = p { mushroom(puntero al bloque) pushback
 			
 		}
@@ -126,21 +127,21 @@ void Game::loadMap() {
 			cout << "GOOMBA - " << posX << "|" << posY << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Goomba* goomba = new Goomba(textures[GoombaTex], this, spawnPosX, spawnPosY);
-			gameItems.push_back(goomba);
+			createdItems.push_back(goomba);
 		}
 		else if (tipo == 'K') { // koopa: 2 atributos
 			spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
 			cout << "KOOPA - " << posX << "|" << posY << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Koopa* koopa = new Koopa(textures[KoopaTex], this, spawnPosX, spawnPosY);
-			gameItems.push_back(koopa);
+			createdItems.push_back(koopa);
 		}
 		else if (tipo == 'C') { // koopa: 2 atributos
 			//spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
 			cout << "COIN - " << posX << "|" << posY << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Coin* coin = new Coin(textures[CoinTex], this, spawnPosX, spawnPosY);
-			gameItems.push_back(coin);
+			createdItems.push_back(coin);
 		}
 
 		cout << "------------------\n";
@@ -149,11 +150,11 @@ void Game::loadMap() {
 }
 
 Collision Game::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
-	for (int i = 0; i < gameItems.size(); i++) {
-		int distX = abs(gameItems[i]->returnPos().Y() - rect.y);
-		int distY = abs(gameItems[i]->returnPos().Y() - rect.y);
+	for (int i = 0; i < createdItems.size(); i++) {
+		int distX = abs(createdItems[i]->returnPos().Y() - rect.y);
+		int distY = abs(createdItems[i]->returnPos().Y() - rect.y);
 		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = gameItems[i]->hit(rect, tipoObj);
+			Collision collision = createdItems[i]->hit(rect, tipoObj);
 			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
@@ -243,8 +244,8 @@ Game::render() const
 	// Renderiza player
 	player->render();
 	// Renderiza objetos del mapa
-	for (int i = 0; i < gameItems.size(); i++) {
-		gameItems[i]->render();
+	for (int i = 0; i < createdItems.size(); i++) {
+		createdItems[i]->render();
 	}
 	for (int i = 0; i < activeItems.size(); i++) {
 		activeItems[i]->render();
@@ -259,8 +260,8 @@ Game::update()
 	// Actualiza player
 	player->update();
 	// Actualiza los objetos del juego
-	for (int i = 0; i < gameItems.size(); i++) {
-		gameItems[i]->update();
+	for (int i = 0; i < createdItems.size(); i++) {
+		createdItems[i]->update();
 	}
 	for (int i = 0; i < activeItems.size(); i++) {
 		activeItems[i]->update();

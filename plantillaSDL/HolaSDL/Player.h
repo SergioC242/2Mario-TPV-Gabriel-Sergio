@@ -1,6 +1,6 @@
 #include "Vector2D.h"
 #include "Texture.h"
-#include "GameObject.h"
+#include "SceneObject.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "checkML.h"
@@ -9,13 +9,14 @@
 #include <SDL.h>
 
 
+
 #pragma once
 
 class Game;
 
 using uint = unsigned int;
 
-class Player : public GameObject
+class Player : public SceneObject
 {
 private:
 
