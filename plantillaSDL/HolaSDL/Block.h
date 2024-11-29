@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "Game.h"
 #include "SceneObject.h"
+#include "gameList.h"
 #include "checkML.h"
 #include <iostream>
 
@@ -37,8 +38,10 @@ private:
 
 public:
 
-    //cnstructor
+    //constructor
     Block(Texture* tex, Game* g, char t, char a, int x, int y);
+    Block(const Block&) {}
+    Block* clone() const { return new Block(*this); }
 
     void render();
     void update();

@@ -31,6 +31,9 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Koopa(Texture* tex, Game* g, int posX, int posY);
+	Koopa(const Koopa&) {}
+	Koopa* clone() const { return new Koopa(*this); }
+
 	void update();
 	void render();
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);

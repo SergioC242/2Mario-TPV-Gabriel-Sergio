@@ -25,6 +25,9 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Shell(Texture* tex, Game* g, int posX, int posY);
+	Shell(const Shell&) {}
+	Shell* clone() const { return new Shell(*this); }
+
 	void update();
 	void render();
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);

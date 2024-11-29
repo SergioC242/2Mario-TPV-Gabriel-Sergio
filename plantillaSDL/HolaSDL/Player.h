@@ -52,6 +52,8 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8; //hay que comprobar si se queda que es negativo
 
 	Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, int posY, int lives);
+	Player(const Player&) {}
+	Player* clone() const { return new Player(*this); }
 
 	void handleEvent(SDL_KeyboardEvent& E);
 	void update();

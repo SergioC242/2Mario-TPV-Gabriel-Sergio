@@ -149,23 +149,20 @@ void Game::loadMap() {
 	cout << "|                |\n" << "------------------\n";
 }
 
+void Game::addVisibleObjects() {
+	for (int i = 0; i < createdItems.size(); i++) {
+		if (createdItems[i]->returnPos().X() < (mapOffset + WIN_WIDTH + TILE_SIZE)) { // Está en pantalla
+			lista.push_back(createdItems[i]->clone());
+		}
+	}
+}
+
 Collision Game::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	for (int i = 0; i < createdItems.size(); i++) {
 		int distX = abs(createdItems[i]->returnPos().Y() - rect.y);
 		int distY = abs(createdItems[i]->returnPos().Y() - rect.y);
 		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
 			Collision collision = createdItems[i]->hit(rect, tipoObj);
-			//cout << collision.directionV() << endl;
-			if (collision.hasCollided()) {
-				return collision;
-			}
-		}
-	}
-	for (int i = 0; i < activeItems.size(); i++) {
-		int distX = abs(activeItems[i]->returnPos().Y() - rect.y);
-		int distY = abs(activeItems[i]->returnPos().Y() - rect.y);
-		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = activeItems[i]->hit(rect, tipoObj);
 			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
@@ -179,8 +176,8 @@ Game::~Game()
 {
 
 	// Elimina los objetos del juego
-	for (GameObject* obj : gameItems) delete obj;
-	for (GameObject* obj : activeItems) delete obj;
+	for (GameObject* obj : createdItems) delete obj;
+	// lista
 	delete tilemap;
 	delete player;
 
@@ -247,9 +244,6 @@ Game::render() const
 	for (int i = 0; i < createdItems.size(); i++) {
 		createdItems[i]->render();
 	}
-	for (int i = 0; i < activeItems.size(); i++) {
-		activeItems[i]->render();
-	}
 
 	SDL_RenderPresent(renderer);
 }
@@ -262,9 +256,6 @@ Game::update()
 	// Actualiza los objetos del juego
 	for (int i = 0; i < createdItems.size(); i++) {
 		createdItems[i]->update();
-	}
-	for (int i = 0; i < activeItems.size(); i++) {
-		activeItems[i]->update();
 	}
 	//destroyDead();
 }
@@ -286,20 +277,21 @@ Game::handleEvents()
 
 void Game::createMushrooms(int x,  int y) {
 	Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - TILE_SIZE);
-	activeItems.push_back(mushroom);
+	lista.push_back(mushroom);
 }
 void Game::createShell(int x, int y) {
 	Shell* shell = new Shell(textures[ShellTex], this, x, y - TILE_SIZE * 2);
-	cout << x << "|" << y << endl;
-	activeItems.push_back(shell);
+	lista.push_back(shell);
 }
 
 void Game::destroyDead() {
+	/*
 	for (int i = 0; i < activeItems.size(); i++) {
 		if (!(activeItems[i]->isActive())) {
 			delete activeItems[i];
 		}
 	}
+	*/
 }
 
 int 

@@ -17,9 +17,12 @@ class Game;
 
 class SceneObject : public GameObject
 {
-private:
+protected:
 	GameList<SceneObject>::anchor anchor;
 public:
+
+	SceneObject(){}
+	SceneObject(const SceneObject&) { }
 
 	void setListAnchor(GameList<SceneObject>::anchor&& anchor);
 	virtual void handleEvents() {
@@ -39,6 +42,8 @@ public:
 		//cout << "Fallo de polimorfismo en isActive para GameItem" << endl;
 		return true;
 	}
+
+	virtual SceneObject* clone() const = 0;
 };
 
 #endif

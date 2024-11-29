@@ -71,8 +71,8 @@ private:
 	vector<SceneObject*> createdItems;
 
 	// Objetos del juego
-	vector<SceneObject*> gameItems;
-	vector<SceneObject*> activeItems; //objetos que se spawnean
+	//vector<SceneObject*> gameItems;
+	//vector<SceneObject*> activeItems; //objetos que se spawnean
 
 public:
 	void run();
@@ -82,6 +82,7 @@ public:
 	void handleEvents();
 
 	void loadMap();
+	void addVisibleObjects();
 	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);

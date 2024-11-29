@@ -16,8 +16,10 @@ private:
 	bool active;
 
 public:
-
 	Coin(Texture* tex, Game* g, int posX, int posY);
+	Coin(const Coin&) {}
+	Coin* clone() const { return new Coin(*this); }
+
 	//~Coin();
 	void update();
 	void render();
