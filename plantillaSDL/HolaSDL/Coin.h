@@ -17,7 +17,7 @@ private:
 
 public:
 	Coin(Texture* tex, Game* g, int posX, int posY);
-	Coin(const Coin&) {}
+	Coin(const Coin&);
 	Coin* clone() const { return new Coin(*this); }
 
 	//~Coin();

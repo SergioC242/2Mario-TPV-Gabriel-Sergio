@@ -31,7 +31,7 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Koopa(Texture* tex, Game* g, int posX, int posY);
-	Koopa(const Koopa&) {}
+	Koopa(const Koopa&);
 	Koopa* clone() const { return new Koopa(*this); }
 
 	void update();

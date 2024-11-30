@@ -22,7 +22,6 @@ protected:
 public:
 
 	SceneObject(){}
-	SceneObject(const SceneObject&) { }
 
 	void setListAnchor(GameList<SceneObject>::anchor&& anchor);
 	virtual void handleEvents() {

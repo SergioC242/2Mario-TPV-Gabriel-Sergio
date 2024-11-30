@@ -28,7 +28,7 @@ private:
 public:
 	// Constructora
 	TileMap(Texture* tex, Game* g, int worldN);
-	TileMap(const TileMap&) {}
+	TileMap(const TileMap&);
 	TileMap* clone() const { return new TileMap(*this); }
 
 	// Dibujar el mapa

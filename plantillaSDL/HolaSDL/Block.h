@@ -40,7 +40,7 @@ public:
 
     //constructor
     Block(Texture* tex, Game* g, char t, char a, int x, int y);
-    Block(const Block&) {}
+    Block(const Block&) = default;
     Block* clone() const { return new Block(*this); }
 
     void render();

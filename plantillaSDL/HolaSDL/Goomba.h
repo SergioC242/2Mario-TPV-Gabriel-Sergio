@@ -30,7 +30,7 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Goomba(Texture* tex, Game* g, int posX, int posY);
-	Goomba(const Goomba&) {}
+	Goomba(const Goomba&);
 	Goomba* clone() const { return new Goomba(*this); }
 
 	//~Goomba();

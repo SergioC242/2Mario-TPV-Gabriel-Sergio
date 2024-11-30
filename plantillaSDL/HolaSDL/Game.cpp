@@ -241,6 +241,7 @@ Game::render() const
 	// Renderiza player
 	player->render();
 	// Renderiza objetos del mapa
+
 	for (int i = 0; i < createdItems.size(); i++) {
 		createdItems[i]->render();
 	}

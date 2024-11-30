@@ -25,7 +25,7 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Mushroom(Texture* tex, Game* g, int posX, int posY);
-	Mushroom(const Mushroom&) {}
+	Mushroom(const Mushroom&);
 	Mushroom* clone() const { return new Mushroom(*this); }
 
 	//~Mushroom();
