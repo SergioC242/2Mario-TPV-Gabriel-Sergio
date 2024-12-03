@@ -82,7 +82,7 @@ void Player::update() {
 		predictedRect.h = predictedRect.h * 2;
 	}
 
-	cout << predictedRect.x << "|" << predictedRect.y << " " << predictedRect.w << "|" << predictedRect.h << endl;
+	//cout << predictedRect.x << "|" << predictedRect.y << " " << predictedRect.w << "|" << predictedRect.h << endl;
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.y = position.Y() + GRAVITY;

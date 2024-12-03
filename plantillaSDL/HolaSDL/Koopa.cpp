@@ -15,10 +15,12 @@ Koopa::Koopa(Texture* tex, Game* g, int posX, int posY) : position(posX + game->
 
 
 void Koopa::render() const{
-	
-	if(dirIzq)
-	texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
-	else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
+	if(alive)
+	{
+		if (dirIzq)
+			texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
+		else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
+	}
 }
 
 void Koopa::update() {

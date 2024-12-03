@@ -78,6 +78,8 @@ Game::Game(int worldN, Game* pGame)	: exit(false) {
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
 
+	objectVectorPos = 0;
+
 	// Crea los elementos del juego
 	loadMap();
 }
@@ -150,19 +152,21 @@ void Game::loadMap() {
 }
 
 void Game::addVisibleObjects() {
-	for (int i = 0; i < createdItems.size(); i++) {
+	if (objectVectorPos > createdItems.size())objectVectorPos = createdItems.size();
+	for (int i = objectVectorPos; i < createdItems.size(); i++) {
 		if (createdItems[i]->returnPos().X() < (mapOffset + WIN_WIDTH + TILE_SIZE)) { // Está en pantalla
 			lista.push_back(createdItems[i]->clone());
+			objectVectorPos++;
 		}
 	}
 }
 
 Collision Game::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
-	for (int i = 0; i < createdItems.size(); i++) {
-		int distX = abs(createdItems[i]->returnPos().Y() - rect.y);
-		int distY = abs(createdItems[i]->returnPos().Y() - rect.y);
+	for (auto obj : lista) {
+		int distX = abs(obj->returnPos().Y() - rect.y);
+		int distY = abs(obj->returnPos().Y() - rect.y);
 		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = createdItems[i]->hit(rect, tipoObj);
+			Collision collision = obj->hit(rect, tipoObj);
 			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
@@ -251,6 +255,7 @@ Game::render() const
 	for (auto elem : lista) {
 		elem->render();
 	}
+
 	SDL_RenderPresent(renderer);
 }
 
@@ -261,8 +266,8 @@ Game::update()
 	player->update();
 	// Actualiza los objetos del juego
 	addVisibleObjects();
-	for (int i = 0; i < createdItems.size(); i++) {
-		createdItems[i]->update();
+	for (auto elem : lista) {
+		elem->update();
 	}
 	//destroyDead();
 }

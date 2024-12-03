@@ -69,6 +69,7 @@ private:
 	//lista de objetos (gamelist)
 	GameList<SceneObject> lista;
 	vector<SceneObject*> createdItems;
+	int objectVectorPos;
 
 	// Objetos del juego
 	//vector<SceneObject*> gameItems;

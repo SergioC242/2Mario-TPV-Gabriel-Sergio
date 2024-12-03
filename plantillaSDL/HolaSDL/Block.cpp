@@ -39,32 +39,19 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
     }
     game = g;
 
-    rect.x = position.X() - game->offset_Return();
-    rect.y = position.Y();
-    rect.h = Game::TILE_SIZE;
-    rect.w = Game::TILE_SIZE;
-    if (hitAnimFrame) {
-        rect.y = position.Y() - (Game::TILE_SIZE / 2);
-        hitAnimFrame = false;
-    }
-    if (tipo == Tipo::Pregunta) {
-        if (currentFrame >= 3) {
-            currentFrame = 0;
-        }
-        else {
-            currentFrame++;
-        }
-    }
+    
+    
     
 }
 
 void Block::render() const{
-
     // const SDL_Rect& target, int row, int col, SDL_RendererFlip flip
     if (tipo == Tipo::Pregunta) {
+        cout << "bloqueeeeee" << endl;
         texture->renderFrame(rect, 0, startFrame + currentFrame, SDL_FLIP_NONE);
     }
     else {
+        cout << "bloqueeeeee" << endl;
         texture->renderFrame(rect, 0, startFrame, SDL_FLIP_NONE);
     }
 }
@@ -81,6 +68,23 @@ void Block::update() {
     }
     else if (tipo == Tipo::Oculto) {
         startFrame = -1;
+    }
+    rect.x = position.X() - game->offset_Return();
+    rect.y = position.Y();
+    rect.h = Game::TILE_SIZE;
+    rect.w = Game::TILE_SIZE;
+
+    if (hitAnimFrame) {
+        rect.y = position.Y() - (Game::TILE_SIZE / 2);
+        hitAnimFrame = false;
+    }
+    if (tipo == Tipo::Pregunta) {
+        if (currentFrame >= 3) {
+            currentFrame = 0;
+        }
+        else {
+            currentFrame++;
+        }
     }
 }
 

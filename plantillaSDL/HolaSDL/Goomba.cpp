@@ -23,8 +23,7 @@ Goomba::Goomba(Texture* tex, Game* g, int posX, int posY) : position(posX + game
 
 
 void Goomba::render() const{
-	if(alive)
-	{
+	if(alive){
 		texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
 	}
 }

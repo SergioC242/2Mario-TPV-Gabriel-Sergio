@@ -109,18 +109,18 @@ void Shell::update(){
 	else {
 		moveX = -moveX;
 	}
-}
 
-void Shell::render() {
-
-	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;
+}
 
+void Shell::render() const{
 	texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 }
+
+
 Collision Shell::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	SDL_Rect shellRect;
 	shellRect.x = position.X();
