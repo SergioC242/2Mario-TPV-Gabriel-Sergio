@@ -16,7 +16,6 @@ private:
 	int moveX;
 	int moveY;
 	bool onGround;
-	bool active;
 	int hitCD;
 
 public:

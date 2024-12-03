@@ -19,9 +19,7 @@ private:
 	int frame;
 	int moveX;
 	int moveY;
-	bool alive;
 	bool onGround;
-	bool active;
 	bool dead;
 
 public: 
@@ -38,7 +36,6 @@ public:
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void die();
 	Vector2D<float> returnPos() { return position; }
-	bool isActive() { return active; }
 };
 
 #endif

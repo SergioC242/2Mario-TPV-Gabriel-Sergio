@@ -20,10 +20,8 @@ private:
 	int frame;
 	int moveX;
 	int moveY;
-	bool alive;
 	bool inShell;
 	bool onGround;
-	bool active;
 
 public:
 	static constexpr uint WALK_POWER = 4;

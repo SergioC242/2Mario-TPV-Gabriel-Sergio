@@ -7,7 +7,6 @@ Shell::Shell(Texture* tex, Game* g, int posX, int posY) : position(posX, posY + 
 	dirIzq = false;
 	moving = false;
 	onGround = true;
-	active = false;
 	hitCD = 20;
 	moveX = 0;
 	moveY = 0;

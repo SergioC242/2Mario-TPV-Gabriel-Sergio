@@ -8,135 +8,117 @@ Koopa::Koopa(Texture* tex, Game* g, int posX, int posY) : position(posX + game->
 	game = g;
 	dirIzq = true;
 	frame = 0;
-	alive = true;
 	onGround = true;
-	active = false;
 }
 
 
 void Koopa::render() const{
-	if(alive)
-	{
-		if (dirIzq)
-			texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
-		else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
-	}
+	if (dirIzq) texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
+	else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
 }
 
 void Koopa::update() {
-	if (!active) {
-		active = (game->offset_Return() + game->WIN_WIDTH + game->TILE_SIZE) > position.X();
+	int walkp = WALK_POWER;
+	if (dirIzq) {
+		moveX = -walkp;
 	}
-	else if (alive)
-	{
-		int walkp = WALK_POWER;
-		if (dirIzq) {
-			moveX = -walkp;
+	else {
+		moveX = walkp;
+	}
+
+	int maxfallspeed = MAX_FALL_SPEED;
+
+	if (onGround) {
+		moveY = 0;
+	}
+	else {
+		if (moveY <= -maxfallspeed) {
+			moveY = -maxfallspeed;
 		}
 		else {
-			moveX = walkp;
+			moveY -= GRAVITY;
 		}
+	}
 
-		int maxfallspeed = MAX_FALL_SPEED;
+	int frameWidth = texture->getFrameWidth() * 2;
+	int frameHeight = texture->getFrameHeight() * 2;
+	SDL_Rect predictedRect;
+	predictedRect.w = frameWidth;
+	predictedRect.h = frameHeight / 4 * 3;
 
-		if (onGround) {
-			moveY = 0;
-		}
-		else {
-			if (moveY <= -maxfallspeed) {
-				moveY = -maxfallspeed;
-			}
-			else {
-				moveY -= GRAVITY;
-			}
-		}
+	// colisiones VERTICAL en función de la gravedad
+	predictedRect.x = position.X();
+	predictedRect.y = position.Y() + frameHeight / 4 + GRAVITY;
+	bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
+	// colisiones VERTICAL en función del movimiento
+	predictedRect.y = position.Y() + frameHeight / 4 - moveY;
+	bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
+	// colisiones HORIZONTAL en función del movimiento previsto
+	predictedRect.x = position.X() + moveX;
+	predictedRect.y = position.Y() + frameHeight / 4;
+	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
 
-		int frameWidth = texture->getFrameWidth() * 2;
-		int frameHeight = texture->getFrameHeight() * 2;
-		SDL_Rect predictedRect;
-		predictedRect.w = frameWidth;
-		predictedRect.h = frameHeight / 4 * 3;
+	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
+	if (objectCollisionGravity.hasCollided()) {
+		if (objectCollisionGravity.object() == Collision::Block) {
+			collisionGravity = true;
+		}
+	}
+	else if (objectCollisionVertical.hasCollided()) {
+		if (objectCollisionVertical.object() == Collision::Block) {
+			collisionHorizontal = true;
+		}
+	}
+	else if (objectCollisionHorizontal.hasCollided()) {
+		if (objectCollisionHorizontal.object() == Collision::Block) {
+			collisionHorizontal = true;
+		}
+	}
 
-		// colisiones VERTICAL en función de la gravedad
-		predictedRect.x = position.X();
-		predictedRect.y = position.Y() + frameHeight/4 + GRAVITY;
-		bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
-		// colisiones VERTICAL en función del movimiento
-		predictedRect.y = position.Y() + frameHeight/4 - moveY;
-		bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
-		// colisiones HORIZONTAL en función del movimiento previsto
-		predictedRect.x = position.X() + moveX;
-		predictedRect.y = position.Y() + frameHeight/4;
-		bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Koopa).hasCollided(); // Dirección es irrelevante para tilemap
-		Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Koopa);
+	// cálculo de onGround (en el suelo)
+	if (!collisionGravity && !collisionVertical) {
+		onGround = false;
+	}
+	else {
+		onGround = true;
+	}
 
-		// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
-		if (objectCollisionGravity.hasCollided()) {
-			if (objectCollisionGravity.object() == Collision::Block) {
-				collisionGravity = true;
-			}
-		}
-		else if (objectCollisionVertical.hasCollided()) {
-			if (objectCollisionVertical.object() == Collision::Block) {
-				collisionHorizontal = true;
-			}
-		}
-		else if (objectCollisionHorizontal.hasCollided()) {
-			if (objectCollisionHorizontal.object() == Collision::Block) {
-				collisionHorizontal = true;
-			}
-		}
-
-		// cálculo de onGround (en el suelo)
-		if (!collisionGravity && !collisionVertical) {
-			onGround = false;
-		}
-		else {
-			onGround = true;
-		}
-
-		// aplicar movimiento VERTICAL
-		if (!onGround) {
-			position += Vector2D<float>(0, -moveY);
-		}
-		else {
-			moveY = 0;
-		}
-		// aplicar movimiento HORIZONTAL
-		if (!collisionHorizontal) {
-			if (!(position.X() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde del mapa
-				position += Vector2D<float>(moveX, 0);
-			}
-			else {
-				dirIzq = !dirIzq;
-			}
+	// aplicar movimiento VERTICAL
+	if (!onGround) {
+		position += Vector2D<float>(0, -moveY);
+	}
+	else {
+		moveY = 0;
+	}
+	// aplicar movimiento HORIZONTAL
+	if (!collisionHorizontal) {
+		if (!(position.X() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde del mapa
+			position += Vector2D<float>(moveX, 0);
 		}
 		else {
 			dirIzq = !dirIzq;
 		}
-
-		if (alive)
-		{
-			if (frame == 0) {
-				frame = 1;
-			}
-			else {
-				frame = 0;
-			}
-		}
-		else
-		{
-			frame = -1; // Se debe reemplazar con un objeto shell cuando muere, no tiene sprite para muerte
-		}
-
-		rect.x = position.X() - game->offset_Return();
-		rect.y = position.Y();
-		rect.h = texture->getFrameHeight() * 2;
-		rect.w = texture->getFrameWidth() * 2;
-
 	}
+	else {
+		dirIzq = !dirIzq;
+	}
+	
+	if (frame == 0) {
+		frame = 1;
+	}
+	else {
+		frame = 0;
+	}
+
+	rect.x = position.X() - game->offset_Return();
+	rect.y = position.Y();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
+
+	
 }
 
 
@@ -157,13 +139,12 @@ Collision Koopa::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	}
 
 	SDL_bool intersection = SDL_HasIntersection(&rect, &koopaRect);
-	if (intersection == SDL_TRUE && alive) {
-
-		if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Above && alive) {
-			alive = false;
+	if (intersection == SDL_TRUE) {
+		Collision::ObjetoTipo type = Collision::Koopa;
+		if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Above) {
 			die();
 		}
-		return Collision(true, dir, Collision::Koopa);
+		return Collision(true, dir, type);
 	}
 	return Collision(false, dir, Collision::Koopa);
 }
@@ -171,4 +152,5 @@ Collision Koopa::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 void Koopa::die() {
 	game->addScore(100);
 	game->createShell(position.X(), position.Y());
+	delete this;
 }

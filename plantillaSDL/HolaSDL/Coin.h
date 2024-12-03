@@ -13,7 +13,6 @@ private:
 	Vector2D<float> position;
 	Texture* texture;
 	Game* game;
-	bool active;
 
 public:
 	Coin(Texture* tex, Game* g, int posX, int posY);
@@ -24,7 +23,5 @@ public:
 	void render() const;
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	Vector2D<float> returnPos() { return position; }
-	bool isActive() { return active; }
-
 };
 

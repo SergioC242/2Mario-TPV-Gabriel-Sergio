@@ -47,11 +47,9 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
 void Block::render() const{
     // const SDL_Rect& target, int row, int col, SDL_RendererFlip flip
     if (tipo == Tipo::Pregunta) {
-        cout << "bloqueeeeee" << endl;
         texture->renderFrame(rect, 0, startFrame + currentFrame, SDL_FLIP_NONE);
     }
     else {
-        cout << "bloqueeeeee" << endl;
         texture->renderFrame(rect, 0, startFrame, SDL_FLIP_NONE);
     }
 }
@@ -98,6 +96,11 @@ void Block::act() {
     }
 }
 
+void Block::destroyBrick() {
+    game->addScore(50);
+    delete this;
+}
+
 Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 
     SDL_Rect blockRect;
@@ -120,14 +123,20 @@ Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 
     SDL_bool intersection = SDL_HasIntersection(&rect, &blockRect);
     if (intersection == SDL_TRUE) {
-
-        if (tipo == Tipo::Pregunta && tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Below) {
-            tipo = Tipo::Vacio;
-            hitAnimFrame = true;
-            act();
+        
+        Collision::ObjetoTipo type = Collision::Block;
+        if (tipoObj == Collision::ObjetoTipo::Player && dir == Collision::CollisionDir::Below) {
+            if (tipo == Tipo::Pregunta) {
+                tipo = Tipo::Vacio;
+                hitAnimFrame = true;
+                act();
+            }
+            else if (tipo == Tipo::Ladrillo && game->isSuperMario()) {
+                destroyBrick();
+            }
         }
 
-        return Collision(true, dir, Collision::Block);
+        return Collision(true, dir, type);
     }
     return Collision(false, dir, Collision::Block);
 }

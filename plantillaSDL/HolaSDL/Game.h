@@ -87,12 +87,12 @@ public:
 	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);
-	void destroyDead();
 
 	int offset_Return() const;
 	void offset_Add(int n);
 	void offset_Lock();
 	bool offset_isLocked() const;
+	bool isSuperMario() { return player->isSuperMario(); }
 
 	void addScore(int n);
 	void nextWorld();

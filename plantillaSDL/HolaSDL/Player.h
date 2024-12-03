@@ -60,6 +60,7 @@ public:
 
 	void bounce();
 	void makeSuper();
+	bool isSuperMario() { return (forma == Super); }
 
 	bool isMovingUp() { return moveY > 0; }
 

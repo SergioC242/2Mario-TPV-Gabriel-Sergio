@@ -18,7 +18,6 @@ private:
 	int moveX;
 	int moveY;
 	bool onGround;
-	bool active;
 public:
 	static constexpr uint WALK_POWER = 4;
 	static constexpr uint GRAVITY = 2;
@@ -32,7 +31,6 @@ public:
 	void render() const;
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	Vector2D<float> returnPos() { return position; }
-	bool isActive() { return active; }
 
 };
 

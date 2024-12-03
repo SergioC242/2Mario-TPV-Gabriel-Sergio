@@ -296,16 +296,6 @@ void Game::createShell(int x, int y) {
 	lista.push_back(shell);
 }
 
-void Game::destroyDead() {
-	/*
-	for (int i = 0; i < activeItems.size(); i++) {
-		if (!(activeItems[i]->isActive())) {
-			delete activeItems[i];
-		}
-	}
-	*/
-}
-
 int 
 Game::offset_Return() const {
 	return mapOffset;

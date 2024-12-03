@@ -45,6 +45,7 @@ public:
     void render() const;
     void update();
     void act();
+    void destroyBrick();
     Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
     Point2D returnPos() { return position; }
 };
