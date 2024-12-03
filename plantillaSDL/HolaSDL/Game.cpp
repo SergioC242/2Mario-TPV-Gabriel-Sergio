@@ -43,10 +43,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"numbers.png", 10, 1}
 };
 
-Game::Game(int worldN, Game* pGame)	: exit(false) {
-	if (pGame != nullptr) {
-		prevWorld = pGame;
-	}
+Game::Game(int worldN)	: exit(false) {
 	world = worldN;
 
 	// Inicializa la SDL
@@ -317,10 +314,4 @@ void
 Game::addScore(int n) {
 	score += n;
 	cout << "SCORE: " << to_string(score) << endl;
-}
-
-void
-Game::nextWorld() {
-	Game* game2 = new Game(world + 1, this);
-	game2->run();
 }

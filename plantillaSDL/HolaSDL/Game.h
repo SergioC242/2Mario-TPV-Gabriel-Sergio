@@ -95,7 +95,6 @@ public:
 	bool isSuperMario() { return player->isSuperMario(); }
 
 	void addScore(int n);
-	void nextWorld();
 
 	Texture* getTexture(TextureName name) const { return textures[name]; }
 	TileMap* getTileMap() { return tilemap; }
@@ -106,7 +105,7 @@ public:
 	static constexpr uint FRAME_RATE = 60;
 	static constexpr uint TILE_SIZE = 32;
 
-	Game(int worldN, Game* prevGame);
+	Game(int worldN);
 	~Game();
 };
 
