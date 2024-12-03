@@ -38,31 +38,31 @@ Block::Block(Texture* tex, Game* g, char t, char a, int x, int y) : position(x, 
         action = Action::Moneda;
     }
     game = g;
-}
 
-void Block::render() {
-
-    SDL_Rect rect;
     rect.x = position.X() - game->offset_Return();
     rect.y = position.Y();
-    rect.h = game->TILE_SIZE;
-    rect.w = game->TILE_SIZE;
-
+    rect.h = Game::TILE_SIZE;
+    rect.w = Game::TILE_SIZE;
     if (hitAnimFrame) {
-        rect.y = position.Y() - (game->TILE_SIZE / 2);
+        rect.y = position.Y() - (Game::TILE_SIZE / 2);
         hitAnimFrame = false;
     }
-
-    // const SDL_Rect& target, int row, int col, SDL_RendererFlip flip
     if (tipo == Tipo::Pregunta) {
-        texture->renderFrame(rect, 0, startFrame + currentFrame, SDL_FLIP_NONE);
-
         if (currentFrame >= 3) {
             currentFrame = 0;
         }
         else {
             currentFrame++;
         }
+    }
+    
+}
+
+void Block::render() const{
+
+    // const SDL_Rect& target, int row, int col, SDL_RendererFlip flip
+    if (tipo == Tipo::Pregunta) {
+        texture->renderFrame(rect, 0, startFrame + currentFrame, SDL_FLIP_NONE);
     }
     else {
         texture->renderFrame(rect, 0, startFrame, SDL_FLIP_NONE);
@@ -99,7 +99,7 @@ Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
     SDL_Rect blockRect;
     blockRect.x = position.X();
     blockRect.y = position.Y();
-    blockRect.w = blockRect.h = game->TILE_SIZE;
+    blockRect.w = blockRect.h = Game::TILE_SIZE;
     if (tipo == Tipo::Pregunta) {
         // Los bloques pregunta colisionan un poco más abajo, dando prioridad sobre otros bloques a la misma altura
         blockRect.h += 8; 
@@ -110,7 +110,7 @@ Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
     if (rect.y < blockRect.y) {
         dir = Collision::CollisionDir::Above;
     }
-    else if (rect.y > blockRect.y - game->TILE_SIZE) {
+    else if (rect.y > blockRect.y - Game::TILE_SIZE) {
         dir = Collision::CollisionDir::Below;
     }
 

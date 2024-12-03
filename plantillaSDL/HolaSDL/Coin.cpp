@@ -13,17 +13,16 @@ Coin::Coin(Texture* tex, Game* g, int posX, int posY) : position(posX, posY) {
 //	game = nullptr;
 //}
 
-void Coin::update(){}
+void Coin::update(){
+	rect.x = position.X() - game->offset_Return();
+	rect.y = position.Y();
+	rect.h = texture->getFrameHeight() * 2;
+	rect.w = texture->getFrameWidth() * 2;
+}
 
-void Coin::render() {
+void Coin::render() const{
 	if(active)
 	{
-		SDL_Rect rect;
-		rect.x = position.X() - game->offset_Return();
-		rect.y = position.Y();
-		rect.h = texture->getFrameHeight() * 2;
-		rect.w = texture->getFrameWidth() * 2;
-
 		texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 	}
 }

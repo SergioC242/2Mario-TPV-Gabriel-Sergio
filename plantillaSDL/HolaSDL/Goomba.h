@@ -30,12 +30,11 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Goomba(Texture* tex, Game* g, int posX, int posY);
-	Goomba(const Goomba&);
 	Goomba* clone() const { return new Goomba(*this); }
 
 	//~Goomba();
 	void update();
-	void render();
+	void render() const;
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void die();
 	Vector2D<float> returnPos() { return position; }

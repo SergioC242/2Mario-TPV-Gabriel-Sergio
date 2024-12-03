@@ -25,7 +25,6 @@ public:
 	static constexpr uint MAX_FALL_SPEED = 8;
 
 	Shell(Texture* tex, Game* g, int posX, int posY);
-	Shell(const Shell&);
 	Shell* clone() const { return new Shell(*this); }
 
 	void update();

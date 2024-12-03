@@ -42,7 +42,7 @@ public:
     Block(Texture* tex, Game* g, char t, char a, int x, int y);
     Block* clone() const { return new Block(*this); }
 
-    void render();
+    void render() const;
     void update();
     void act();
     Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);

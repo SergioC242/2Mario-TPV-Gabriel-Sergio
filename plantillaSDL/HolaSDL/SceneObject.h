@@ -17,11 +17,18 @@ class Game;
 
 class SceneObject : public GameObject
 {
+
 protected:
 	GameList<SceneObject>::anchor anchor;
+
+	SDL_Rect rect;
+
 public:
 
 	SceneObject(){}
+	SceneObject(const SceneObject&) {
+
+	}
 
 	void setListAnchor(GameList<SceneObject>::anchor&& anchor);
 	virtual void handleEvents() {

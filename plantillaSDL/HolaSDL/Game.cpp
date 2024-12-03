@@ -242,10 +242,15 @@ Game::render() const
 	player->render();
 	// Renderiza objetos del mapa
 
+	/*
 	for (int i = 0; i < createdItems.size(); i++) {
 		createdItems[i]->render();
 	}
+	*/
 
+	for (auto elem : lista) {
+		elem->render();
+	}
 	SDL_RenderPresent(renderer);
 }
 
@@ -255,6 +260,7 @@ Game::update()
 	// Actualiza player
 	player->update();
 	// Actualiza los objetos del juego
+	addVisibleObjects();
 	for (int i = 0; i < createdItems.size(); i++) {
 		createdItems[i]->update();
 	}

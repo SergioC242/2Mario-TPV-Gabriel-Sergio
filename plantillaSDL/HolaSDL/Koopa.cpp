@@ -14,26 +14,8 @@ Koopa::Koopa(Texture* tex, Game* g, int posX, int posY) : position(posX + game->
 }
 
 
-void Koopa::render() {
-	if (alive)
-	{
-		if (frame == 0) {
-			frame = 1;
-		}
-		else {
-			frame = 0;
-		}
-	}
-	else
-	{
-		frame = -1; // Se debe reemplazar con un objeto shell cuando muere, no tiene sprite para muerte
-	}
-
-	SDL_Rect rect;
-	rect.x = position.X() - game->offset_Return();
-	rect.y = position.Y();
-	rect.h = texture->getFrameHeight() * 2;
-	rect.w = texture->getFrameWidth() * 2;
+void Koopa::render() const{
+	
 	if(dirIzq)
 	texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
 	else texture->renderFrame(rect, 0, frame, SDL_FLIP_HORIZONTAL);
@@ -132,6 +114,25 @@ void Koopa::update() {
 		else {
 			dirIzq = !dirIzq;
 		}
+
+		if (alive)
+		{
+			if (frame == 0) {
+				frame = 1;
+			}
+			else {
+				frame = 0;
+			}
+		}
+		else
+		{
+			frame = -1; // Se debe reemplazar con un objeto shell cuando muere, no tiene sprite para muerte
+		}
+
+		rect.x = position.X() - game->offset_Return();
+		rect.y = position.Y();
+		rect.h = texture->getFrameHeight() * 2;
+		rect.w = texture->getFrameWidth() * 2;
 
 	}
 }

@@ -17,12 +17,11 @@ private:
 
 public:
 	Coin(Texture* tex, Game* g, int posX, int posY);
-	Coin(const Coin&);
 	Coin* clone() const { return new Coin(*this); }
 
 	//~Coin();
 	void update();
-	void render();
+	void render() const;
 	Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	Vector2D<float> returnPos() { return position; }
 	bool isActive() { return active; }

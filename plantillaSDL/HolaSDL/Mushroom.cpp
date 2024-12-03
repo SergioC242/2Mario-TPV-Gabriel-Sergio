@@ -106,18 +106,16 @@ void Mushroom::update() {
 		else {
 			dirIzq = !dirIzq;
 		}
-	}
-}
-
-
-void Mushroom::render() {
-	if (active){
-		SDL_Rect rect;
 		rect.x = position.X() - game->offset_Return();
 		rect.y = position.Y();
 		rect.h = texture->getFrameHeight() * 2;
 		rect.w = texture->getFrameWidth() * 2;
+	}
+}
 
+
+void Mushroom::render() const{
+	if (active){
 		texture->renderFrame(rect, 0, 0, SDL_FLIP_NONE);
 	}
 }

@@ -22,29 +22,9 @@ Goomba::Goomba(Texture* tex, Game* g, int posX, int posY) : position(posX + game
 //}
 
 
-void Goomba::render() {
+void Goomba::render() const{
 	if(alive)
 	{
-		if (alive)
-		{
-			if (frame == 0) {
-				frame = 1;
-			}
-			else {
-				frame = 0;
-			}
-		}
-		else
-		{
-			frame = 2;
-		}
-
-		SDL_Rect rect;
-		rect.x = position.X() - game->offset_Return();
-		rect.y = position.Y();
-		rect.h = texture->getFrameHeight() * 2;
-		rect.w = texture->getFrameWidth() * 2;
-
 		texture->renderFrame(rect, 0, frame, SDL_FLIP_NONE);
 	}
 }
@@ -146,6 +126,25 @@ void Goomba::update() {
 			}
 
 		}
+
+		if (alive)
+		{
+			if (frame == 0) {
+				frame = 1;
+			}
+			else {
+				frame = 0;
+			}
+		}
+		else
+		{
+			frame = 2;
+		}
+
+		rect.x = position.X() - game->offset_Return();
+		rect.y = position.Y();
+		rect.h = texture->getFrameHeight() * 2;
+		rect.w = texture->getFrameWidth() * 2;
 	}
 }
 
