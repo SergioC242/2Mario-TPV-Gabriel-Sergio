@@ -52,7 +52,7 @@ void Player::handleEvent(SDL_KeyboardEvent& E) {
 void Player::update() {
 
 	if (position.X() > 6296) {
-		game->nextWorld();
+		game->map_next();
 	}
 
 	int maxfallspeed = MAX_FALL_SPEED;

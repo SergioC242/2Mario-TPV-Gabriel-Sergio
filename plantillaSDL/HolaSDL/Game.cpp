@@ -78,14 +78,14 @@ Game::Game(int worldN)	: exit(false) {
 	objectVectorPos = 0;
 
 	// Crea los elementos del juego
-	loadMap();
+	loadMap(world);
 }
 
-void Game::loadMap() {
+void Game::loadMap(int worldN) {
 
-	tilemap = new TileMap(textures[Background], this, world);
+	tilemap = new TileMap(textures[Background], this, worldN);
 
-	string filename = "../assets/maps/world" + to_string(world) + ".txt";
+	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
 	ifstream txtWorld(filename);
 
 	char tipo;
@@ -146,6 +146,23 @@ void Game::loadMap() {
 		cout << "------------------\n";
 	}
 	cout << "|                |\n" << "------------------\n";
+}
+
+void Game::map_reload() {
+	for (auto obj : lista) {
+		delete obj;
+	}
+	mapOffset = 0;
+	objectVectorPos = 0;
+}
+
+void Game::map_next() {
+	world++;
+	for (auto obj : createdItems) {
+		delete obj;
+	}
+	loadMap(world);
+	map_reload();
 }
 
 void Game::addVisibleObjects() {
@@ -210,12 +227,6 @@ Game::run()
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;
 
-		/*
-		if (!lockOffset) { // AVANCE POR FUERZA BRUTA
-			offset_Add(8);
-		}
-		*/
-
 		// Duerme el resto de la duraci󮠤el frame
 		if (elapsed < FRAME_RATE)
 			SDL_Delay(FRAME_RATE - elapsed);
@@ -228,30 +239,15 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// Pinta los objetos del juego
-	
-	/*
-	test
-	SDL_Rect rect;
-	rect.x = rect.y = 0;
-	rect.h = rect.w = 32;
-	textures[SmallMario]->renderFrame(rect, 0, 1, SDL_FLIP_NONE);
-	*/
+	for (auto elem : lista) {
+		elem->render();
+	}
 	
 	// Renderiza tilemap
 	tilemap->render();
 	// Renderiza player
 	player->render();
 	// Renderiza objetos del mapa
-
-	/*
-	for (int i = 0; i < createdItems.size(); i++) {
-		createdItems[i]->render();
-	}
-	*/
-
-	for (auto elem : lista) {
-		elem->render();
-	}
 
 	SDL_RenderPresent(renderer);
 }
@@ -266,7 +262,6 @@ Game::update()
 	for (auto elem : lista) {
 		elem->update();
 	}
-	//destroyDead();
 }
 
 void

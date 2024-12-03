@@ -82,11 +82,14 @@ public:
 	void render() const;
 	void handleEvents();
 
-	void loadMap();
+	void loadMap(int worldN);
 	void addVisibleObjects();
 	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
 	void createMushrooms(int x, int y);
 	void createShell(int x, int y);
+
+	void map_reload();
+	void map_next();
 
 	int offset_Return() const;
 	void offset_Add(int n);
