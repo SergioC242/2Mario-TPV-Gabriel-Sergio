@@ -61,7 +61,7 @@ TileMap::TileMap(Texture* tex, Game* g, int worldN) {
 	//cout << nCols << " " << nRows << endl;
 }
 
-void TileMap::render() {
+void TileMap::render() const {
 	int offset = game->offset_Return();
 
 	// Primera columna y fila del mapa visible

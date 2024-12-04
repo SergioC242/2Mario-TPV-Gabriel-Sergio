@@ -55,6 +55,10 @@ void Player::update() {
 		game->map_next();
 	}
 
+	if (position.Y() > Game::WIN_HEIGHT) {
+		die();
+	}
+
 	int maxfallspeed = MAX_FALL_SPEED;
 
 	if (onGround) {
@@ -172,7 +176,7 @@ void Player::update() {
 				forma = Forma::Small;
 			}
 			else if (forma == Forma::Small) {
-				//die
+				die();
 			}
 		}
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
@@ -233,16 +237,9 @@ void Player::update() {
 		game->offset_Add(WALK_POWER);
 	}
 
-	//cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY << endl;
-}
+	cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY << endl;
+	//cout << moveX << " " << moveY << endl;
 
-void Player::render() {
-	
-	Texture* currentTexture = textures[forma];
-
-	//void renderFrame(const SDL_Rect& target, int row, int col, SDL_RendererFlip flip) const;
-
-	SDL_Rect rect;
 	rect.x = position.X() - game->offset_Return();
 	rect.y = position.Y();
 	rect.h = currentTexture->getFrameHeight() * 2;
@@ -253,8 +250,6 @@ void Player::render() {
 	}
 
 	if (estado == Estado::Caminando) {
-		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
-
 		if (currentWalkingFrame >= 2) {
 			currentWalkingFrame = 0;
 		}
@@ -262,6 +257,17 @@ void Player::render() {
 			currentWalkingFrame++;
 		}
 
+	}
+}
+
+void Player::render() const {
+	
+	Texture* currentTexture = textures[forma];
+
+	//void renderFrame(const SDL_Rect& target, int row, int col, SDL_RendererFlip flip) const;
+
+	if (estado == Estado::Caminando) {
+		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
 	}
 	else if (estado == Estado::Aire) {
 		currentTexture->renderFrame(rect, 0, 6, flipH);
@@ -281,6 +287,10 @@ void Player::makeSuper() {
 	int tilesize = game->TILE_SIZE;
 	position += Point2D(0, -tilesize);
 	forma = Forma::Super;
+}
+
+void Player::die() {
+	game->map_reload();
 }
 
 Player::~Player() {

@@ -31,9 +31,6 @@ public:
 	}
 
 	void setListAnchor(GameList<SceneObject>::anchor&& anchor);
-	virtual void handleEvents() {
-		//cout << "Fallo de polimorfismo en HandleEvents para GameItem" << endl;
-	}
 
 	virtual Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 		//cout << "Fallo de polimorfismo en Hit para GameItem" << endl;

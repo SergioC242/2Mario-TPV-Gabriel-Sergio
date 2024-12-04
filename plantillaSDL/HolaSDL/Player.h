@@ -56,13 +56,15 @@ public:
 
 	void handleEvent(SDL_KeyboardEvent& E);
 	void update();
-	void render();
+	void render() const;
 
 	void bounce();
 	void makeSuper();
 	bool isSuperMario() { return (forma == Super); }
 
 	bool isMovingUp() { return moveY > 0; }
+
+	void die();
 
 	~Player();
 };

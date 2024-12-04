@@ -64,6 +64,7 @@ private:
 
 	// Elementos del juego
 	TileMap* tilemap;
+	Player* storedPlayer;
 	Player* player;
 
 	//lista de objetos (gamelist)

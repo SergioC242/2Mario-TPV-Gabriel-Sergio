@@ -84,6 +84,7 @@ Game::Game(int worldN)	: exit(false) {
 void Game::loadMap(int worldN) {
 
 	tilemap = new TileMap(textures[Background], this, worldN);
+	createdItems.push_back(tilemap);
 
 	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
 	ifstream txtWorld(filename);
@@ -108,8 +109,8 @@ void Game::loadMap(int worldN) {
 			l >> atrib1;
 			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			player = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, spawnPosX, spawnPosY, atrib1);
-			createdItems.push_back(player);
+			storedPlayer = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, spawnPosX, spawnPosY, atrib1);
+			player = storedPlayer->clone();
 		}
 		else if (tipo == 'B') { // bloque: 4 atributos
 			l >> atrib1;
@@ -118,8 +119,6 @@ void Game::loadMap(int worldN) {
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl; 
 			Block* block = new Block(textures[Blocks], this, atrib1, atrib2, spawnPosX, spawnPosY);
 			createdItems.push_back(block);
-			// if atrb 2 = p { mushroom(puntero al bloque) pushback
-			
 		}
 		else if (tipo == 'G') { // goomba: 2 atributos
 			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
@@ -149,20 +148,23 @@ void Game::loadMap(int worldN) {
 }
 
 void Game::map_reload() {
+	mapOffset = 0;
 	for (auto obj : lista) {
 		delete obj;
 	}
-	mapOffset = 0;
 	objectVectorPos = 0;
+	player = storedPlayer->clone();
 }
 
 void Game::map_next() {
+	/*
 	world++;
 	for (auto obj : createdItems) {
 		delete obj;
 	}
 	loadMap(world);
 	map_reload();
+	*/
 }
 
 void Game::addVisibleObjects() {
@@ -243,10 +245,8 @@ Game::render() const
 		elem->render();
 	}
 	
-	// Renderiza tilemap
-	tilemap->render();
 	// Renderiza player
-	player->render();
+	if (player) player->render();
 	// Renderiza objetos del mapa
 
 	SDL_RenderPresent(renderer);
@@ -256,7 +256,7 @@ void
 Game::update()
 {
 	// Actualiza player
-	player->update();
+	if (player) player->update();
 	// Actualiza los objetos del juego
 	addVisibleObjects();
 	for (auto elem : lista) {
@@ -274,7 +274,7 @@ Game::handleEvents()
 		if (evento.type == SDL_QUIT)
 			exit = true;
 		else if (evento.type == SDL_KEYDOWN || evento.type == SDL_KEYUP) {
-			player->handleEvent(evento.key);
+			if (player) player->handleEvent(evento.key);
 		}
 	}
 }

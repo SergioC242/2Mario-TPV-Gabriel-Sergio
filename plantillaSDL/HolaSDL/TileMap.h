@@ -31,7 +31,7 @@ public:
 	TileMap* clone() const { return new TileMap(*this); }
 
 	// Dibujar el mapa
-	void render();
+	void render() const;
 
 	// Detectar colisiones
 	Collision hit(const SDL_Rect& rect, Collision::ObjetoTipo tipoObj);
