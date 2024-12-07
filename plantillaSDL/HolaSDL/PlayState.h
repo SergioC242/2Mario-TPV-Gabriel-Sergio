@@ -1,60 +1,59 @@
 #include "GameState.h"
 #include "Player.h"
+#include "TileMap.h"
 
 #pragma once
 class PlayState : public GameState
 {
 private:
-	GameList<SceneObject> sceneObjects;
+	// Puntero a game
+	Game* game;
+
+	// Datos del juego
+	int world;
 	int mapOffset;
 	bool lockOffset;
 	int score;
 
+	// Elementos del juego
+	TileMap* tilemap;
+	Player* storedPlayer;
+	Player* player;
+
+	//lista de objetos (gamelist)
+	GameList<SceneObject> lista;
+	vector<SceneObject*> createdItems;
+	int objectVectorPos;
+
+	// Objetos del juego
+	//vector<SceneObject*> gameItems;
+	//vector<SceneObject*> activeItems; //objetos que se spawnean
+
 public:
-	void loadMap(int worldN) {
-		
-	}
+	void update();
+	void render() const;
+	void handleEvents();
 
-	void addVisibleObjects() {
+	void loadMap(int worldN);
+	void addVisibleObjects();
+	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj);
+	void createMushrooms(int x, int y);
+	void createShell(int x, int y);
 
-	}
+	void map_reload();
+	void map_next();
 
-	Collision checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
-
-	}
-
-	void createMushrooms(int x, int y) {
-
-	}
-
-	void createShell(int x, int y) {
-
-	}
-
-	void map_reload() {
-
-	}
-
-	void map_next() {
-
-	}
-
-	int offset_Return() const { return mapOffset; }
-
-
-	void offset_Add(int n) {
-		if (!lockOffset) {
-			mapOffset += n;
-		}
-	}
-
-	void offset_Lock() { lockOffset = true; }
-
-	bool offset_isLocked() const { return lockOffset; }
-
+	int offset_Return() const;
+	void offset_Add(int n);
+	void offset_Lock();
+	bool offset_isLocked() const;
 	bool isSuperMario() { return player->isSuperMario(); }
 
-	void addScore(int n) { score += n; }
+	void addScore(int n);
 
+	TileMap* getTileMap() { return tilemap; }
+
+	PlayState(int worldN, Game* g);
+	~PlayState();
 };
 

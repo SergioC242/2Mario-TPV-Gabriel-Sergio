@@ -51,17 +51,17 @@ void Shell::update(){
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, state);
+	bool collisionGravity = game->playstate->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->playstate->checkCollisions(predictedRect, state);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, state);
+	bool collisionVertical = game->playstate->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->playstate->checkCollisions(predictedRect, state);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, state);
+	bool collisionHorizontal = game->playstate->getTileMap()->hit(predictedRect, state).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->playstate->checkCollisions(predictedRect, state);
 
 	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 	if (objectCollisionGravity.hasCollided()) {
@@ -109,7 +109,7 @@ void Shell::update(){
 		moveX = -moveX;
 	}
 
-	rect.x = position.X() - game->offset_Return();
+	rect.x = position.X() - game->playstate->offset_Return();
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;

@@ -56,17 +56,17 @@ void Goomba::update() {
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
+	bool collisionGravity = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
+	bool collisionVertical = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
+	bool collisionHorizontal = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Goomba).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Goomba);
 
 	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 	if (objectCollisionGravity.hasCollided()) {
@@ -119,7 +119,7 @@ void Goomba::update() {
 	else {
 		frame = 0;
 	}
-	rect.x = position.X() - game->offset_Return();
+	rect.x = position.X() - game->playstate->offset_Return();
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;
@@ -160,6 +160,6 @@ Collision Goomba::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 }
 
 void Goomba::die() {
-	game->addScore(100);
+	game->playstate->addScore(100);
 	delete this;
 }

@@ -43,8 +43,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"numbers.png", 10, 1}
 };
 
-Game::Game(int worldN)	: exit(false) {
-	world = worldN;
+Game::Game(int worldN) : exit(false) {
 
 	// Inicializa la SDL
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -67,148 +66,11 @@ Game::Game(int worldN)	: exit(false) {
 			textureSpec[i].numRows,
 			textureSpec[i].numColumns);
 
-	objectVectorPos = 0;
-
-	// Crea los elementos del juego
-	loadMap(world);
+	// Creación de playstates
+	playstate = new PlayState(worldN, this);
 }
 
-void Game::loadMap(int worldN) {
 
-	tilemap = new TileMap(textures[Background], this, worldN);
-	createdItems.push_back(tilemap);
-
-	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
-	ifstream txtWorld(filename);
-
-	// Color de fondo
-	if (world == 1) {
-		SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
-	}
-	if (world == 2) {
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	}
-
-	char tipo;
-	float posX;
-	float posY;
-	float spawnPosX;
-	float spawnPosY;
-	char atrib1;
-	char atrib2;
-	string line;
-	while (getline(txtWorld, line)) {
-		//cout << line << endl;
-		istringstream l(line);
-		l >> tipo;
-		l >> posX;
-		l >> posY;
-		spawnPosX = (posX - 1) * TILE_SIZE;
-		spawnPosY = (posY - 2) * TILE_SIZE;
-		if (tipo == 'M') { // mario: 3 atributos
-			l >> atrib1;
-			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			storedPlayer = new Player(textures[SmallMario], textures[SuperMario], textures[FireMario], this, spawnPosX, spawnPosY, atrib1);
-			player = storedPlayer->clone();
-		}
-		else if (tipo == 'B') { // bloque: 4 atributos
-			l >> atrib1;
-			l >> atrib2;
-			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl; 
-			Block* block = new Block(textures[Blocks], this, atrib1, atrib2, spawnPosX, spawnPosY);
-			createdItems.push_back(block);
-		}
-		else if (tipo == 'G') { // goomba: 2 atributos
-			spawnPosX += 0.5 * TILE_SIZE; // Prevención de clipping
-			cout << "GOOMBA - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			Goomba* goomba = new Goomba(textures[GoombaTex], this, spawnPosX, spawnPosY);
-			createdItems.push_back(goomba);
-		}
-		else if (tipo == 'K') { // koopa: 2 atributos
-			spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
-			cout << "KOOPA - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			Koopa* koopa = new Koopa(textures[KoopaTex], this, spawnPosX, spawnPosY);
-			createdItems.push_back(koopa);
-		}
-		else if (tipo == 'C') { // koopa: 2 atributos
-			//spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
-			cout << "COIN - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
-			Coin* coin = new Coin(textures[CoinTex], this, spawnPosX, spawnPosY);
-			createdItems.push_back(coin);
-		}
-
-		cout << "------------------\n";
-	}
-	cout << "|                |\n" << "------------------\n";
-}
-
-void Game::map_reload() {
-	mapOffset = 0;
-	for (auto obj : lista) {
-		delete obj;
-	}
-	objectVectorPos = 0;
-	player = storedPlayer->clone();
-}
-
-void Game::map_next() {
-	world++;
-	mapOffset = 0;
-	for (auto obj : lista) {
-		delete obj;
-	}
-	objectVectorPos = 0;
-	createdItems.clear();
-	loadMap(world);
-}
-
-void Game::addVisibleObjects() {
-	if (objectVectorPos > createdItems.size())objectVectorPos = createdItems.size();
-	for (int i = objectVectorPos; i < createdItems.size(); i++) {
-		if (createdItems[i]->returnPos().X() < (mapOffset + WIN_WIDTH + TILE_SIZE)) { // Está en pantalla
-			lista.push_back(createdItems[i]->clone());
-			objectVectorPos++;
-		}
-	}
-}
-
-Collision Game::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
-	for (auto obj : lista) {
-		int distX = abs(obj->returnPos().Y() - rect.y);
-		int distY = abs(obj->returnPos().Y() - rect.y);
-		if (distX < TILE_SIZE && distY < TILE_SIZE) { // Solo comprueba objetos cerca
-			Collision collision = obj->hit(rect, tipoObj);
-			//cout << collision.directionV() << endl;
-			if (collision.hasCollided()) {
-				return collision;
-			}
-		}
-	}
-	return Collision(false, Collision::CollisionDir::Middle, Collision::None);
-}
-
-Game::~Game()
-{
-
-	// Elimina los objetos del juego
-	for (GameObject* obj : createdItems) delete obj;
-	// lista
-	delete tilemap;
-	delete player;
-
-	// Elimina las texturas
-	for (Texture* texture : textures) delete texture;
-
-	// Desactiva la SDL
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	SDL_Quit();
-}
 
 void
 Game::run()
@@ -221,92 +83,27 @@ Game::run()
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
-		
-		update();       // Actualiza el estado de los objetos del juego
-		render();       // Dibuja los objetos en la venta
-		handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)
+
+		playstate->update();       // Actualiza el estado de los objetos del juego
+		playstate->render();       // Dibuja los objetos en la venta
+		playstate->handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)
 
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;
 
 		// Duerme el resto de la duraci󮠤el frame
-		if (elapsed < FRAME_RATE)
-			SDL_Delay(FRAME_RATE - elapsed);
+		if (elapsed < Game::FRAME_RATE)
+			SDL_Delay(Game::FRAME_RATE - elapsed);
 	}
 }
 
-void
-Game::render() const
+Game::~Game()
 {
-	SDL_RenderClear(renderer);
+	// Elimina las texturas
+	for (Texture* texture : textures) delete texture;
 
-	// Pinta los objetos del juego
-	for (auto elem : lista) {
-		elem->render();
-	}
-	
-	// Renderiza player
-	if (player) player->render();
-	// Renderiza objetos del mapa
-
-	SDL_RenderPresent(renderer);
-}
-
-void
-Game::update()
-{
-	// Actualiza player
-	if (player) player->update();
-	// Actualiza los objetos del juego
-	addVisibleObjects();
-	for (auto elem : lista) {
-		elem->update();
-	}
-}
-
-void
-Game::handleEvents()
-{
-	// Procesamiento de eventos
-	SDL_Event evento;
-
-	while (SDL_PollEvent(&evento)) {
-		if (evento.type == SDL_QUIT)
-			exit = true;
-		else if (evento.type == SDL_KEYDOWN || evento.type == SDL_KEYUP) {
-			if (player) player->handleEvent(evento.key);
-		}
-	}
-}
-
-void Game::createMushrooms(int x,  int y) {
-	Mushroom* mushroom = new Mushroom(textures[MushroomTex], this, x, y - TILE_SIZE);
-	lista.push_back(mushroom);
-}
-void Game::createShell(int x, int y) {
-	Shell* shell = new Shell(textures[ShellTex], this, x, y - TILE_SIZE * 2);
-	lista.push_back(shell);
-}
-
-int 
-Game::offset_Return() const {
-	return mapOffset;
-}
-void 
-Game::offset_Add(int n) {
-	mapOffset += n;
-}
-void 
-Game::offset_Lock() {
-	lockOffset = true;
-}
-bool 
-Game::offset_isLocked() const {
-	return lockOffset;
-}
-
-void
-Game::addScore(int n) {
-	score += n;
-	cout << "SCORE: " << to_string(score) << endl;
+	// Desactiva la SDL
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }

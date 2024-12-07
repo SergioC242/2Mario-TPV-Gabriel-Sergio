@@ -62,7 +62,7 @@ TileMap::TileMap(Texture* tex, Game* g, int worldN) {
 }
 
 void TileMap::render() const {
-	int offset = game->offset_Return();
+	int offset = game->playstate->offset_Return();
 
 	// Primera columna y fila del mapa visible
 	int x0 = offset / (game->TILE_SIZE);
@@ -76,7 +76,7 @@ void TileMap::render() const {
 		for (int j = 0; j < nRows; j++) {
 			if (x0 + nColsOnScreen >= nCols) {
 				x0 = nCols - (nColsOnScreen) - 1;
-				game->offset_Lock();
+				game->playstate->offset_Lock();
 			}
 			int index = tiledata[j][i + x0];
 
