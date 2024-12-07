@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "checkML.h"
+#include "gameList.h"
 
 #pragma once
 using namespace std;
@@ -15,7 +16,10 @@ class GameObject
 {
 private:
 	Game* game;
+	GameList<GameObject>::anchor listAnchor;
 public:
+	void setListAnchor(GameList<GameObject>::anchor a) { listAnchor = move(a); }
+
 	virtual void update() = 0;
 
 	virtual void render() const{

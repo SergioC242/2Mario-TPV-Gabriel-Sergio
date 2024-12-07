@@ -11,14 +11,36 @@
 class GameState
 {
 private:
-	GameList<SceneObject> obj;
-	list<EventHandler*> event;
+	Game* game;
+	GameList<GameObject> gameObj;
+	list<EventHandler*> eventObj;
 
 
 public:
-	void update(){}
-	void render(){}
-	void handleEvent(SDL_Event e){}
+	virtual void update(){
+		for (auto elem : gameObj) {
+			elem->update();
+		}
+	}
+	virtual void render(){
+		for (auto elem : gameObj) {
+			elem->render();
+		}
+	}
+	void handleEvent(SDL_Event e){
+		for (auto elem : eventObj) {
+			elem->handleEvent(e); 
+		}
+	}
+
+	void addEventListener(EventHandler* eventLis) {
+		eventObj.push_back(eventLis);
+	}
+
+	void addObject(GameObject* obj) {
+		gameObj.push_back(obj);
+	}
+
 
 };
 
