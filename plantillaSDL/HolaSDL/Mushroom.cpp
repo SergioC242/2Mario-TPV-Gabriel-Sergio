@@ -48,17 +48,17 @@ void Mushroom::update() {
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.x = position.X();
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
+	bool collisionGravity = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
+	bool collisionVertical = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
+	bool collisionHorizontal = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Mushroom).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Mushroom);
 
 	// si se ha colisionado con un objeto, con qué? actuar en función (prioridad a la colisión vertical)
 	if (objectCollisionGravity.hasCollided()) {
@@ -104,7 +104,7 @@ void Mushroom::update() {
 	else {
 		dirIzq = !dirIzq;
 	}
-	rect.x = position.X() - game->offset_Return();
+	rect.x = position.X() - game->playstate->offset_Return();
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;
@@ -128,7 +128,7 @@ Collision Mushroom::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	if (intersection == SDL_TRUE && tipoObj == Collision::ObjetoTipo::Player) {
 		Collision::ObjetoTipo type = Collision::Mushroom;
 		//disappear mushroom
-		game->addScore(1000);
+		game->playstate->addScore(1000);
 		delete this;
 		return Collision(true, dir, type); //esto tiene que ser mushroom
 	}

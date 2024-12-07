@@ -8,7 +8,7 @@ Coin::Coin(Texture* tex, Game* g, int posX, int posY) : position(posX, posY) {
 }
 
 void Coin::update(){
-	rect.x = position.X() - game->offset_Return();
+	rect.x = position.X() - game->playstate->offset_Return();
 	rect.y = position.Y();
 	rect.h = texture->getFrameHeight() * 2;
 	rect.w = texture->getFrameWidth() * 2;
@@ -30,7 +30,7 @@ Collision Coin::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
 	SDL_bool intersection = SDL_HasIntersection(&rect, &coinRect);
 	if (intersection == SDL_TRUE && tipoObj == Collision::ObjetoTipo::Player) {
 		Collision::ObjetoTipo type = Collision::Coin;
-		game->addScore(100);
+		game->playstate->addScore(100);
 		delete this;
 		return Collision(true, dir, type);
 	}

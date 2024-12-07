@@ -67,7 +67,7 @@ void Block::update() {
     else if (tipo == Tipo::Oculto) {
         startFrame = -1;
     }
-    rect.x = position.X() - game->offset_Return();
+    rect.x = position.X() - game->playstate->offset_Return();
     rect.y = position.Y();
     rect.h = Game::TILE_SIZE;
     rect.w = Game::TILE_SIZE;
@@ -89,15 +89,15 @@ void Block::update() {
 void Block::act() {
     string ac;
     if (action == Action::Moneda) {
-        game->addScore(200);
+        game->playstate->addScore(200);
     }
     else if (action == Action::Potenciador) {
-        game->createMushrooms(position.X(), position.Y());
+        game->playstate->createMushrooms(position.X(), position.Y());
     }
 }
 
 void Block::destroyBrick() {
-    game->addScore(50);
+    game->playstate->addScore(50);
     delete this;
 }
 
@@ -131,7 +131,7 @@ Collision Block::hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) {
                 hitAnimFrame = true;
                 act();
             }
-            else if (tipo == Tipo::Ladrillo && game->isSuperMario()) {
+            else if (tipo == Tipo::Ladrillo && game->playstate->isSuperMario()) {
                 destroyBrick();
             }
         }

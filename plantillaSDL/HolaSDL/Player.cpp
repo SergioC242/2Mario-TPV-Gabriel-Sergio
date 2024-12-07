@@ -52,7 +52,7 @@ void Player::handleEvent(SDL_KeyboardEvent& E) {
 void Player::update() {
 
 	if (position.X() > 6296) {
-		game->map_next();
+		game->playstate->map_next();
 	}
 
 	if (position.Y() > Game::WIN_HEIGHT) {
@@ -90,17 +90,17 @@ void Player::update() {
 
 	// colisiones VERTICAL en función de la gravedad
 	predictedRect.y = position.Y() + GRAVITY;
-	bool collisionGravity = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionGravity = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
+	bool collisionGravity = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionGravity = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 	// colisiones VERTICAL en función del movimiento
 	predictedRect.y = position.Y() - moveY;
-	bool collisionVertical = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionVertical = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
+	bool collisionVertical = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionVertical = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 	// colisiones HORIZONTAL en función del movimiento previsto
 	predictedRect.x = position.X() + moveX;
 	predictedRect.y = position.Y();
-	bool collisionHorizontal = game->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
-	Collision objectCollisionHorizontal = game->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
+	bool collisionHorizontal = game->playstate->getTileMap()->hit(predictedRect, Collision::ObjetoTipo::Player).hasCollided(); // Dirección es irrelevante para tilemap
+	Collision objectCollisionHorizontal = game->playstate->checkCollisions(predictedRect, Collision::ObjetoTipo::Player);
 
 	// Si se encuentra un objeto encima, parar movimiento. No puede pasar con check de gravedad
 	if (objectCollisionVertical.directionV() == Collision::CollisionDir::Above) {
@@ -216,7 +216,7 @@ void Player::update() {
 	}
 	// aplicar movimiento HORIZONTAL
 	if (!collisionHorizontal) {
-		if (!(position.X() - game->offset_Return() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde de la pantalla
+		if (!(position.X() - game->playstate->offset_Return() <= 0 && moveX < 0)) { // Impide moverse a la izquierda del borde de la pantalla
 			position += Point2D(moveX, 0);
 		}
 	}
@@ -232,15 +232,17 @@ void Player::update() {
 		estado = Estado::Caminando;
 	}
 
+	//cout << position.X() - game->playstate->offset_Return() << " " << Game::WIN_WIDTH / 2 << "t" << game->playstate->offset_isLocked();
+
 	// Mover el mapa hacia adelante si se está moviendo por delante del medio de la pantalla
-	if (position.X() - game->offset_Return() > game->WIN_WIDTH / 2 && !game->offset_isLocked()) {
-		game->offset_Add(WALK_POWER);
+	if (position.X() - game->playstate->offset_Return() > Game::WIN_WIDTH / 2 && !game->playstate->offset_isLocked()) {
+		game->playstate->offset_Add(WALK_POWER);
 	}
 
-	cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY << endl;
+	//cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY;
 	//cout << moveX << " " << moveY << endl;
 
-	rect.x = position.X() - game->offset_Return();
+	rect.x = position.X() - game->playstate->offset_Return();
 	rect.y = position.Y();
 	rect.h = currentTexture->getFrameHeight() * 2;
 	rect.w = currentTexture->getFrameWidth() * 2;
@@ -290,7 +292,7 @@ void Player::makeSuper() {
 }
 
 void Player::die() {
-	game->map_reload();
+	game->playstate->map_reload();
 }
 
 Player::~Player() {
