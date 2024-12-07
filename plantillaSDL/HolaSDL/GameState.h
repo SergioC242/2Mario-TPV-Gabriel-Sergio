@@ -17,21 +17,9 @@ private:
 
 
 public:
-	virtual void update(){
-		for (auto elem : gameObj) {
-			elem->update();
-		}
-	}
-	virtual void render(){
-		for (auto elem : gameObj) {
-			elem->render();
-		}
-	}
-	void handleEvent(SDL_Event e){
-		for (auto elem : eventObj) {
-			elem->handleEvent(e); 
-		}
-	}
+	virtual void update();
+	virtual void render();
+	virtual void handleEvent(SDL_Event e);
 
 	void addEventListener(EventHandler* eventLis) {
 		eventObj.push_back(eventLis);

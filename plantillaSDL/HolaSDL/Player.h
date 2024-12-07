@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "checkML.h"
+#include "EventHandler.h"
 #include <array>
 #include <vector>
 #include <SDL.h>
@@ -16,7 +17,7 @@ class Game;
 
 using uint = unsigned int;
 
-class Player : public SceneObject
+class Player : public SceneObject, public EventHandler
 {
 private:
 
@@ -67,5 +68,8 @@ public:
 	void die();
 
 	~Player();
+
+	// Heredado vía EventHandler
+	void handleEvent(const SDL_Event& e) override;
 };
 

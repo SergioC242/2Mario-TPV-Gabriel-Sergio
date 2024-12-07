@@ -296,3 +296,7 @@ void Player::die() {
 Player::~Player() {
 	//for (Texture* tex : textures) delete tex;
 }
+
+void Player::handleEvent(const SDL_Event& e)
+{
+}

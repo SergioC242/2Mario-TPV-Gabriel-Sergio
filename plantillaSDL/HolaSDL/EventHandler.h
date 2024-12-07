@@ -8,11 +8,6 @@
 #pragma once
 class EventHandler
 {
-
-private:
-	GameList<SceneObject> events;
-
-
 public:
 
 	virtual void handleEvent(const SDL_Event& e) = 0;
