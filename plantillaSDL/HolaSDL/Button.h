@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "EventHandler.h"
 #include <functional>
+#include "Game.h"
+
 
 using Callback = std::function<void(void)>;
 
@@ -14,9 +16,11 @@ private:
 		SDL_Texture* mushroomTexture; 
 		Callback callback; 
 		bool isMouseOver;
+		SDL_Rect boundingBox;
 
 public:
 
+	Button(int x, int y, int w, int h, SDL_Texture* tex, SDL_Texture* mushTex);
 
 	
 

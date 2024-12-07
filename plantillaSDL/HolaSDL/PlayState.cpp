@@ -20,8 +20,10 @@ PlayState::PlayState(int worldN, Game* g) {
 	game = g;
 	objectVectorPos = 0;
 	mapOffset = 0;
+	score = 0;
 	lockOffset = false;
 	loadMap(world);
+	
 }
 
 void PlayState::loadMap(int worldN) {
