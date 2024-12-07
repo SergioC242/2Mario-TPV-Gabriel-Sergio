@@ -60,14 +60,6 @@ Game::Game(int worldN)	: exit(false) {
 	if (window == nullptr || renderer == nullptr)
 		throw "Error cargando SDL"s;
 
-	// Color de fondo
-	if (world == 1) {
-		SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
-	}
-	if (world == 2) {
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-	}
-
 	// Carga las texturas
 	for (int i = 0; i < NUM_TEXTURES; ++i)
 		textures[i] = new Texture(renderer,
@@ -88,6 +80,14 @@ void Game::loadMap(int worldN) {
 
 	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
 	ifstream txtWorld(filename);
+
+	// Color de fondo
+	if (world == 1) {
+		SDL_SetRenderDrawColor(renderer, 38, 132, 255, 255);
+	}
+	if (world == 2) {
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	}
 
 	char tipo;
 	float posX;
@@ -157,14 +157,14 @@ void Game::map_reload() {
 }
 
 void Game::map_next() {
-	/*
 	world++;
-	for (auto obj : createdItems) {
+	mapOffset = 0;
+	for (auto obj : lista) {
 		delete obj;
 	}
+	objectVectorPos = 0;
+	createdItems.clear();
 	loadMap(world);
-	map_reload();
-	*/
 }
 
 void Game::addVisibleObjects() {
