@@ -19,6 +19,8 @@ PlayState::PlayState(int worldN, Game* g) {
 	world = worldN;
 	game = g;
 	objectVectorPos = 0;
+	mapOffset = 0;
+	lockOffset = false;
 	loadMap(world);
 }
 
@@ -168,6 +170,8 @@ PlayState::update()
 	for (auto elem : lista) {
 		elem->update();
 	}
+
+	cout << endl;
 }
 
 void

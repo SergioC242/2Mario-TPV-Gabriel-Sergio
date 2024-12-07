@@ -232,12 +232,14 @@ void Player::update() {
 		estado = Estado::Caminando;
 	}
 
+	//cout << position.X() - game->playstate->offset_Return() << " " << Game::WIN_WIDTH / 2 << "t" << game->playstate->offset_isLocked();
+
 	// Mover el mapa hacia adelante si se está moviendo por delante del medio de la pantalla
-	if (position.X() - game->playstate->offset_Return() > game->WIN_WIDTH / 2 && !game->playstate->offset_isLocked()) {
+	if (position.X() - game->playstate->offset_Return() > Game::WIN_WIDTH / 2 && !game->playstate->offset_isLocked()) {
 		game->playstate->offset_Add(WALK_POWER);
 	}
 
-	cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY << endl;
+	//cout << position.X() << "|" << position.Y() << " " << collisionGravity << collisionVertical << " " << onGround << " " << jumping << " " << moveX << " " << moveY;
 	//cout << moveX << " " << moveY << endl;
 
 	rect.x = position.X() - game->playstate->offset_Return();
