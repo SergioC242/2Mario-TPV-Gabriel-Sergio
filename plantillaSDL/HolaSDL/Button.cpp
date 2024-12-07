@@ -7,3 +7,7 @@ void Button::handleEvent(const SDL_Event& e)
 	}
 
 }
+
+void Button::update()
+{
+}
