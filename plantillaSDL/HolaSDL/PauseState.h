@@ -9,18 +9,9 @@ private:
 	Game* game;
 public:
 	
-	PauseState(Game* g): game(g), pause(game, 2, 2, 2, 2, nullptr) {
-		//construir boton
-		//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
-		pause.connect([this]() { onClick(); });
-		
-		
-	}
+	PauseState(Game* g);
 
-	void onClick()
-	{
-
-	}
+	void onClick();
 
 	
 
