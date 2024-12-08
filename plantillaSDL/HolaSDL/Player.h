@@ -50,7 +50,7 @@ private:
 	bool dead;
 
 public:
-	static constexpr uint WALK_POWER = 8 * 4;
+	static constexpr uint WALK_POWER = 8;
 	static constexpr uint JUMP_POWER = 24; 
 	static constexpr uint GRAVITY = 2;
 	static constexpr uint MAX_FALL_SPEED = 8; //hay que comprobar si se queda que es negativo

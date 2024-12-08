@@ -35,17 +35,14 @@ void Button::handleEvent(const SDL_Event& e)
 			callback();
 
 		}
-		cout << isMouseOver << endl;
 	}
 	else {
 		isMouseOver = false;
-		cout << isMouseOver << endl;
 	}
 
 }
 void Button::render() const{
 	texture->renderFrame(rect, 0, 0);
-	cout << isMouseOver << endl;
 	if (isMouseOver) {
 		mushroomTexture->renderFrame(mrect, 0, 0);
 	}

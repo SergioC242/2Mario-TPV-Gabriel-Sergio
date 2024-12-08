@@ -117,7 +117,6 @@ void PlayState::map_reload() {
 }
 
 void PlayState::map_next() {
-	cout << world << endl;
 	if (world == 2) {
 		game->stateEnd();
 	}
