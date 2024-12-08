@@ -4,7 +4,7 @@
 #include "checkML.h"
 
 
-Button::Button(int x, int y, int w, int h, SDL_Texture* tex, SDL_Texture* mushTex) : rect{ x, y, w, h }, 
+Button::Button(int x, int y, int w, int h, Texture* tex, Texture* mushTex) : rect{ x, y, w, h }, 
 																					texture(tex), 
 																					mushroomTexture(mushTex), 
 																					isMouseOver(false) 
@@ -25,7 +25,7 @@ void Button::handleEvent(const SDL_Event& e)
 
 }
 void Button::render() {
-
+	texture->renderFrame(rect, 0, 0);
 }
 
 void Button::update()
