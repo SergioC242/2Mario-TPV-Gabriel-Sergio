@@ -10,6 +10,19 @@ PauseState::PauseState(Game* g) : game(g){
 	pause->connect([this]() { onClick(); });
 
 
+
+}
+
+void PauseState::render() {
+	SDL_RenderClear(game->renderer);
+
+	// Pinta los objetos del juego
+
+	GameState::render();
+
+	// Renderiza objetos del mapa
+
+	SDL_RenderPresent(game->renderer);
 }
 
 void PauseState::onClick()

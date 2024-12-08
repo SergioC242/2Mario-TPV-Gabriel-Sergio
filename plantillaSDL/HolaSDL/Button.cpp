@@ -49,7 +49,6 @@ void Button::render() const{
 	if (isMouseOver) {
 		mushroomTexture->renderFrame(mrect, 0, 0);
 	}
-	SDL_RenderPresent(game->renderer);
 }
 
 void Button::update()

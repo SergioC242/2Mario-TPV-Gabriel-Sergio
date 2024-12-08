@@ -10,7 +10,7 @@ private:
 public:
 	
 	PauseState(Game* g);
-
+	virtual void render();
 	void onClick();
 
 	
