@@ -120,8 +120,8 @@ Game::run()
 }
 
 
-void Game::statePlay() {
-	playstate = new PlayState(1, this);
+void Game::statePlay(int w) {
+	playstate = new PlayState(w, this);
 	GameStateMachine::replaceState(playstate);
 
 }

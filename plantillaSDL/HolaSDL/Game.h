@@ -83,7 +83,7 @@ public:
 	Game(int worldN);
 	~Game();
 	void run();
-	void statePlay();
+	void statePlay(int w);
 	void statePause();
 	void stateNotPause();
 	void stateMainMenu();

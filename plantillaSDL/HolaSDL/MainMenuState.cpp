@@ -12,8 +12,19 @@ MainMenuState::MainMenuState(Game* g) : game(g)
 	GameState::addEventListener(start);
 }
 
+void MainMenuState::render(){
+	SDL_RenderClear(game->renderer);
+
+	// Pinta los objetos del juego
+
+	GameState::render();
+
+	// Renderiza objetos del mapa
+
+	SDL_RenderPresent(game->renderer);
+}
 
 void MainMenuState::onClick()
 {
-	game->statePlay();
+	game->statePlay(1);
 }

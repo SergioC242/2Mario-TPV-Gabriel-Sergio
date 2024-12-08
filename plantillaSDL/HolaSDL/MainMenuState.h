@@ -13,6 +13,7 @@ private:
 	Game* game;
 public:
 	MainMenuState(Game* g);
+	virtual void render();
 	void onClick();
 
 };
