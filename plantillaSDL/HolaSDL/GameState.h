@@ -4,7 +4,7 @@
 #include "SceneObject.h"
 #include "EventHandler.h"
 
-#include <list>;
+#include <list>
 
 
 #pragma once

@@ -2,13 +2,13 @@
 #include "GameObject.h"
 #include "EventHandler.h"
 #include <functional>
-#include "Game.h"
+#include "GameState.h"
 #include "Texture.h"
-
+#pragma once
 
 using Callback = std::function<void(void)>;
 
-#pragma once
+
 class Button : public GameObject, public EventHandler
 {
 private: 

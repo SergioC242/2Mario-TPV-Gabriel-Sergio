@@ -40,7 +40,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"plant.png", 4, 1},
 	{"star.png", 4, 1},
 	{"lift.png", 1, 1 },
-	{"numbers.png", 10, 1}
+	{"txt_numbers.png", 10, 1}
 };
 
 Game::Game(int worldN) : exit(false) {
@@ -68,8 +68,8 @@ Game::Game(int worldN) : exit(false) {
 
 	// Creación de playstates
 	playstate = new PlayState(worldN, this);
-	mainmenu = new MainMenuState();
-	GameStateMachine::pushState(mainmenu);
+	//mainmenu = new MainMenuState();
+	GameStateMachine::pushState(playstate);
 }
 
 
