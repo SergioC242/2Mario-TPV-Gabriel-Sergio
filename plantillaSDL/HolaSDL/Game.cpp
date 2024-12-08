@@ -154,6 +154,10 @@ void Game::stateEnd() {
 	GameStateMachine::pushState(endstate);
 }
 
+void Game::gameExit(){
+	exit = true;
+}
+
 Game::~Game()
 {
 	// Elimina las texturas

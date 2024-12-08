@@ -9,6 +9,7 @@ class PauseState : public GameState
 private:
 	Button* continuar;
 	Button* menu;
+	Button* ex;
 	Game* game;
 public:
 	
@@ -16,6 +17,7 @@ public:
 	virtual void render();
 	void onClickCont();
 	void onClickMen();
+	void onClickEx();
 
 	
 

@@ -94,6 +94,7 @@ public:
 	void stateAnimation();
 	void stateAnimationEnd();
 	void stateEnd();
+	void gameExit();
 };
 
 #endif

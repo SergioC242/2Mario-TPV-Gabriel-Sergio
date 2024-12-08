@@ -37,5 +37,5 @@ void EndState::onClickMen() {
 }
 
 void EndState::onClickEx() {
-
+	game->gameExit();
 }
