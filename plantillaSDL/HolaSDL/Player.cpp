@@ -17,6 +17,7 @@ Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, i
 	flipH = SDL_FLIP_NONE;
 	onGround = false;
 	jumping = false;
+	dead = false;
 }
 
 void Player::handleEvent(SDL_KeyboardEvent& E) {
@@ -242,7 +243,10 @@ void Player::render() const {
 
 	//void renderFrame(const SDL_Rect& target, int row, int col, SDL_RendererFlip flip) const;
 
-	if (estado == Estado::Caminando) {
+	if (dead) {
+		textures[Forma::Small]->renderFrame(rect, 0, 1);
+	}
+	else if (estado == Estado::Caminando) {
 		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
 	}
 	else if (estado == Estado::Aire) {
@@ -266,7 +270,25 @@ void Player::makeSuper() {
 }
 
 void Player::die() {
-	game->playstate->map_reload();
+	estado = Estado::Muerto;
+	dead = true;
+	moveX = 0;
+	moveY = JUMP_POWER;
+	game->stateAnimation();
+}
+
+bool Player::dieAnimCallback() {
+	if (position.Y() < Game::WIN_HEIGHT) {
+		int maxfallspeed = MAX_FALL_SPEED;
+		if (moveY <= -maxfallspeed) {
+			moveY = -maxfallspeed;
+		}
+		else {
+			moveY -= GRAVITY;
+		}
+		return true;
+	}
+	return false;
 }
 
 Player::~Player() {

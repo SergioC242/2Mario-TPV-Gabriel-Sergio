@@ -123,7 +123,6 @@ Game::run()
 void Game::statePlay(int w) {
 	playstate = new PlayState(w, this);
 	GameStateMachine::replaceState(playstate);
-
 }
 
 void Game::statePause(){
@@ -139,6 +138,16 @@ void Game::stateMainMenu() {
 	GameStateMachine::popState();
 	mainmenu = new MainMenuState(this); //se puede comentar y ver si va
 	GameStateMachine::pushState(mainmenu);
+}
+
+void Game::stateAnimation() {
+	animationstate = new AnimationState(this, playstate);
+	GameStateMachine::pushState(animationstate);
+}
+
+void Game::stateAnimationEnd() {
+	GameStateMachine::popState();
+	playstate->map_reload();
 }
 
 Game::~Game()

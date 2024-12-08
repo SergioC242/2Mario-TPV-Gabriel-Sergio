@@ -28,7 +28,8 @@ private:
 	enum Estado {
 		Quieto,
 		Caminando,
-		Aire
+		Aire,
+		Muerto
 	};
 	enum Forma {
 		Small,
@@ -45,6 +46,8 @@ private:
 
 	bool onGround;
 	bool jumping;
+
+	bool dead;
 
 public:
 	static constexpr uint WALK_POWER = 8;
@@ -66,6 +69,7 @@ public:
 	bool isMovingUp() { return moveY > 0; }
 
 	void die();
+	bool dieAnimCallback();
 
 	~Player();
 

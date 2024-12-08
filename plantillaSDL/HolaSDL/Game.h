@@ -15,6 +15,7 @@
 #include "PlayState.h"
 #include "MainMenuState.h"
 #include "PauseState.h"
+#include "AnimationState.h"
 #include "gameStateMachine.h"
 
 #pragma once
@@ -70,6 +71,7 @@ public:
 	PlayState* playstate;
 	MainMenuState* mainmenu;
 	PauseState* pausestate;
+	AnimationState* animationstate;
 
 private:
 	// Array con todas las texturas del juego
@@ -87,6 +89,8 @@ public:
 	void statePause();
 	void stateNotPause();
 	void stateMainMenu();
+	void stateAnimation();
+	void stateAnimationEnd();
 };
 
 #endif

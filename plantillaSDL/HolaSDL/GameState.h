@@ -28,7 +28,7 @@ public:
 	void addObject(GameObject* obj) {
 		gameObj.push_back(obj);
 	}
-
+	void map_reload();
 
 };
 
