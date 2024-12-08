@@ -3,9 +3,10 @@
 
 
 
-MainMenuState::MainMenuState(Game* g) : game(g), start(2, 2, 2, 2, game->getTexture(Game::TXT_Lv1), game->getTexture(Game::MushroomTex))
+MainMenuState::MainMenuState(Game* g) : game(g)
 {
-	start.connect([this]() { onClick(); });
+	start = new Button(g, 2, 2, 2, 2, game->getTexture(Game::TXT_Lv1));
+	start->connect([this]() { onClick(); });
 }
 
 void MainMenuState::onClick()

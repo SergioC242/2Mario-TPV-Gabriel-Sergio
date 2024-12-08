@@ -77,6 +77,7 @@ Game::Game(int worldN) : exit(false) {
 	//playstate = new PlayState(worldN, this); //se fue a su metodo propio
 	mainmenu = new MainMenuState(this);
 	GameStateMachine::pushState(mainmenu);
+	//GameStateMachine::pushState(playstate);
 }
 
 

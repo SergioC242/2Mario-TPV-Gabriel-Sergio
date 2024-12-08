@@ -9,7 +9,7 @@ class Game;
 class MainMenuState : public GameState
 {
 private:
-	Button start;
+	Button* start;
 	Game* game;
 public:
 	MainMenuState(Game* g);

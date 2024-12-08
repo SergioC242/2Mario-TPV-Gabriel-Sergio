@@ -4,12 +4,13 @@
 
 #include "checkML.h"
 
+#include "Game.h"
 
-Button::Button(int x, int y, int w, int h, Texture* tex, Texture* mushTex) : rect{ x, y, w, h }, 
-																					texture(tex), 
-																					mushroomTexture(mushTex), 
-																					isMouseOver(false) 
+
+Button::Button(Game* g, int x, int y, int w, int h, Texture* tex) : rect{ x, y, w, h }, game(g), isMouseOver(false) 
 {
+	texture = tex;
+	//mushroomTexture = game->getTexture(Game::MushroomTex);
 	boundingBox = { x, y, w, h }; // Inicializar el bounding box 
 }
 
