@@ -44,7 +44,14 @@ public:
 		Plant,
 		Star,
 		Lift,
-		Numbers,
+		TXT_Numbers,
+		TXT_Mario,
+		TXT_Lv1,
+		TXT_Lv2,
+		TXT_Continue,
+		TXT_ReturnMenu,
+		TXT_Win,
+		TXT_Loss,
 		NUM_TEXTURES
 	};
 	// Constante globales
