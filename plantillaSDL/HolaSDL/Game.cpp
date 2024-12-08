@@ -126,6 +126,20 @@ void Game::statePlay() {
 
 }
 
+void Game::statePause(){
+	pausestate = new PauseState(this);
+	GameStateMachine::pushState(pausestate);
+}
+
+void Game::stateNotPause(){
+	GameStateMachine::popState();
+}
+
+void Game::stateMainMenu() {
+	mainmenu = new MainMenuState(this); //se puede comentar y ver si va
+	GameStateMachine::pushState(mainmenu);
+}
+
 Game::~Game()
 {
 	// Elimina las texturas
