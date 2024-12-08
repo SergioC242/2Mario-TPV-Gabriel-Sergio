@@ -117,14 +117,21 @@ void PlayState::map_reload() {
 }
 
 void PlayState::map_next() {
-	world++;
-	mapOffset = 0;
-	for (auto obj : lista) {
-		delete obj;
+	cout << world << endl;
+	if (world == 2) {
+		game->stateEnd();
 	}
-	objectVectorPos = 0;
-	createdItems.clear();
-	loadMap(world);
+	else
+	{
+		world++;
+		mapOffset = 0;
+		for (auto obj : lista) {
+			delete obj;
+		}
+		objectVectorPos = 0;
+		createdItems.clear();
+		loadMap(world);
+	}
 }
 
 void PlayState::addVisibleObjects() {
