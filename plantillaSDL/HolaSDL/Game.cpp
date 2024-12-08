@@ -68,6 +68,7 @@ Game::Game(int worldN) : exit(false) {
 
 	// Creación de playstates
 	playstate = new PlayState(worldN, this);
+	GameStateMachine::pushState(playstate);
 }
 
 
@@ -83,10 +84,25 @@ Game::run()
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
+		
+	
+
 		GameStateMachine::update();
-		playstate->update();       // Actualiza el estado de los objetos del juego
-		playstate->render();       // Dibuja los objetos en la venta
-		playstate->handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)
+		GameStateMachine::render();
+
+		SDL_Event evento;
+
+		while (SDL_PollEvent(&evento)) {
+			if (evento.type == SDL_QUIT)
+				exit = true;
+			else {
+				GameStateMachine::handleEvent(evento);
+			}
+		}
+		
+		//playstate->update();       // Actualiza el estado de los objetos del juego
+		//playstate->render();       // Dibuja los objetos en la venta
+		//playstate->handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)
 
 		// Tiempo que se ha tardado en ejecutar lo anterior
 		uint32_t elapsed = SDL_GetTicks() - inicio;

@@ -8,10 +8,10 @@ private:
 	Button pause;
 public:
 	
-	PauseState(): pause(2, 2, 2, 2, nullptr, nullptr) {
+	PauseState(): pause(2, 2, 2, 2, nullptr, nullptr){
 		//construir boton
 		//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
-		//pause.connect([this]() { onClick(); });
+		pause.connect([this]() { onClick(); });
 		
 		
 	}
