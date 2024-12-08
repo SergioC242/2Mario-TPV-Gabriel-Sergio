@@ -275,6 +275,10 @@ Player::~Player() {
 
 void Player::handleEvent(const SDL_Event& e)
 {
+	if (e.key.keysym.sym == SDLK_ESCAPE) {
+			
+			game->statePause();
+		}
 	if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP)
 	{
 		SDL_KeyboardEvent E = e.key;

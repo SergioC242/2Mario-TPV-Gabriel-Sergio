@@ -184,7 +184,7 @@ PlayState::update()
 }
 
 void
-PlayState::handleEvents()
+PlayState::handleEvents(SDL_Event e)
 {
 	// Procesamiento de eventos
 	SDL_Event evento;
@@ -194,7 +194,12 @@ PlayState::handleEvents()
 			//exit = true;
 		}
 		else if (evento.type == SDL_KEYDOWN || evento.type == SDL_KEYUP) {
-			if (player) player->handleEvent(evento.key);
+
+			//if (evento.key.keysym.sym == SDLK_ESCAPE) {
+			//	
+			//	game->statePause();
+			//}
+			//else if (player) player->handleEvent(evento.key);
 		}
 	}
 }

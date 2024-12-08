@@ -32,7 +32,7 @@ private:
 public:
 	virtual void update();
 	virtual void render();
-	virtual void handleEvents();
+	virtual void handleEvents(SDL_Event e);
 
 	void loadMap(int worldN);
 	void addVisibleObjects();
