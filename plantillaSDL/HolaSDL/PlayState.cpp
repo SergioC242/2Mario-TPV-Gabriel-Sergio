@@ -23,6 +23,7 @@ PlayState::PlayState(int worldN, Game* g) {
 	score = 0;
 	lockOffset = false;
 	loadMap(world);
+	vida = 3;
 	
 }
 
@@ -102,12 +103,17 @@ void PlayState::loadMap(int worldN) {
 }
 
 void PlayState::map_reload() {
+	if (vida <= 0) {
+		game->stateEnd();
+	}
+	vida--;
 	mapOffset = 0;
 	for (auto obj : lista) {
 		delete obj;
 	}
 	objectVectorPos = 0;
 	player = storedPlayer->clone();
+	addEventListener(player);
 }
 
 void PlayState::map_next() {

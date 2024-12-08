@@ -2,7 +2,7 @@
 
 
 void GameState::update() {
-	for (auto elem : gameObj) {
+	for (GameObject* elem : gameObj) {
 		elem->update();
 	}
 }

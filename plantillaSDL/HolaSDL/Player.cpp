@@ -8,7 +8,6 @@ Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, i
 	textures[0] = tex1;
 	textures[1] = tex2;
 	textures[2] = tex3;
-	vidas = 3;
 	forma = Forma::Small;
 	estado = Estado::Quieto;
 	moveX = 0;

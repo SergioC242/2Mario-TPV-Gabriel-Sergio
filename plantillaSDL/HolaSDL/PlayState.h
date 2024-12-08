@@ -14,6 +14,7 @@ private:
 	int mapOffset;
 	bool lockOffset;
 	int score;
+	int vida;
 
 	// Elementos del juego
 	TileMap* tilemap;
