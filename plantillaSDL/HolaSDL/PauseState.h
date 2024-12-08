@@ -5,13 +5,15 @@
 class PauseState : public GameState
 {
 private:
-	Button* pause;
+	Button* continuar;
+	Button* menu;
 	Game* game;
 public:
 	
 	PauseState(Game* g);
 	virtual void render();
-	void onClick();
+	void onClickCont();
+	void onClickMen();
 
 	
 

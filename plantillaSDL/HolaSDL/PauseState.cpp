@@ -7,10 +7,15 @@ PauseState::PauseState(Game* g) : game(g){
 	//construir boton
 	//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
 
-	pause = new Button(g, 200, 200, 1, 1, game->getTexture(Game::TXT_Lv1));
-	pause->connect([this]() { onClick(); });
-	GameState::addObject(pause);
-	GameState::addEventListener(pause);
+	continuar = new Button(g, 170, 100, 1, 1, game->getTexture(Game::TXT_Continue));
+	continuar->connect([this]() { onClickCont(); });
+	GameState::addObject(continuar);
+	GameState::addEventListener(continuar);
+
+	menu = new Button(g, 170, 200, 1, 1, game->getTexture(Game::TXT_ReturnMenu));
+	menu->connect([this]() { onClickMen(); });
+	GameState::addObject(menu);
+	GameState::addEventListener(menu);
 
 }
 
@@ -26,7 +31,12 @@ void PauseState::render() {
 	SDL_RenderPresent(game->renderer);
 }
 
-void PauseState::onClick()
+void PauseState::onClickCont()
 {
 	game->stateNotPause();
+}
+
+void PauseState::onClickMen()
+{
+	game->stateMainMenu();
 }

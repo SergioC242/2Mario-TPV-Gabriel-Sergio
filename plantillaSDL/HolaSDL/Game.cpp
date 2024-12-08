@@ -136,6 +136,7 @@ void Game::stateNotPause(){
 }
 
 void Game::stateMainMenu() {
+	GameStateMachine::popState();
 	mainmenu = new MainMenuState(this); //se puede comentar y ver si va
 	GameStateMachine::pushState(mainmenu);
 }
