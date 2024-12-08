@@ -34,7 +34,7 @@ public:
 	// Heredado vía EventHandler
 	void handleEvent(const SDL_Event& e) override;
 
-	virtual void render();
+	virtual void render() const;
 
 
 	// Heredado vía GameObject

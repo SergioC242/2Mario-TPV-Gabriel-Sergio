@@ -26,7 +26,7 @@ void Button::handleEvent(const SDL_Event& e)
 	}
 
 }
-void Button::render() {
+void Button::render() const{
 	texture->renderFrame(rect, 0, 0);
 }
 

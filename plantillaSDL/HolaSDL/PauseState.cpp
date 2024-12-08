@@ -3,10 +3,11 @@
 
 
 
-PauseState::PauseState(Game* g) : game(g), pause(2, 2, 2, 2, game->getTexture(Game::TXT_Lv1), game->getTexture(Game::MushroomTex)) {
+PauseState::PauseState(Game* g) : game(g){
 	//construir boton
 	//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
-	pause.connect([this]() { onClick(); });
+	pause = new Button(g, 2, 2, 2, 2, game->getTexture(Game::TXT_Lv1));
+	pause->connect([this]() { onClick(); });
 
 
 }
