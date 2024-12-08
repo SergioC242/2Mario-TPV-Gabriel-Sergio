@@ -30,12 +30,12 @@ public:
 
 	// Apila un nuevo estado, que se convierte en el estado actual,
 	// manteniendo el anterior en la pila
-	void pushState(std::shared_ptr<GameState> state);
+	void pushState(std::shared_ptr<GameState> state); //inicializar y pausa
 	// Reemplaza el estado actual por el nuevo estado
-	void replaceState(std::shared_ptr<GameState> state);
+	void replaceState(std::shared_ptr<GameState> state); //cambiar
 	// Desapila el estado actual y pasa al siguiente en la pila
 	// (no hace nada si no la pila es vacía)
-	void popState();
+	void popState(); //despausa
 
 	// Sobrecargas que reciben un puntero normal
 	void pushState(GameState* state);

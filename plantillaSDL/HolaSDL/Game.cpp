@@ -83,7 +83,7 @@ Game::run()
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
-
+		GameStateMachine::update();
 		playstate->update();       // Actualiza el estado de los objetos del juego
 		playstate->render();       // Dibuja los objetos en la venta
 		playstate->handleEvents(); // Maneja los eventos de la SDL (por defecto estaba después de render?)

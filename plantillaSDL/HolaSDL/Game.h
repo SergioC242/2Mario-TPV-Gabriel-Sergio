@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "gameList.h"
 #include "PlayState.h"
+#include "gameStateMachine.h"
 
 #pragma once
 
@@ -23,7 +24,7 @@ class Mushroom;
 class Shell;
 class Coin;
 
-class Game
+class Game : private GameStateMachine
 {
 public:
 	// Identificadores de las texturas
