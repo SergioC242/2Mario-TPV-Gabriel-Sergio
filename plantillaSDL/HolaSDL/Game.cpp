@@ -40,9 +40,7 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"plant.png", 4, 1},
 	{"star.png", 4, 1},
 	{"lift.png", 1, 1 },
-<<<<<<< Updated upstream
 	{"txt_numbers.png", 10, 1}
-=======
 	{"txt_numbers.png", 10, 1},
 	{"txt_mario.png", 1, 1},
 	{"txt_lv1.png", 1, 1},
@@ -51,7 +49,6 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"txt_returnmenu.png", 1, 1},
 	{"txt_win.png", 1, 1},
 	{"txt_loss.png", 1, 1}
->>>>>>> Stashed changes
 };
 
 Game::Game(int worldN) : exit(false) {
