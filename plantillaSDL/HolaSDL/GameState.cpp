@@ -11,6 +11,7 @@ void GameState::render() {
 	for (GameObject* elem : gameObj) {
 		elem->render();
 	}
+
 }
 
 void GameState::handleEvent(SDL_Event e) {

@@ -7,11 +7,9 @@
 #include "Game.h"
 
 
-Button::Button(Game* g, int x, int y, int w, int h, Texture* tex) : rect{ x, y, w, h }, game(g), isMouseOver(false) 
+Button::Button(Game* g, int x, int y, int w, int h, Texture* tex) : texture(tex), rect{ x, y, tex->getFrameWidth() * w, tex->getFrameHeight() * h }, game(g), isMouseOver(false)
 {
-	texture = tex;
-	//mushroomTexture = game->getTexture(Game::MushroomTex);
-	boundingBox = { x, y, w, h }; // Inicializar el bounding box 
+	mushroomTexture = game->getTexture(Game::MushroomTex);
 }
 
 //Button::Button(GameState* g)
@@ -28,6 +26,7 @@ void Button::handleEvent(const SDL_Event& e)
 }
 void Button::render() const{
 	texture->renderFrame(rect, 0, 0);
+	SDL_RenderPresent(game->renderer);
 }
 
 void Button::update()

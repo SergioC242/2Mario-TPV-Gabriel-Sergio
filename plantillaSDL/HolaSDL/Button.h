@@ -17,7 +17,6 @@ private:
 		Texture* mushroomTexture; 
 		Callback callback; 
 		bool isMouseOver;
-		SDL_Rect boundingBox;
 		GameState* gamestate;
 		Game* game;
 
