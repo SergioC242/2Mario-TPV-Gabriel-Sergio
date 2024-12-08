@@ -149,6 +149,10 @@ void Game::stateAnimationEnd() {
 	GameStateMachine::popState();
 	playstate->map_reload();
 }
+void Game::stateEnd() {
+	endstate = new EndState(this);
+	GameStateMachine::pushState(endstate);
+}
 
 Game::~Game()
 {

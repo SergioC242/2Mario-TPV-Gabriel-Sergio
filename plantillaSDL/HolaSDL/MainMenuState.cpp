@@ -6,10 +6,15 @@
 
 MainMenuState::MainMenuState(Game* g) : game(g)
 {
-	start = new Button(g, 100, 100, 1, 1, game->getTexture(Game::TXT_Lv1));
-	start->connect([this]() { onClick(); });
-	GameState::addObject(start);
-	GameState::addEventListener(start);
+	start1 = new Button(g, 100, 100, 1, 1, game->getTexture(Game::TXT_Lv1));
+	start1->connect([this]() { onClick(1); });
+	GameState::addObject(start1);
+	GameState::addEventListener(start1);
+
+	start2 = new Button(g, 100, 200, 1, 1, game->getTexture(Game::TXT_Lv2));
+	start2->connect([this]() { onClick(2); });
+	GameState::addObject(start2);
+	GameState::addEventListener(start2);
 }
 
 void MainMenuState::render(){
@@ -24,7 +29,7 @@ void MainMenuState::render(){
 	SDL_RenderPresent(game->renderer);
 }
 
-void MainMenuState::onClick()
+void MainMenuState::onClick(int w)
 {
-	game->statePlay(1);
+	game->statePlay(w);
 }

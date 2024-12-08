@@ -1,12 +1,22 @@
 #include "Button.h"
 #include "GameState.h"
 
+class Game;
+
 #pragma once
-class EndState : GameState
+class EndState : public GameState
 {
-	EndState() {
-		//addObject(new Button(100, 300, 200, 50, "Exit")); 
-	}
+private:
+	Button* ex;
+	Button* menu;
+	Game* game;
+public:
+	EndState(Game* g);
+
+	virtual void render();
+	
+	void onClickMen();
+	void onClickEx();
 
 
 };

@@ -16,6 +16,7 @@
 #include "MainMenuState.h"
 #include "PauseState.h"
 #include "AnimationState.h"
+#include "EndState.h"
 #include "gameStateMachine.h"
 
 #pragma once
@@ -62,7 +63,7 @@ public:
 	static constexpr uint FRAME_RATE = 60;
 	static constexpr uint TILE_SIZE = 32;
 
-	// Ventana de la SDL (se destruirá en el destructor)
+	// Ventana de la SDL (se destruirï¿½ en el destructor)
 	SDL_Window* window = nullptr;
 	// Renderizador de la SDL (para dibujar)
 	SDL_Renderer* renderer = nullptr;
@@ -72,6 +73,7 @@ public:
 	MainMenuState* mainmenu;
 	PauseState* pausestate;
 	AnimationState* animationstate;
+	EndState* endstate;
 
 private:
 	// Array con todas las texturas del juego
@@ -91,6 +93,7 @@ public:
 	void stateMainMenu();
 	void stateAnimation();
 	void stateAnimationEnd();
+	void stateEnd();
 };
 
 #endif
