@@ -81,6 +81,7 @@ public:
 	Game(int worldN);
 	~Game();
 	void run();
+	void statePlay();
 };
 
 #endif

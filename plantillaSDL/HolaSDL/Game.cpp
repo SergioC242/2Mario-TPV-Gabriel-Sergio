@@ -40,7 +40,6 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"plant.png", 4, 1},
 	{"star.png", 4, 1},
 	{"lift.png", 1, 1 },
-	{"txt_numbers.png", 10, 1}
 	{"txt_numbers.png", 10, 1},
 	{"txt_mario.png", 1, 1},
 	{"txt_lv1.png", 1, 1},
@@ -75,9 +74,9 @@ Game::Game(int worldN) : exit(false) {
 			textureSpec[i].numColumns);
 
 	// Creación de playstates
-	playstate = new PlayState(worldN, this);
-	//mainmenu = new MainMenuState();
-	GameStateMachine::pushState(playstate);
+	//playstate = new PlayState(worldN, this); //se fue a su metodo propio
+	mainmenu = new MainMenuState(this);
+	GameStateMachine::pushState(mainmenu);
 }
 
 
@@ -117,6 +116,13 @@ Game::run()
 		if (elapsed < Game::FRAME_RATE)
 			SDL_Delay(Game::FRAME_RATE - elapsed);
 	}
+}
+
+
+void Game::statePlay() {
+	playstate = new PlayState(1, this);
+	GameStateMachine::replaceState(playstate);
+
 }
 
 Game::~Game()
