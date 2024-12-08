@@ -12,7 +12,8 @@ using Callback = std::function<void(void)>;
 class Button : public GameObject, public EventHandler
 {
 private: 
-		SDL_Rect rect; 
+		SDL_Rect rect;
+		SDL_Rect mrect;
 		Texture* texture; 
 		Texture* mushroomTexture; 
 		Callback callback; 

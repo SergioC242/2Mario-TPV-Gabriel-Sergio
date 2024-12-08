@@ -12,6 +12,7 @@ MainMenuState::MainMenuState(Game* g) : game(g)
 	GameState::addEventListener(start);
 }
 
+
 void MainMenuState::onClick()
 {
 	game->statePlay();
