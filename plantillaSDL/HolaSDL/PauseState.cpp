@@ -7,12 +7,13 @@ PauseState::PauseState(Game* g) : game(g){
 	//construir boton
 	//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
 
-	continuar = new Button(g, 170, 100, 1, 1, game->getTexture(Game::TXT_Continue));
+	
+	continuar = new Button(g, game->WIN_WIDTH/2 - game->getTexture(Game::TXT_Continue)->getFrameWidth()/2, 100, 1, 1, game->getTexture(Game::TXT_Continue));
 	continuar->connect([this]() { onClickCont(); });
 	GameState::addObject(continuar);
 	GameState::addEventListener(continuar);
 
-	menu = new Button(g, 170, 200, 1, 1, game->getTexture(Game::TXT_ReturnMenu));
+	menu = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_ReturnMenu)->getFrameWidth() / 2, 200, 1, 1, game->getTexture(Game::TXT_ReturnMenu));
 	menu->connect([this]() { onClickMen(); });
 	GameState::addObject(menu);
 	GameState::addEventListener(menu);
