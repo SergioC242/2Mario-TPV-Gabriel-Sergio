@@ -84,9 +84,6 @@ Game::run()
 		// Marca de tiempo del inicio de la iteración
 		uint32_t inicio = SDL_GetTicks();
 
-		
-	
-
 		GameStateMachine::update();
 		GameStateMachine::render();
 

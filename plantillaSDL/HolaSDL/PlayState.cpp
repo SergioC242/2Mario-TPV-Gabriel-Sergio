@@ -64,6 +64,7 @@ void PlayState::loadMap(int worldN) {
 			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			storedPlayer = new Player(game->getTexture(Game::SmallMario), game->getTexture(Game::SuperMario), game->getTexture(Game::FireMario), game, spawnPosX, spawnPosY, atrib1);
 			player = storedPlayer->clone();
+			addEventListener(player);
 		}
 		else if (tipo == 'B') { // bloque: 4 atributos
 			l >> atrib1;
@@ -124,7 +125,11 @@ void PlayState::addVisibleObjects() {
 	if (objectVectorPos > createdItems.size())objectVectorPos = createdItems.size();
 	for (int i = objectVectorPos; i < createdItems.size(); i++) {
 		if (createdItems[i]->returnPos().X() < (mapOffset + Game::WIN_WIDTH + Game::TILE_SIZE)) { // Está en pantalla
+			/*SceneObject* so = createdItems[i]->clone();
+			lista.push_back(so);
+			addObject(so);*/
 			lista.push_back(createdItems[i]->clone());
+			
 			objectVectorPos++;
 		}
 	}
@@ -146,7 +151,7 @@ Collision PlayState::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoOb
 }
 
 void
-PlayState::render() const
+PlayState::render()
 {
 	SDL_RenderClear(game->renderer);
 
@@ -154,6 +159,8 @@ PlayState::render() const
 	for (auto elem : lista) {
 		elem->render();
 	}
+	//GameState::render();
+
 
 	// Renderiza player
 	if (player) player->render();

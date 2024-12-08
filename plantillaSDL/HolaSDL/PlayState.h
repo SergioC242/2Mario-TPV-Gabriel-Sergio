@@ -30,9 +30,9 @@ private:
 	//vector<SceneObject*> activeItems; //objetos que se spawnean
 
 public:
-	void update();
-	void render() const;
-	void handleEvents();
+	virtual void update();
+	virtual void render();
+	virtual void handleEvents();
 
 	void loadMap(int worldN);
 	void addVisibleObjects();

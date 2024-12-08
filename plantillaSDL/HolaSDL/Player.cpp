@@ -20,33 +20,7 @@ Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, i
 }
 
 void Player::handleEvent(SDL_KeyboardEvent& E) {
-	if (E.state == SDL_PRESSED &&										//si acabas de pulsar el boton de salto (no mantenido) salta
-		E.keysym.sym == SDLK_UP && E.repeat == 0) {
-		//if grounded, jump
-		if (onGround) {
-			moveY = JUMP_POWER;
-			onGround = false;
-			jumping = true;
-		}
-	}
-
-	if (E.state == SDL_PRESSED &&										//si tecla derecha Mov = +1
-		E.keysym.sym == SDLK_RIGHT) {
-		moveX = WALK_POWER;
-		flipH = SDL_FLIP_NONE;
-	}
-	else if (E.state == SDL_PRESSED &&									//si tecla izquierda Mov = -1
-		E.keysym.sym == SDLK_LEFT) {
-		//Movement x = -1
-		int walk = WALK_POWER; // porque no se puede añadir - a una constante, aparentemente
-		moveX = -walk;
-		flipH = SDL_FLIP_HORIZONTAL;
-	}
-	else if (E.state == SDL_RELEASED &&									//si sueltas tecla derecha o izquierda Mov = 0
-		(E.keysym.sym == SDLK_RIGHT || E.keysym.sym == SDLK_LEFT)) {
-		//movement x= 0
-		moveX = 0;
-	}
+	
 }
 
 void Player::update() {
@@ -301,4 +275,35 @@ Player::~Player() {
 
 void Player::handleEvent(const SDL_Event& e)
 {
+	if (e.type == SDL_KEYDOWN || e.type == SDL_KEYUP)
+	{
+		SDL_KeyboardEvent E = e.key;
+		if (E.state == SDL_PRESSED &&										//si acabas de pulsar el boton de salto (no mantenido) salta
+			E.keysym.sym == SDLK_UP && E.repeat == 0) {
+			//if grounded, jump
+			if (onGround) {
+				moveY = JUMP_POWER;
+				onGround = false;
+				jumping = true;
+			}
+		}
+
+		if (E.state == SDL_PRESSED &&										//si tecla derecha Mov = +1
+			E.keysym.sym == SDLK_RIGHT) {
+			moveX = WALK_POWER;
+			flipH = SDL_FLIP_NONE;
+		}
+		else if (E.state == SDL_PRESSED &&									//si tecla izquierda Mov = -1
+			E.keysym.sym == SDLK_LEFT) {
+			//Movement x = -1
+			int walk = WALK_POWER; // porque no se puede añadir - a una constante, aparentemente
+			moveX = -walk;
+			flipH = SDL_FLIP_HORIZONTAL;
+		}
+		else if (E.state == SDL_RELEASED &&									//si sueltas tecla derecha o izquierda Mov = 0
+			(E.keysym.sym == SDLK_RIGHT || E.keysym.sym == SDLK_LEFT)) {
+			//movement x= 0
+			moveX = 0;
+		}
+	}
 }
