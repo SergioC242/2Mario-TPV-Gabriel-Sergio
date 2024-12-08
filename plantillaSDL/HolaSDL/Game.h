@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "gameList.h"
 #include "PlayState.h"
+#include "MainMenuState.h"
 #include "gameStateMachine.h"
 
 #pragma once
@@ -59,6 +60,7 @@ public:
 
 	// Gamestates
 	PlayState* playstate;
+	MainMenuState* mainmenu;
 
 private:
 	// Array con todas las texturas del juego

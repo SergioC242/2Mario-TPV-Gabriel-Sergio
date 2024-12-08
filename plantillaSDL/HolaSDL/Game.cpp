@@ -68,7 +68,8 @@ Game::Game(int worldN) : exit(false) {
 
 	// Creación de playstates
 	playstate = new PlayState(worldN, this);
-	GameStateMachine::pushState(playstate);
+	mainmenu = new MainMenuState();
+	GameStateMachine::pushState(mainmenu);
 }
 
 
