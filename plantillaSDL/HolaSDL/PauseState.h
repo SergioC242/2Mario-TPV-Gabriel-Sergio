@@ -5,7 +5,7 @@
 class PauseState : public GameState
 {
 private:
-	Button pause;
+	Button* pause;
 	Game* game;
 public:
 	
