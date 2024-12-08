@@ -6,6 +6,7 @@
 EndState::EndState(Game* g) : game(g) {
 	//construir boton
 	//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
+	
 
 	menu = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_ReturnMenu)->getFrameWidth() / 2, 200, 1, 1, game->getTexture(Game::TXT_ReturnMenu));
 	menu->connect([this]() { onClickMen(); });
@@ -13,7 +14,7 @@ EndState::EndState(Game* g) : game(g) {
 	GameState::addEventListener(menu);
 
 
-	ex = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_Continue)->getFrameWidth() / 2, 300, 1, 1, game->getTexture(Game::TXT_Continue));
+	ex = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_Salir)->getFrameWidth() / 2, 300, 1, 1, game->getTexture(Game::TXT_Salir));
 	ex->connect([this]() { onClickEx(); });
 	GameState::addObject(ex);
 	GameState::addEventListener(ex);

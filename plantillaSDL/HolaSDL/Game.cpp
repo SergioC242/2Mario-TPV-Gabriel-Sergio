@@ -47,7 +47,8 @@ const array<TextureSpec, Game::NUM_TEXTURES> textureSpec{
 	{"txt_continue.png", 1, 1},
 	{"txt_returnmenu.png", 1, 1},
 	{"txt_win.png", 1, 1},
-	{"txt_loss.png", 1, 1}
+	{"txt_loss.png", 1, 1},
+	{"salir.png", 1, 1}
 };
 
 Game::Game(int worldN) : exit(false) {

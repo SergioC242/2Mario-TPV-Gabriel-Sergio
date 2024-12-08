@@ -16,7 +16,7 @@ MainMenuState::MainMenuState(Game* g) : game(g)
 	GameState::addObject(start2);
 	GameState::addEventListener(start2);
 
-	ex = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_Continue)->getFrameWidth() / 2, 300, 1, 1, game->getTexture(Game::TXT_Continue));
+	ex = new Button(g, game->WIN_WIDTH / 2 - game->getTexture(Game::TXT_Salir)->getFrameWidth() / 2, 300, 1, 1, game->getTexture(Game::TXT_Salir));
 	ex->connect([this]() { onClickEx(); });
 	GameState::addObject(ex);
 	GameState::addEventListener(ex);

@@ -55,6 +55,7 @@ public:
 		TXT_ReturnMenu,
 		TXT_Win,
 		TXT_Loss,
+		TXT_Salir,
 		NUM_TEXTURES
 	};
 	// Constante globales
