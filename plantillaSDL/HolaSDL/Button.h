@@ -17,10 +17,12 @@ private:
 		Callback callback; 
 		bool isMouseOver;
 		SDL_Rect boundingBox;
+		GameState* game;
 
 public:
 
 	Button(int x, int y, int w, int h, SDL_Texture* tex, SDL_Texture* mushTex);
+	//Button(GameState* game);
 
 	
 

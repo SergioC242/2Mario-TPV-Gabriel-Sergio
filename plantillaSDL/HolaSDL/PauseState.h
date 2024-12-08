@@ -5,12 +5,14 @@
 class PauseState : public GameState
 {
 private:
-	//Button pause;
+	Button pause;
 public:
-
-	PauseState() {
+	
+	PauseState(): pause(2, 2, 2, 2, nullptr, nullptr) {
 		//construir boton
+		//pause = new Button(2, 2, 2, 2, nullptr, nullptr);
 		//pause.connect([this]() { onClick(); });
+		
 		
 	}
 
