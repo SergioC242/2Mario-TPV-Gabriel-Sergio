@@ -69,7 +69,7 @@ public:
 	bool isMovingUp() { return moveY > 0; }
 
 	void die();
-	bool dieAnimCallback();
+	void dieAnimUpdate();
 
 	~Player();
 

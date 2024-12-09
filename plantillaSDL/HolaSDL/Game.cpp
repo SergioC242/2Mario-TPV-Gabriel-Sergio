@@ -141,8 +141,8 @@ void Game::stateMainMenu() {
 	GameStateMachine::pushState(mainmenu);
 }
 
-void Game::stateAnimation() {
-	animationstate = new AnimationState(this, playstate);
+void Game::stateAnimation(function<bool()> funcAnim) {
+	animationstate = new AnimationState(this, playstate, funcAnim);
 	GameStateMachine::pushState(animationstate);
 }
 

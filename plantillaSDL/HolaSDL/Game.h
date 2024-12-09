@@ -92,7 +92,7 @@ public:
 	void statePause();
 	void stateNotPause();
 	void stateMainMenu();
-	void stateAnimation();
+	void stateAnimation(function<bool()> funcAnim);
 	void stateAnimationEnd();
 	void stateEnd();
 	void gameExit();

@@ -244,6 +244,7 @@ void Player::render() const {
 
 	if (dead) {
 		textures[Forma::Small]->renderFrame(rect, 0, 1);
+		cout << "RENDER DEAD" << endl;
 	}
 	else if (estado == Estado::Caminando) {
 		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
@@ -273,21 +274,28 @@ void Player::die() {
 	dead = true;
 	moveX = 0;
 	moveY = JUMP_POWER;
-	game->stateAnimation();
+	rect.h = textures[Forma::Small]->getFrameHeight();
+	function<bool()> dieAnim = [this]() { 
+		cout << position.Y() << " " << moveY << endl;
+		dieAnimUpdate();
+		if (position.Y() < Game::WIN_HEIGHT) {
+			return true;
+		}
+		return false;
+	};
+	game->stateAnimation(dieAnim);
 }
 
-bool Player::dieAnimCallback() {
-	if (position.Y() < Game::WIN_HEIGHT) {
-		int maxfallspeed = MAX_FALL_SPEED;
-		if (moveY <= -maxfallspeed) {
-			moveY = -maxfallspeed;
-		}
-		else {
-			moveY -= GRAVITY;
-		}
-		return true;
+void Player::dieAnimUpdate() {
+	int maxfallspeed = MAX_FALL_SPEED * 2;
+	if (moveY <= -maxfallspeed) {
+		moveY = -maxfallspeed;
 	}
-	return false;
+	else {
+		moveY -= GRAVITY;
+	}
+	position += Point2D(0, -moveY);
+	rect.y = position.Y();
 }
 
 Player::~Player() {
