@@ -44,7 +44,6 @@ void PlayState::loadMap(int worldN) {
 	char atrib2;
 	string line;
 	while (getline(txtWorld, line)) {
-		//cout << line << endl;
 		istringstream l(line);
 		l >> tipo;
 		l >> posX;
@@ -53,8 +52,8 @@ void PlayState::loadMap(int worldN) {
 		spawnPosY = (posY - 2) * Game::TILE_SIZE;
 		if (tipo == 'M') { // mario: 3 atributos
 			l >> atrib1;
-			cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//cout << "MARIO - " << posX << "|" << posY << "  " << atrib1 << "\n";
+			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			storedPlayer = new Player(game->getTexture(Game::SmallMario), game->getTexture(Game::SuperMario), game->getTexture(Game::FireMario), game, spawnPosX, spawnPosY, atrib1);
 			player = storedPlayer->clone();
 			addEventListener(player);
@@ -62,36 +61,36 @@ void PlayState::loadMap(int worldN) {
 		else if (tipo == 'B') { // bloque: 4 atributos
 			l >> atrib1;
 			l >> atrib2;
-			cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//cout << "BLOQUE - " << posX << "|" << posY << "  " << atrib1 << " " << atrib2 << "\n";
+			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Block* block = new Block(game->getTexture(Game::Blocks), game, atrib1, atrib2, spawnPosX, spawnPosY);
 			createdItems.push_back(block);
 		}
 		else if (tipo == 'G') { // goomba: 2 atributos
 			spawnPosX += 0.5 * Game::TILE_SIZE; // Prevención de clipping
-			cout << "GOOMBA - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//cout << "GOOMBA - " << posX << "|" << posY << "\n";
+			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Goomba* goomba = new Goomba(game->getTexture(Game::GoombaTex), game, spawnPosX, spawnPosY);
 			createdItems.push_back(goomba);
 		}
 		else if (tipo == 'K') { // koopa: 2 atributos
 			spawnPosY -= 0.5 * Game::TILE_SIZE; // Prevención de clipping
-			cout << "KOOPA - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//cout << "KOOPA - " << posX << "|" << posY << "\n";
+			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Koopa* koopa = new Koopa(game->getTexture(Game::KoopaTex), game, spawnPosX, spawnPosY);
 			createdItems.push_back(koopa);
 		}
 		else if (tipo == 'C') { // koopa: 2 atributos
 			//spawnPosY -= 0.5 * TILE_SIZE; // Prevención de clipping
-			cout << "COIN - " << posX << "|" << posY << "\n";
-			cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
+			//cout << "COIN - " << posX << "|" << posY << "\n";
+			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Coin* coin = new Coin(game->getTexture(Game::CoinTex), game, spawnPosX, spawnPosY);
 			createdItems.push_back(coin);
 		}
 
-		cout << "------------------\n";
+		//cout << "------------------\n";
 	}
-	cout << "|                |\n" << "------------------\n";
+	//cout << "|                |\n" << "------------------\n";
 }
 
 void PlayState::map_reload() {
@@ -145,7 +144,6 @@ Collision PlayState::checkCollisions(SDL_Rect rect, Collision::ObjetoTipo tipoOb
 		int distY = abs(obj->returnPos().Y() - rect.y);
 		if (distX < Game::TILE_SIZE && distY < Game::TILE_SIZE) { // Solo comprueba objetos cerca
 			Collision collision = obj->hit(rect, tipoObj);
-			//cout << collision.directionV() << endl;
 			if (collision.hasCollided()) {
 				return collision;
 			}
@@ -190,8 +188,6 @@ PlayState::update()
 	for (auto elem : lista) {
 		elem->update();
 	}
-
-	cout << endl;
 }
 
 void

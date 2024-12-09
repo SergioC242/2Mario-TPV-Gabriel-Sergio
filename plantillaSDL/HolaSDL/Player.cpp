@@ -132,11 +132,11 @@ void Player::update() {
 			//mario grande
 			if (forma == Forma::Small) {
 				makeSuper();
-				cout << "Mario Grande" << endl;
+				//cout << "Mario Grande" << endl;
 			}
 			else {
 				vidas++;
-				cout << "vidas: " << vidas << endl;
+				cout << "Vidas: " << vidas << endl;
 			}
 		}
 	}
@@ -156,7 +156,7 @@ void Player::update() {
 		else if (objectCollisionHorizontal.object() == Collision::Mushroom) {
 			if (forma == Forma::Small) {
 				makeSuper();
-				cout << "Mario Grande" << endl;
+				//cout << "Mario Grande" << endl;
 			}
 			else {
 				vidas++;
@@ -244,7 +244,6 @@ void Player::render() const {
 
 	if (dead) {
 		textures[Forma::Small]->renderFrame(rect, 0, 1);
-		cout << "RENDER DEAD" << endl;
 	}
 	else if (estado == Estado::Caminando) {
 		currentTexture->renderFrame(rect, 0, 2 + currentWalkingFrame, flipH);
@@ -270,13 +269,12 @@ void Player::makeSuper() {
 }
 
 void Player::die() {
+	cout << "Has muerto" << endl;
 	estado = Estado::Muerto;
 	dead = true;
 	moveX = 0;
 	moveY = JUMP_POWER;
-	rect.h = textures[Forma::Small]->getFrameHeight();
-	function<bool()> dieAnim = [this]() { 
-		cout << position.Y() << " " << moveY << endl;
+	function<bool()> dieAnim = [this]() {
 		dieAnimUpdate();
 		if (position.Y() < Game::WIN_HEIGHT) {
 			return true;
@@ -296,6 +294,7 @@ void Player::dieAnimUpdate() {
 	}
 	position += Point2D(0, -moveY);
 	rect.y = position.Y();
+	rect.h = textures[Forma::Small]->getFrameHeight() * 2;
 }
 
 Player::~Player() {
