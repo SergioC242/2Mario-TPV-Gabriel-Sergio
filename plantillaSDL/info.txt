@@ -1,2 +1,7 @@
 Gabriel Barroso Bueno 
 Sergio Croche Trigo
+
+Falta el lift.
+
+En algunos lugares, enemigos no spawnean correctamente (como al inicio del nivel 1.) 
+Este bug apareció cuando creamos la lista de objetos y no encontramos manera de arreglarlo.
