@@ -35,14 +35,6 @@ void PlayState::loadMap(int worldN) {
 	string filename = "../assets/maps/world" + to_string(worldN) + ".txt";
 	ifstream txtWorld(filename);
 
-	// Color de fondo
-	if (world == 1) {
-		SDL_SetRenderDrawColor(game->renderer, 38, 132, 255, 255);
-	}
-	if (world == 2) {
-		SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-	}
-
 	char tipo;
 	float posX;
 	float posY;
@@ -166,6 +158,13 @@ void
 PlayState::render()
 {
 	SDL_RenderClear(game->renderer);
+	// Color de fondo
+	if (world == 1) {
+		SDL_SetRenderDrawColor(game->renderer, 38, 132, 255, 255);
+	}
+	if (world == 2) {
+		SDL_SetRenderDrawColor(game->renderer, 10, 0, 10, 255);
+	}
 
 	// Pinta los objetos del juego
 	for (auto elem : lista) {

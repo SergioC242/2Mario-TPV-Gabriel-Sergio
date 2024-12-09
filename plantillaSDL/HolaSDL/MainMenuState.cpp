@@ -25,11 +25,13 @@ MainMenuState::MainMenuState(Game* g) : game(g)
 void MainMenuState::render(){
 	SDL_RenderClear(game->renderer);
 
-	// Pinta los objetos del juego
+	SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
+
+	// Pinta los objetos
 
 	GameState::render();
 
-	// Renderiza objetos del mapa
+	// Renderiza objetos
 
 	SDL_RenderPresent(game->renderer);
 }

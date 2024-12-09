@@ -27,12 +27,13 @@ PauseState::PauseState(Game* g) : game(g){
 
 void PauseState::render() {
 	SDL_RenderClear(game->renderer);
+	SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
 
-	// Pinta los objetos del juego
+	// Pinta los objetos
 
 	GameState::render();
 
-	// Renderiza objetos del mapa
+	// Renderiza objetos
 
 	SDL_RenderPresent(game->renderer);
 }
