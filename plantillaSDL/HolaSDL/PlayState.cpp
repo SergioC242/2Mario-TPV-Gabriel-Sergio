@@ -67,7 +67,7 @@ void PlayState::loadMap(int worldN) {
 			createdItems.push_back(block);
 		}
 		else if (tipo == 'G') { // goomba: 2 atributos
-			spawnPosX += 0.5 * Game::TILE_SIZE; // Prevención de clipping
+			//spawnPosX += 0.5 * Game::TILE_SIZE; // Prevención de clipping
 			//cout << "GOOMBA - " << posX << "|" << posY << "\n";
 			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Goomba* goomba = new Goomba(game->getTexture(Game::GoombaTex), game, spawnPosX, spawnPosY);
