@@ -1,26 +1,28 @@
 #include "mPlatform.h"
 #include "Collision.h"
+#include "Game.h"
 
-mPlatform::mPlatform(Texture* tex, Game* g, int x, int y, int range)
-    : texture(tex), game(g), position(x, y), moveY(1), goingUp(false) {
-    minY = y - range;
-    maxY = y + range;
+ 
+mPlatform::mPlatform(Texture* tex, Game* g, int x, int y, int rangeInPixels, int speed)
+    : texture(tex), game(g), position(x, y), movSpeed(speed)
+{
+    rect.w = texture->getFrameWidth() * 2;
+    rect.h = texture->getFrameHeight();
+    rect.x = position.X();
+    rect.y = position.Y();
+    topY = y;
+    bottomY = y + rangeInPixels;
 }
 
 void mPlatform::update() {
-    if (goingUp) {
-        position += Point2D(0, -moveY);
-        if (position.Y() <= minY) goingUp = false;
-    }
-    else {
-        position += Point2D(0, moveY);
-        if (position.Y() >= maxY) goingUp = true;
+    position += Point2D(0, movSpeed);
+
+    if (position.Y() <= topY || position.Y() >= bottomY) {
+        movSpeed = -movSpeed;
     }
 
     rect.x = position.X() - game->playstate->offset_Return();
     rect.y = position.Y();
-    rect.w = texture->getFrameWidth();
-    rect.h = texture->getFrameHeight();
 }
 
 void mPlatform::render() const {
@@ -41,7 +43,7 @@ Collision mPlatform::hit(SDL_Rect r, Collision::ObjetoTipo tipoObj) {
     }
 
     if (SDL_HasIntersection(&r, &platRect)) {
-        return Collision(true, dir, Collision::ObjetoTipo::MovingPlatform, this);
+        return Collision(true, dir, Collision::ObjetoTipo::MovingPlatform);
     }
 
     return Collision(false, dir, Collision::None);

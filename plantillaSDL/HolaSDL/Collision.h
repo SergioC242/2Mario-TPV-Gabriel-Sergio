@@ -17,7 +17,8 @@ public:
 	Mushroom,
 	Shell,
 	moveShell,
-	Coin
+	Coin,
+	MovingPlatform
 	};
 enum CollisionDir {
 	Above,

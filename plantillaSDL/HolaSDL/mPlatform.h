@@ -1,28 +1,28 @@
 #pragma once
 #include "SceneObject.h"
-#include "Game.h"
+
 #include "Texture.h"
 
+class Game;
 
 class mPlatform : public SceneObject
 {
 private:
-    Texture* texture;
     Game* game;
+    Texture* texture;
     Point2D position;
     SDL_Rect rect;
-    int moveY;
-    bool goingUp;
-    int minY, maxY;
+
+    int movSpeed;
+    int topY, bottomY;
 
 public:
-    mPlatform(Texture* tex, Game* g, int x, int y, int range);
-    virtual void render() const override;
-    virtual void update() override;
-    virtual Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) override;
-    Point2D returnPos() override { return position; }
+    mPlatform(Texture* tex, Game* g, int x, int y, int rangeInPixels, int speed = 1);
 
-    int getMoveY() const { return moveY; }
+    virtual void update() override;
+    virtual void render() const override;
+    virtual Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) override;
+    virtual Point2D returnPos() override { return position; }
 
 };
 
