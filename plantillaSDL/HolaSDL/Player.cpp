@@ -91,8 +91,9 @@ void Player::update() {
 				SceneObject* platform = objectCollisionGravity.getObject();
 				mPlatform* mplat = dynamic_cast<mPlatform*>(platform);
 				if (mplat != nullptr) {
-					position += Point2D(0, -mplat->getMoveY());
+					position += Point2D(0, mplat->getMoveY());
 				}
+				collisionGravity = true;
 			//}
 		}
 		else if (objectCollisionGravity.object() == Collision::Goomba || objectCollisionGravity.object() == Collision::Koopa) {

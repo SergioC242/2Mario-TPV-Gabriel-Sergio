@@ -12,6 +12,7 @@
 #include "Mushroom.h"
 #include "Shell.h"
 #include "Coin.h"
+#include "mPlatform.h"
 
 using namespace std;
 
@@ -86,6 +87,18 @@ void PlayState::loadMap(int worldN) {
 			//cout << "SPAWNING AT " << spawnPosX << "|" << spawnPosY << endl;
 			Coin* coin = new Coin(game->getTexture(Game::CoinTex), game, spawnPosX, spawnPosY);
 			createdItems.push_back(coin);
+		}
+		else if (tipo == 'P') { // plataforma móvil
+			int altura;
+			l >> altura;
+			mPlatform* plat = new mPlatform(
+				game->getTexture(Game::Lift), // o una textura propia si tienes
+				game,
+				spawnPosX,
+				spawnPosY,
+				altura * Game::TILE_SIZE
+			);
+			createdItems.push_back(plat);
 		}
 
 		//cout << "------------------\n";

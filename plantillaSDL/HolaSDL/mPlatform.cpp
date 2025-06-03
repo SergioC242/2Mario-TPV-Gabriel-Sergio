@@ -43,9 +43,14 @@ Collision mPlatform::hit(SDL_Rect r, Collision::ObjetoTipo tipoObj) {
     }
 
     if (SDL_HasIntersection(&r, &platRect)) {
-        return Collision(true, dir, Collision::ObjetoTipo::MovingPlatform);
+        return Collision(true, dir, Collision::ObjetoTipo::MovingPlatform, this);
     }
 
     return Collision(false, dir, Collision::None);
+}
+
+SceneObject* mPlatform::clone() const
+{
+    return new mPlatform(*this);
 }
 
