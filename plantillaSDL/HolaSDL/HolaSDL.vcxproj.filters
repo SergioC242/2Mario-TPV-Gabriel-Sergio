@@ -93,6 +93,9 @@
     <ClCompile Include="AnimationState.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="mPlatform.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="checkML.h">
@@ -177,6 +180,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="AnimationState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="mPlatform.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

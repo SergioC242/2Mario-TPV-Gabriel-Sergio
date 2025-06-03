@@ -85,6 +85,7 @@
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="mPlatform.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Pickable.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="mPlatform.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Pickable.h" />
