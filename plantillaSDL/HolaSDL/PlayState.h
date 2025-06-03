@@ -48,11 +48,11 @@ public:
 	void offset_Add(int n);
 	void offset_Lock();
 	bool offset_isLocked() const;
-	bool isSuperMario() { return player->isSuperMario(); }
+	bool isSuperMario() const { return player->isSuperMario(); }
 
 	void addScore(int n);
 
-	TileMap* getTileMap() { return tilemap; }
+	TileMap* getTileMap() const { return tilemap; }
 
 	PlayState(int worldN, Game* g);
 	~PlayState();
