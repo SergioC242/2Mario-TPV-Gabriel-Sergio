@@ -17,7 +17,7 @@ private:
     int topY, bottomY;
 
 public:
-    mPlatform(Texture* tex, Game* g, int x, int y, int rangeInPixels = 5, int speed = 1);
+    mPlatform(Texture* tex, Game* g, int x, int y, int rangeInPixels = 5, int speed = 2);
 
     virtual void update() override;
     virtual void render() const override;

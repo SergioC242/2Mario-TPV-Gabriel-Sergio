@@ -88,15 +88,16 @@ void PlayState::loadMap(int worldN) {
 			Coin* coin = new Coin(game->getTexture(Game::CoinTex), game, spawnPosX, spawnPosY);
 			createdItems.push_back(coin);
 		}
-		else if (tipo == 'P') { // plataforma móvil
-			int altura;
-			l >> altura;
+		else if (tipo == 'L') { // plataforma móvil
+			int velocidad;
+			l >> velocidad;
 			mPlatform* plat = new mPlatform(
-				game->getTexture(Game::Lift), // o una textura propia si tienes
+				game->getTexture(Game::Lift),      
 				game,
-				spawnPosX,
-				spawnPosY,
-				altura * Game::TILE_SIZE
+				(posX - 1) * Game::TILE_SIZE,         
+				(posY - 2) * Game::TILE_SIZE,         
+				game->WIN_HEIGHT + Game::TILE_SIZE,   // altura: mueve hasta arriba de pantalla antes de reiniciar
+				velocidad							  // velocidad
 			);
 			createdItems.push_back(plat);
 		}
