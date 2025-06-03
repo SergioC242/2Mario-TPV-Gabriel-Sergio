@@ -3,6 +3,8 @@
 
 #include "checkML.h"
 
+class SceneObject;
+
 #pragma once
 class Collision
 {
@@ -30,6 +32,7 @@ private:
 	bool collision;
 	CollisionDir dirV;
 	ObjetoTipo tipo;
+	SceneObject* obj;
 
 public:
 	Collision() {
@@ -37,7 +40,7 @@ public:
 		dirV = Middle;
 		tipo = None;
 	}
-	Collision(bool c, CollisionDir d, ObjetoTipo t) {
+	Collision(bool c, CollisionDir d, ObjetoTipo t, SceneObject* o = nullptr) : obj(o) {
 		collision = c;
 		dirV = d;
 		tipo = t;
@@ -46,6 +49,7 @@ public:
 	bool hasCollided() const { return collision; }
 	CollisionDir directionV() const { return dirV; }
 	ObjetoTipo object() const { return tipo; }
+	SceneObject* getObject() const { return obj; }
 };
 
 #endif

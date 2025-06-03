@@ -86,6 +86,15 @@ void Player::update() {
 		if (objectCollisionGravity.object() == Collision::Block) {
 			collisionGravity = true;
 		}
+		else if (objectCollisionGravity.object() == Collision::MovingPlatform) {
+			//if (objectCollisionGravity.directionV() == Collision::Above) {
+				SceneObject* platform = objectCollisionGravity.getObject();
+				mPlatform* mplat = dynamic_cast<mPlatform*>(platform);
+				if (mplat != nullptr) {
+					position += Point2D(0, -mplat->getMoveY());
+				}
+			//}
+		}
 		else if (objectCollisionGravity.object() == Collision::Goomba || objectCollisionGravity.object() == Collision::Koopa) {
 			if (objectCollisionGravity.directionV() == Collision::Above) {
 				// bounce, enemy handles the rest

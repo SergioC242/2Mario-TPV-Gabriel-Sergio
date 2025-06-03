@@ -9,6 +9,8 @@
 #include <vector>
 #include <SDL.h>
 
+#include "mPlatform.h"
+
 
 
 #pragma once

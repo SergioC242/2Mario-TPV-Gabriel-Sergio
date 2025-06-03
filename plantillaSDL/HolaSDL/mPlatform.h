@@ -23,6 +23,7 @@ public:
     virtual void render() const override;
     virtual Collision hit(SDL_Rect rect, Collision::ObjetoTipo tipoObj) override;
     virtual Point2D returnPos() override { return position; }
+    int getMoveY() { return movSpeed; }
 
 };
 
