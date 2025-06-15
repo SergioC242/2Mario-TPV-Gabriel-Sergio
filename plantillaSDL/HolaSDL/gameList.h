@@ -171,7 +171,7 @@ public:
 	/// ¿La lista es vacía?
 	bool empty() const
 	{
-		return ghostNode->next == ghostNode->prev;
+		return ghostNode.next == &ghostNode && ghostNode.prev == &ghostNode;
 	}
 
 	/// Impide copiar la lista

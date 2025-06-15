@@ -24,11 +24,29 @@ public:
 	void addEventListener(EventHandler* eventLis) {
 		eventObj.push_back(eventLis);
 	}
+	void removeEventListener(EventHandler* eventLis) {
+		eventObj.remove(eventLis);
+	}
 
 	void addObject(GameObject* obj) {
 		gameObj.push_back(obj);
 	}
 	void map_reload();
+
+	void clearGameList(GameList<GameObject>& gameList);
+
+	virtual ~GameState() {
+		/*
+		for (auto& event : eventObj) {
+			delete event;
+		}
+		eventObj.clear();
+		*/
+		//Delete gameobjects
+		// Usamos iteración segura que maneja la eliminación durante el recorrido
+		clearGameList(gameObj);
+
+	}
 
 };
 

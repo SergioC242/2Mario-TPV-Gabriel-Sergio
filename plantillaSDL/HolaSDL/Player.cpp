@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, int posY, int liv) : position(posX, posY - 32) {
+Player::Player(Texture* tex1, Texture* tex2, Texture* tex3, Game* g, int posX, int posY, int liv) : position(posX, posY - 32), vidas(liv) {
 	game = g;
 	textures[0] = tex1;
 	textures[1] = tex2;
@@ -154,7 +154,7 @@ void Player::update() {
 		if (objectCollisionHorizontal.object() == Collision::Block) {
 			collisionHorizontal = true;
 		}
-		else if (objectCollisionHorizontal.object() == Collision::Goomba || objectCollisionVertical.object() == Collision::Koopa) {
+		else if (objectCollisionHorizontal.object() == Collision::Goomba || objectCollisionHorizontal.object() == Collision::Koopa) {
 			// take damage
 			if (forma == Forma::Super) {
 				forma = Forma::Small;

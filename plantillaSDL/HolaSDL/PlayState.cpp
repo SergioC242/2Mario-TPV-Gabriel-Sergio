@@ -116,6 +116,12 @@ void PlayState::map_reload() {
 	for (auto obj : lista) {
 		delete obj;
 	}
+	if (player) {
+
+		removeEventListener(player);
+		delete player;
+		player = nullptr;
+	}
 	objectVectorPos = 0;
 	player = storedPlayer->clone();
 	addEventListener(player);
@@ -258,8 +264,26 @@ PlayState::addScore(int n) {
 }
 
 PlayState::~PlayState() {
-	// Elimina los objetos del juego
-	for (GameObject* obj : createdItems) delete obj;
-	delete tilemap;
-	delete player;
+	// Elimina los objetos del mapa cargado
+	for (GameObject* obj : createdItems) {
+		delete obj;
+	}
+	createdItems.clear();
+
+	// Elimina todos los objetos activos en la lista
+	for (SceneObject* obj : lista) {
+		delete obj;
+	}
+	
+
+	if (player) {
+		delete player;
+		player = nullptr;
+	}
+
+	//Delete Stored Player
+	if (storedPlayer) {
+		delete storedPlayer;
+		storedPlayer = nullptr;
+	}
 }

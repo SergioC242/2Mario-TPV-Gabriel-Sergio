@@ -1,7 +1,8 @@
 Gabriel Barroso Bueno 
-Sergio Croche Trigo
+Sergio Croche Trigo (solo yo tengo la media de las practicas suspensas y este cambio lo he hecho yo)
 
-Falta el lift.
+lift hecho
+Ademas muchos arreglos de la p2 se hicieron durante la p3 (obviamente no evaluados en la p2) aunque no los recuerdo al completo. se que arreglamos es uso de lista a gamelist y mas
 
-En algunos lugares, enemigos no spawnean correctamente (como al inicio del nivel 1.) 
-Este bug apareció cuando creamos la lista de objetos y no encontramos manera de arreglarlo.
+también pase algún método a const / override pero muchos de ellos aunque dueran render me rompían un poco el juego y hacia cosas raras y no lo pude solucionar por lo que esos se han quedado sin estar const (ejemplo goomba render)
+

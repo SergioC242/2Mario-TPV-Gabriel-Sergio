@@ -20,4 +20,15 @@ void GameState::handleEvent(SDL_Event e) {
 	}
 }
 
+void GameState::clearGameList(GameList<GameObject>& gameList)
+{
+	while (!gameList.empty()) {
+		GameObject* obj = *gameList.begin();  // Obtenemos el primer elemento
+		obj->destroy();  // Lo destruimos
+		// El destructor se encarga de sacarlo de la lista
+	}
+
+
+}
+
 

@@ -18,8 +18,9 @@ public:
 	void onClickCont();
 	void onClickMen();
 	void onClickEx();
-
-	
+	//destructor
+	virtual ~PauseState() {
+	}
 
 };
 

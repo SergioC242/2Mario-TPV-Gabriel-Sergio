@@ -25,6 +25,15 @@ public:
 	virtual void render() const{
 		//cout << "Fallo de polimorfismo en Render para GameItem" << endl;
 	}
+
+	virtual ~GameObject()
+	{
+		// El destructor del anchor se encargará del unlink automáticamente
+	}
+	// Método seguro para eliminar el objeto
+	void destroy() {
+		delete this; // Llama al destructor que maneja el anchor
+	}
 };
 
 #endif
